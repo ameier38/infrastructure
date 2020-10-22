@@ -1,0 +1,3 @@
+name: infrastructure
+runtime: nodejs
+description: Pulumi project for Andrew's infrastructure
