@@ -8,18 +8,18 @@ config:
   auth0:clientId:
     secure: AAABACWUFf3nUwFaEzzdP604k3Zdk+20gB5IqfHEy2NBh8QgGCs6EjzjSku3qtQdDcjhZqwO8T9dfBABgjU9uQ==
   auth0:clientSecret:
-    secure: AAABAJYFx7wmrUIlMmhjCgAEtc+F2OrtYem/Q5016EbxlvMqIStzUYzU668TPZg/jBAsg9Re3eYfromqjjBYmDBGe/CxAy0nzHYr7K96g6/cP/J/9BbnP/u5NJiTIyFi
+    secure: AAABAFLBQ8BqtaZzYzMfKaay3ED6G7tjrvXNe9LD893fU6hgBe/38yhcVvs/ldkObE66Sbjc66/M24ZychLvG4n4J3bm8/eJ1pLlF7KJyOY6itsOHc1n4o3+kcyXfMpU
   auth0:domain: ameier38.auth0.com
   cloudflare:apiKey:
-    secure: AAABAEcbwDOPHdTouk+C3fGP5rRvdmLvc+MDSEdBRr7RFiI2Ry25VwWtkXbu/sFwgqWgBt824lAFZlqfXoJwKi5y0+QT
+    secure: AAABAIGc5f+6OOfd+uREBe7FRZVSkLO/K6KweUGl/p0GDa7lavQOz/x/dItfln8/aGa3vBKlsZPZZO/RNsxNrks88c6K
   cloudflare:email:
     secure: AAABAKJL1XJ1PWz0238Z/vxSjHjuILwaDUDnusUzI1SOyVjzdNLMwlUQZyGxJN4qsGU=
   digitalocean:spacesAccessId:
-    secure: AAABAHLh+NYergYJn2eww4r+0GT/no8X15KpaQbtG+12K0xT/7fgPryepdmyJPIQQht+RQ==
+    secure: AAABAGuq4Lzo/u5tDOIttR1/pEIf+B3FWvIayugTjj4H9ISsjj2i/50Imx1vWfItK1l0DA==
   digitalocean:spacesSecretKey:
-    secure: AAABAMhlDcfzwfxDh0Y7X/TRvwSoNiydlMT5ndEbF2Qt0+MIsrN+bYT44iHbYjKhK7sKzCCMTPp31zjrL7meQJAhlXfQQYY6vNqK
+    secure: AAABACyBWzplBp/0sCzqWpPsCBaOmCs/hskSE5214zrjsUJb+2knVYUfNPUTerk0hsgYqXMs1TpYdfMVvcf2KIl5VbqLam5eB9el
   digitalocean:token:
-    secure: AAABADknxo9rJPudtnTggU2j14JfY3jOYCJa0G9444esmP8Kv/MFNn2vx2kQaos5IrlXEH2QGPW22+seT4V8oz1b/YDkZr+59az7h7Ii3WJGqIWEYv9JCklQky9jaXB8
+    secure: AAABAGI5W6zy65/Dc1O+xaxHOBx6pf9yz/GrKWxy8STTPUmD4NvBN+eHiQhG2+zpQIe6xn6k3yr9FqYtSu6x8GjYZ1v+bnTqo8e3Tw4ANzGMrh3Jcg3tLWNvxUELGpER
   eventstore:adminPassword:
     secure: AAABAOGIBr9+EB1cHFBQoQGUrG+OAnvJ7nzCaloGtrWGzXX8znW6YpzMdLfVsRNzQeqczWpfvIg=
   eventstore:readerPassword:
