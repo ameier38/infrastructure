@@ -1,0 +1,37 @@
+config:
+  acme:email:
+    secure: AAABAFgs9ncAeTq8XpxIGoApy9x3yFA3Gfy1vpo4ah3zwjNQBPSpTo/lzuBsajp6Vi4=
+  auth0:adminEmail:
+    secure: AAABAJGh9LAFhFE7oTGp/T4/uQ/x9bN5WwFnjXrVLjlLkZdGqvNaAr4irWyufU5Ph2I=
+  auth0:adminPassword:
+    secure: AAABACYeUISeOXMIi1Z+Ly1iJg3WGDkmCemI9lJLNIc7cz0KzwWUBg87QUCnRVM0DnOxUhwX/Dk=
+  auth0:clientId:
+    secure: AAABACWUFf3nUwFaEzzdP604k3Zdk+20gB5IqfHEy2NBh8QgGCs6EjzjSku3qtQdDcjhZqwO8T9dfBABgjU9uQ==
+  auth0:clientSecret:
+    secure: AAABAFLBQ8BqtaZzYzMfKaay3ED6G7tjrvXNe9LD893fU6hgBe/38yhcVvs/ldkObE66Sbjc66/M24ZychLvG4n4J3bm8/eJ1pLlF7KJyOY6itsOHc1n4o3+kcyXfMpU
+  auth0:domain: ameier38.auth0.com
+  cloudflare:apiKey:
+    secure: AAABAIGc5f+6OOfd+uREBe7FRZVSkLO/K6KweUGl/p0GDa7lavQOz/x/dItfln8/aGa3vBKlsZPZZO/RNsxNrks88c6K
+  cloudflare:email:
+    secure: AAABAKJL1XJ1PWz0238Z/vxSjHjuILwaDUDnusUzI1SOyVjzdNLMwlUQZyGxJN4qsGU=
+  digitalocean:spacesAccessId:
+    secure: AAABAGuq4Lzo/u5tDOIttR1/pEIf+B3FWvIayugTjj4H9ISsjj2i/50Imx1vWfItK1l0DA==
+  digitalocean:spacesSecretKey:
+    secure: AAABACyBWzplBp/0sCzqWpPsCBaOmCs/hskSE5214zrjsUJb+2knVYUfNPUTerk0hsgYqXMs1TpYdfMVvcf2KIl5VbqLam5eB9el
+  digitalocean:token:
+    secure: AAABAGI5W6zy65/Dc1O+xaxHOBx6pf9yz/GrKWxy8STTPUmD4NvBN+eHiQhG2+zpQIe6xn6k3yr9FqYtSu6x8GjYZ1v+bnTqo8e3Tw4ANzGMrh3Jcg3tLWNvxUELGpER
+  eventstore:adminPassword:
+    secure: AAABAOGIBr9+EB1cHFBQoQGUrG+OAnvJ7nzCaloGtrWGzXX8znW6YpzMdLfVsRNzQeqczWpfvIg=
+  eventstore:readerPassword:
+    secure: AAABAPNqJwLx+itRyjTZZjPLN976xSo32u32IiumwNaz7UD2I8806REOqHlrfPy5QXb1IVaNTjg=
+  eventstore:writerPassword:
+    secure: AAABADguzYjeJVGDJ8iLon85A2Q/cf37XzDytyvw8+thVrz6PSiZLhCq1Dp9KKOXubo/N/uMHzQ=
+  grafana:adminPassword:
+    secure: AAABAPGDnegtLbcLOdbipjjXnK2gORuYaJQR5EWLG+Kb1Os8QUviKObn5njSdNi2h61RFKZHJI0=
+  mongo:readerPassword:
+    secure: AAABAJcQNuZeHMsT04secgS/xJ1oLAacWcxopLnr9DVJQ3w+JJPAxhoKVmaaQ3SzXSykRg60+80=
+  mongo:replicaSetName: rs0
+  mongo:rootPassword:
+    secure: AAABAPOD3Hz+d5LSCHNN2t+n0nDBW+d0oHQpNdtQAbCTFg6yAujH3XB2C6W96092csIHp8rruGg=
+  mongo:writerPassword:
+    secure: AAABABRX2gOSFG9z+vxbuBFPU5gMFv27E3Ct/4jOfvZZyCY11MJZY2ly7VcuuPXhO9O+ziaaSPM=
