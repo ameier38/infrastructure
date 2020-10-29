@@ -12,7 +12,8 @@ type ClusterArgs = {
 
 // ref: https://www.digitalocean.com/community/tutorials/how-to-manage-digitalocean-and-kubernetes-infrastructure-with-pulumi
 class Cluster extends pulumi.ComponentResource {
-    kubeconfig: string | pulumi.Output<string>
+    id: pulumi.Output<string>
+    kubeconfig: pulumi.Output<string>
 
     constructor(name:string, args:ClusterArgs, opts:pulumi.ComponentResourceOptions) {
         super('infrastructure:Cluster', name, {}, opts)
@@ -29,9 +30,12 @@ class Cluster extends pulumi.ComponentResource {
             }
         }, { parent: this })
 
+        this.id = cluster.id
+
         this.kubeconfig = cluster.kubeConfigs[0].rawConfig
 
         this.registerOutputs({
+            id: this.id,
             kubeconfig: this.kubeconfig
         })
     }
