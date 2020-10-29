@@ -3,7 +3,7 @@ import * as config from '../config'
 
 const addEmailToAccessTokenRuleScript = `
 function (user, context, callback) {
-    context.accessToken['https://${config.tld}/email'] = user.email;
+    context.accessToken['${config.emailClaim}'] = user.email;
     return callback(null, user, context);
 }`
 

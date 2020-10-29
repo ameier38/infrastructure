@@ -4,18 +4,22 @@ import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { gateway } from './gateway'
 import { prometheus } from './prometheus'
-import { k8sProvider, monitoringNamespace } from './k8s'
-import { tldZone } from './zone'
+import { k8sProvider } from './cluster'
+import { infrastructureNamespace, monitoringNamespace } from './namespace'
+import { zone } from './zone'
+import { oauthFilter, jwtFilter } from './filter'
 
 type GrafanaArgs = {
     chartVersion: pulumi.Input<string>
     namespace: pulumi.Input<string>
+    filterNamespace: pulumi.Input<string>
     adminPassword: pulumi.Input<string>
-    tld: pulumi.Input<string>
-    tldZoneId: pulumi.Input<string>
+    zoneId: pulumi.Input<string>
     subdomain: pulumi.Input<string>
     authUrl: pulumi.Input<string>
     acmeEmail: pulumi.Input<string>
+    oauthFilter: pulumi.Input<string>
+    jwtFilter: pulumi.Input<string>
     loadBalancerAddress: pulumi.Input<string>
     prometheusUrl: pulumi.Input<string>
 }
@@ -29,7 +33,7 @@ export class Grafana extends pulumi.ComponentResource {
         super('infrastructure:Grafana', name, {}, opts)
 
         const record = new cloudflare.Record(`${name}-grafana`, {
-            zoneId: args.tldZoneId,
+            zoneId: args.zoneId,
             name: args.subdomain,
             type: 'A',
             value: args.loadBalancerAddress
@@ -135,6 +139,23 @@ export class Grafana extends pulumi.ComponentResource {
             }
         }, { parent: this })
 
+        // NB: add authentication
+        new k8s.apiextensions.CustomResource(`${name}-grafana`, {
+            apiVersion: 'getambassador.io/v2',
+            kind: 'FilterPolicy',
+            metadata: { namespace: args.namespace },
+            spec: {
+                rules: [{
+                    host: record.hostname,
+                    path: '*',
+                    filters: [
+                        { name: args.oauthFilter, namespace: args.filterNamespace, arguments: { scopes: ['openid'] } },
+                        { name: args.jwtFilter, namespace: args.filterNamespace }
+                    ]
+                }]
+            }
+        }, { parent: this })
+
         this.registerOutputs({
             host: this.host,
             internalHost: this.internalHost,
@@ -146,12 +167,14 @@ export class Grafana extends pulumi.ComponentResource {
 export const grafana = new Grafana(config.env, {
     chartVersion: '5.8.12',
     namespace: monitoringNamespace.metadata.name,
+    filterNamespace: infrastructureNamespace.metadata.name,
     adminPassword: config.grafanaConfig.adminPassword,
-    tld: config.tld,
-    tldZoneId: tldZone.id,
+    zoneId: zone.id,
     subdomain: 'grafana',
     authUrl: config.auth0Config.authUrl,
     acmeEmail: config.acmeEmail,
+    oauthFilter: oauthFilter.metadata.name,
+    jwtFilter: jwtFilter.metadata.name,
     loadBalancerAddress: gateway.loadBalancerAddress,
     prometheusUrl: pulumi.interpolate `http://${prometheus.internalHost}:${prometheus.internalPort}`
 }, { providers: [ k8sProvider, config.auth0Provider, config.cloudflareProvider ] })

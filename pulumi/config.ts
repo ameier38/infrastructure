@@ -8,8 +8,9 @@ export const root = path.dirname(path.dirname(__dirname))
 
 export const env = pulumi.getStack()
 
-// NB: top level domain
-export const tld = 'andrewmeier.dev'
+export const zone = 'andrewmeier.dev'
+
+export const emailClaim = `https://${zone}/email`
 
 const rawCloudflareConfig = new pulumi.Config('cloudflare')
 export const cloudflareProvider = new cloudflare.Provider(`${env}-cloudflare-provider`, {
@@ -46,66 +47,4 @@ export const auth0Provider = new auth0.Provider(`${env}-auth0-provider`, {
 const rawGrafanaConfig = new pulumi.Config('grafana')
 export const grafanaConfig = {
     adminPassword: rawGrafanaConfig.require('adminPassword')
-}
-
-type EventStoreRole = 'read' | 'readWrite'
-
-export type EventStoreUser = {
-    name: string
-    password: string
-    role: EventStoreRole
-}
-
-const rawEventstoreConfig = new pulumi.Config('eventstore')
-
-export const eventstoreWriter: EventStoreUser = {
-    name: 'writer',
-    password: rawEventstoreConfig.require('writerPassword'),
-    role: 'readWrite'
-}
-
-export const eventstoreReader: EventStoreUser = {
-    name: 'reader',
-    password: rawEventstoreConfig.require('readerPassword'),
-    role: 'read'
-}
-
-export const eventstoreConfig = {
-    adminPassword: rawEventstoreConfig.require('adminPassword'),
-    users: [eventstoreWriter, eventstoreReader]
-}
-
-type MongoRole = 'read' | 'readWrite'
-
-type MongoPermission = {
-    role: MongoRole
-    database: string
-}
-
-export type MongoUser = {
-    name: string
-    password: string
-    permissions: MongoPermission[] 
-}
-
-const rawMongoConfig = new pulumi.Config('mongo')
-
-
-export const mongoWriter: MongoUser = {
-    name: 'writer',
-    password: rawMongoConfig.require('writerPassword'),
-    permissions: [{role: 'readWrite', database: env}]
-}
-
-export const mongoReader: MongoUser = {
-    name: 'reader',
-    password: rawMongoConfig.require('readerPassword'),
-    permissions: [{role: 'read', database: env}]
-}
-
-export const mongoConfig = {
-    rootPassword: rawMongoConfig.require('rootPassword'),
-    replicaSetName: rawMongoConfig.require('replicaSetName'),
-    database: env,
-    users: [mongoWriter, mongoReader]
 }

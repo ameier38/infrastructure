@@ -1,7 +1,8 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
-import { k8sProvider, monitoringNamespace } from './k8s'
+import { k8sProvider } from './cluster'
+import { monitoringNamespace } from './namespace'
 
 type PrometheusArgs = {
     chartVersion: pulumi.Input<string>
