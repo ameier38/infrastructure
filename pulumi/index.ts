@@ -1,7 +1,5 @@
 import * as pulumi from '@pulumi/pulumi'
 import './auth0'
-import './eventstore'
-import './mongo'
 import './prometheus'
 import './grafana'
 import './seq'
