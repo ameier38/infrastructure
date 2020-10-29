@@ -2,18 +2,22 @@ import * as cloudflare from '@pulumi/cloudflare'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
-import { tldZone } from './zone'
+import { zone } from './zone'
 import { gateway } from './gateway'
-import { k8sProvider, monitoringNamespace } from './k8s'
+import { k8sProvider } from './cluster'
+import { infrastructureNamespace, monitoringNamespace } from './namespace'
+import { oauthFilter } from './filter'
 
 type SeqArgs = {
     chartVersion: pulumi.Input<string>
     namespace: pulumi.Input<string>
-    tldZoneId: pulumi.Input<string>
+    filterNamespace: pulumi.Input<string>
+    zoneId: pulumi.Input<string>
     subdomain: pulumi.Input<string>
     loadBalancerAddress: pulumi.Input<string>
     authUrl: pulumi.Input<string>
     acmeEmail: pulumi.Input<string>
+    oauthFilter: pulumi.Input<string>
 }
 
 export class Seq extends pulumi.ComponentResource {
@@ -51,7 +55,7 @@ export class Seq extends pulumi.ComponentResource {
 
 
         const record = new cloudflare.Record(`${name}-seq`, {
-            zoneId: args.tldZoneId,
+            zoneId: args.zoneId,
             name: args.subdomain,
             type: 'A',
             value: args.loadBalancerAddress
@@ -84,6 +88,22 @@ export class Seq extends pulumi.ComponentResource {
             }
         }, { parent: this })
 
+        // NB: add authentication
+        new k8s.apiextensions.CustomResource(`${name}-seq`, {
+            apiVersion: 'getambassador.io/v2',
+            kind: 'FilterPolicy',
+            metadata: { namespace: args.namespace },
+            spec: {
+                rules: [{
+                    host: record.hostname,
+                    path: '*',
+                    filters: [
+                        { name: args.oauthFilter, namespace: args.filterNamespace, arguments: { scopes: ['openid'] } }
+                    ]
+                }]
+            }
+        }, { parent: this })
+
         this.registerOutputs({
             internalHost: this.internalHost,
             internalIngestionPort: this.internalIngestionPort,
@@ -95,9 +115,11 @@ export class Seq extends pulumi.ComponentResource {
 export const seq = new Seq(config.env, {
     chartVersion: '2.3.0',
     namespace: monitoringNamespace.metadata.name,
-    tldZoneId: tldZone.id,
+    filterNamespace: infrastructureNamespace.metadata.name,
+    zoneId: zone.id,
     subdomain: 'seq',
     loadBalancerAddress: gateway.loadBalancerAddress,
     authUrl: config.auth0Config.authUrl,
-    acmeEmail: config.acmeEmail
+    acmeEmail: config.acmeEmail,
+    oauthFilter: oauthFilter.metadata.name
 }, { provider: k8sProvider })

@@ -1,7 +1,7 @@
 import * as pulumi from '@pulumi/pulumi'
 import * as k8s from '@pulumi/kubernetes'
 import * as digitalocean from '@pulumi/digitalocean'
-import * as config from '../config'
+import * as config from './config'
 
 type ClusterArgs = {
     version: pulumi.Input<string>
