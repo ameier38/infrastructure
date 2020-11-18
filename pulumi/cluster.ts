@@ -3,7 +3,33 @@ import * as k8s from '@pulumi/kubernetes'
 import * as digitalocean from '@pulumi/digitalocean'
 import * as config from './config'
 
+function createKubeconfig(
+    cluster: digitalocean.KubernetesCluster,
+    user: pulumi.Input<string>,
+    apiToken: pulumi.Input<string>,
+): pulumi.Output<string> {
+    return pulumi.interpolate`apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: ${cluster.kubeConfigs[0].clusterCaCertificate}
+    server: ${cluster.endpoint}
+  name: ${cluster.name}
+contexts:
+- context:
+    cluster: ${cluster.name}
+    user: ${cluster.name}-${user}
+  name: ${cluster.name}
+current-context: ${cluster.name}
+kind: Config
+users:
+- name: ${cluster.name}-${user}
+  user:
+    token: ${apiToken}
+`;
+}
+
 type ClusterArgs = {
+    token: pulumi.Input<string>
     version: pulumi.Input<string>
     defaultSize: digitalocean.DropletSlug
     defaultMinNodes: pulumi.Input<number>
@@ -35,7 +61,7 @@ class Cluster extends pulumi.ComponentResource {
         }, { parent: this })
 
         this.id = cluster.id
-        this.kubeconfig = cluster.kubeConfigs[0].rawConfig
+        this.kubeconfig = createKubeconfig(cluster, 'default', args.token)
 
         const databaseNodePool = new digitalocean.KubernetesNodePool(`${config.env}-database`, {
             name: 'database',
@@ -57,6 +83,7 @@ class Cluster extends pulumi.ComponentResource {
 }
 
 export const cluster = new Cluster('default', {
+    token: config.digitalOceanToken,
     version: '1.18.8-do.1',
     defaultSize: digitalocean.DropletSlugs.DropletS2VCPU2GB,
     defaultMinNodes: 2,
@@ -65,6 +92,7 @@ export const cluster = new Cluster('default', {
     databaseMinNodes: 1,
     databaseMaxNodes: 2
 }, {provider: config.digitalOceanProvider})
+
 
 export const k8sProvider = new k8s.Provider(`${config.env}-k8s-provider`, {
     kubeconfig: cluster.kubeconfig,

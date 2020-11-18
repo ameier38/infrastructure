@@ -19,8 +19,9 @@ export const cloudflareProvider = new cloudflare.Provider(`${env}-cloudflare-pro
 })
 
 const rawDigitalOceanConfig = new pulumi.Config('digitalocean')
+export const digitalOceanToken = rawDigitalOceanConfig.require('token')
 export const digitalOceanProvider = new digitalocean.Provider(`${env}-digitalocean-provider`, {
-    token: rawDigitalOceanConfig.require('token'),
+    token: digitalOceanToken,
     spacesEndpoint: `https://${digitalocean.Regions.NYC3}.digitaloceanspaces.com`,
     spacesAccessId: rawDigitalOceanConfig.require('spacesAccessId'),
     spacesSecretKey: rawDigitalOceanConfig.require('spacesSecretKey')

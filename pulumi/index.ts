@@ -12,7 +12,7 @@ import { zone } from './zone'
 
 export { zone, acmeEmail } from './config'
 export const zoneId = zone.id
-export const clusterId = cluster.id
+export const kubeconfig = pulumi.secret(cluster.kubeconfig)
 export const registryEndpoint = pulumi.secret(registry.endpoint)
 export const dockerCredentials = pulumi.secret(registry.dockerCredentials)
 export const imageRegistry = pulumi.secret(registry.imageRegistry)
