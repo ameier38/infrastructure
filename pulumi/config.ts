@@ -12,6 +12,12 @@ export const zone = 'andrewmeier.dev'
 
 export const emailClaim = `https://${zone}/email`
 
+const rawK8sConfig = new pulumi.Config('k8s')
+export const piKubeconfig = rawK8sConfig.require('piKubeconfig')
+
+const rawInletsConfig = new pulumi.Config('inlets')
+export const inletsLicense = rawInletsConfig.require('license')
+
 const rawCloudflareConfig = new pulumi.Config('cloudflare')
 export const cloudflareProvider = new cloudflare.Provider(`${env}-cloudflare-provider`, {
     email: rawCloudflareConfig.require('email'),

@@ -11,7 +11,9 @@ export class Registry extends pulumi.ComponentResource {
     constructor(name:string, opts:pulumi.ComponentResourceOptions) {
         super('infrastructure:Registry', name, {}, opts)
 
-        const registry = new digitalocean.ContainerRegistry(name, {}, { parent: this })
+        const registry = new digitalocean.ContainerRegistry(name, {
+            subscriptionTierSlug: 'basic'
+        }, { parent: this })
 
         this.endpoint = registry.endpoint
         

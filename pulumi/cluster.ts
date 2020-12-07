@@ -93,8 +93,12 @@ export const cluster = new Cluster('default', {
     databaseMaxNodes: 2
 }, {provider: config.digitalOceanProvider})
 
-
 export const k8sProvider = new k8s.Provider(`${config.env}-k8s-provider`, {
     kubeconfig: cluster.kubeconfig,
+    suppressDeprecationWarnings: true
+})
+
+export const piK8sProvider = new k8s.Provider(`${config.env}-pi-k8s-provider`, {
+    kubeconfig: config.piKubeconfig,
     suppressDeprecationWarnings: true
 })
