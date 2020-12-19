@@ -1,13 +1,13 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
+import { rootRecord } from './dns'
+import { ambassadorClient, ambassadorClientGrant } from './identity'
 import { infrastructureNamespace } from './namespace'
-import { gateway } from './gateway'
-import { k8sProvider } from './cluster'
 
 // NB: specifies oauth client to use for incoming requests
 // ref: https://www.getambassador.io/docs/latest/topics/using/filters/oauth2/
-export const oauthFilter = new k8s.apiextensions.CustomResource(`${config.env}-oauth`, {
+export const oauthFilter = new k8s.apiextensions.CustomResource(`${config.env}-oauth-filter`, {
     apiVersion: 'getambassador.io/v2',
     kind: 'Filter',
     metadata: { namespace: infrastructureNamespace.metadata.name },
@@ -18,21 +18,21 @@ export const oauthFilter = new k8s.apiextensions.CustomResource(`${config.env}-o
             extraAuthorizationParameters: {
                 // NB: specifying an audience will tell Auth0 to return an access token instead of opaque token
                 // ref: https://auth0.com/docs/tokens/access-tokens/get-access-tokens
-                audience: gateway.clientAudience
+                audience: ambassadorClientGrant.audience
             },
-            clientID: gateway.clientId,
-            secret: gateway.clientSecret,
+            clientID: ambassadorClient.clientId,
+            secret: ambassadorClient.clientSecret,
             protectedOrigins: [{
                 // NB: used as callback
-                origin: pulumi.interpolate `https://${gateway.host}`,
+                origin: pulumi.interpolate `https://${rootRecord.hostname}`,
                 includeSubdomains: true
             }]
         }
     }
-}, { provider: k8sProvider })
+}, { provider: config.k8sProvider })
 
 // NB: inject user header from email claim
-export const jwtFilter = new k8s.apiextensions.CustomResource(`${config.env}-jwt`, {
+export const jwtFilter = new k8s.apiextensions.CustomResource(`${config.env}-jwt-filter`, {
     apiVersion: 'getambassador.io/v2',
     kind: 'Filter',
     metadata: { namespace: infrastructureNamespace.metadata.name },
@@ -48,4 +48,4 @@ export const jwtFilter = new k8s.apiextensions.CustomResource(`${config.env}-jwt
             }]
         }
     }
-}, { provider: k8sProvider })
+}, { provider: config.k8sProvider })

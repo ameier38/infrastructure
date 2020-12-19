@@ -1,6 +1,7 @@
 import * as auth0 from '@pulumi/auth0'
 import * as cloudflare from '@pulumi/cloudflare'
 import * as digitalocean from '@pulumi/digitalocean'
+import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as path from 'path'
 
@@ -8,15 +9,27 @@ export const root = path.dirname(path.dirname(__dirname))
 
 export const env = pulumi.getStack()
 
+const rawConfig = new pulumi.Config()
+
 export const zone = 'andrewmeier.dev'
 
+export const acmeEmail = rawConfig.require('acmeEmail')
 export const emailClaim = `https://${zone}/email`
 
 const rawK8sConfig = new pulumi.Config('k8s')
-export const piKubeconfig = rawK8sConfig.require('piKubeconfig')
+export const kubeconfig = rawK8sConfig.require('kubeconfig')
+
+export const k8sProvider = new k8s.Provider(`${env}-local-k8s-provider`, {
+    kubeconfig: kubeconfig,
+    suppressDeprecationWarnings: true
+}, { aliases: ['urn:pulumi:prod::infrastructure::pulumi:providers:kubernetes::prod-local-k8s-provider']})
 
 const rawInletsConfig = new pulumi.Config('inlets')
-export const inletsLicense = rawInletsConfig.require('license')
+export const inletsConfig = {
+    license: rawInletsConfig.require('license'),
+    token: rawInletsConfig.require('token'),
+    publicKey: rawInletsConfig.require('publicKey')
+}
 
 const rawCloudflareConfig = new pulumi.Config('cloudflare')
 export const cloudflareProvider = new cloudflare.Provider(`${env}-cloudflare-provider`, {
@@ -32,9 +45,6 @@ export const digitalOceanProvider = new digitalocean.Provider(`${env}-digitaloce
     spacesAccessId: rawDigitalOceanConfig.require('spacesAccessId'),
     spacesSecretKey: rawDigitalOceanConfig.require('spacesSecretKey')
 })
-
-const rawAcmeConfig = new pulumi.Config('acme')
-export const acmeEmail = rawAcmeConfig.require('email')
 
 const rawAuth0Config = new pulumi.Config('auth0')
 export const auth0Config = {

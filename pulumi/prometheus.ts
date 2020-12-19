@@ -1,48 +1,45 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
-import { k8sProvider } from './cluster'
 import { monitoringNamespace } from './namespace'
 
-type PrometheusArgs = {
-    chartVersion: pulumi.Input<string>
-    namespace: k8s.core.v1.Namespace
-}
+const identifier = `${config.env}-prometheus`
 
-export class Prometheus extends pulumi.ComponentResource {
-    internalHost: pulumi.Output<string>
-    internalPort: pulumi.Output<number>
-
-    constructor(name:string, args:PrometheusArgs, opts:pulumi.ComponentResourceOptions) {
-        super('infrastructure:Prometheus', name, {}, opts)
-
-        const chart = new k8s.helm.v3.Chart(name, {
-            chart: 'prometheus',
-            version: args.chartVersion,
-            fetchOpts: {
-                repo: 'https://prometheus-community.github.io/helm-charts'
-            },
-            namespace: args.namespace.metadata.name
-        }, { parent: this })
-
-        this.internalHost =
-            pulumi.all([chart, args.namespace.metadata.name])
-            .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, `${name}-prometheus-server`, 'metadata'))
-            .apply(meta => `${meta.name}.${meta.namespace}.svc.cluster.local`)
-
-        this.internalPort =
-            pulumi.all([chart, args.namespace.metadata.name])
-            .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, `${name}-prometheus-server`, 'spec'))
-            .apply(spec => spec.ports.find(port => port.name === 'http')!.port)
-
-        this.registerOutputs({
-            internalHost: this.internalHost,
-            internalPort: this.internalPort
-        })
+const chart = new k8s.helm.v3.Chart(identifier, {
+    chart: 'prometheus',
+    version: '13.0.0',
+    fetchOpts: {
+        repo: 'https://prometheus-community.github.io/helm-charts'
+    },
+    namespace: monitoringNamespace.metadata.name,
+    values: {
+        alertmanager: {
+            enabled: true,
+            nodeSelector: { 'kubernetes.io/arch': 'amd64' }
+        },
+        kubeStateMetrics: {
+            enabled: false
+        },
+        nodeExporter: {
+            enabled: true,
+            nodeSelector: { 'kubernetes.io/arch': 'amd64' }
+        },
+        server: {
+            enabled: true,
+            nodeSelector: { 'kubernetes.io/arch': 'amd64' }
+        },
+        pushgateway: {
+            enabled: false
+        }
     }
-}
+}, { provider: config.k8sProvider })
 
-export const prometheus = new Prometheus(config.env, {
-    chartVersion: '11.16.4',
-    namespace: monitoringNamespace
-}, { provider: k8sProvider })
+export const internalHost =
+    pulumi.all([chart, monitoringNamespace.metadata.name])
+    .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, `${identifier}-server`, 'metadata'))
+    .apply(meta => `${meta.name}.${meta.namespace}.svc.cluster.local`)
+
+export const internalPort =
+    pulumi.all([chart, monitoringNamespace.metadata.name])
+    .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, `${identifier}-server`, 'spec'))
+    .apply(spec => spec.ports.find(port => port.name === 'http')!.port)

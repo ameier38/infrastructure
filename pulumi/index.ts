@@ -1,25 +1,23 @@
 import * as pulumi from '@pulumi/pulumi'
-import './auth0'
+import './ambassador'
+import './identity'
 import './prometheus'
 import './grafana'
-import './seq'
-import './filter'
-import './inlets'
-import { cluster } from './cluster'
-import { gateway } from './gateway'
-import { registry } from './registry'
-import { seq } from './seq'
-import { zone } from './zone'
-export { loadBalancerAddress as piLoadBalancerAddress } from './inlets'
+import * as bucket from './bucket'
+import * as inlets from './inlets'
+import * as registry from './registry'
+import * as dns from './dns'
+import * as seq from './seq'
 import * as config from './config'
 
-export { zone, acmeEmail } from './config'
-export const zoneId = zone.id
-export const kubeconfig = pulumi.secret(cluster.kubeconfig)
-export const piKubeconfig = pulumi.secret(config.piKubeconfig)
-export const registryEndpoint = pulumi.secret(registry.endpoint)
+export const amIconUrl = bucket.amIconUrl
+export const acmeEmail = config.acmeEmail
+export const exitNodeIp = inlets.exitNodeIp
+export const zoneId = dns.zone.id
+export const zone = dns.zone.zone
+export const kubeconfig = pulumi.secret(config.kubeconfig)
+export const registryEndpoint = pulumi.secret(registry.registryEndpoint)
 export const dockerCredentials = pulumi.secret(registry.dockerCredentials)
 export const imageRegistry = pulumi.secret(registry.imageRegistry)
-export const loadBalancerAddress = gateway.loadBalancerAddress
 export const seqInternalHost = seq.internalHost
 export const seqInternalPort = seq.internalIngestionPort

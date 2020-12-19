@@ -1,71 +1,73 @@
+import * as digitalocean from '@pulumi/digitalocean'
 import * as k8s from '@pulumi/kubernetes'
-import * as cloudflare from '@pulumi/cloudflare'
 import * as pulumi from '@pulumi/pulumi'
-import { Regions } from '@pulumi/digitalocean'
-import { piK8sProvider } from './cluster'
-import { piInfrastructureNamespace } from './namespace'
-import { zone } from './zone'
+import { DropletSlugs, Regions } from '@pulumi/digitalocean'
+import { infrastructureNamespace } from './namespace'
+import * as ambassador from './ambassador'
 import * as config from './config'
 
-type InletsArgs = {
-    zoneId: pulumi.Input<string>
-    namespace: pulumi.Input<string>
-    version: pulumi.Input<string>
-    digitalOceanToken: pulumi.Input<string>,
-    license: pulumi.Input<string>
-}
+const inletsProVersion = '0.7.2'
+const inletsProImageTag = '0.7.3'
 
-class Inlets extends pulumi.ComponentResource {
-    loadBalancerAddress: pulumi.Output<string>
+// ref: https://github.com/inlets/inletsctl/blob/a301323e3beb3eae64a116b1377c107c8a51984a/pkg/provision/userdata.go#L7
+const userData = `#!/bin/bash
+export AUTHTOKEN="${config.inletsConfig.token}"
+export IP=$(curl -sfSL https://checkip.amazonaws.com)
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/${inletsProVersion}/inlets-pro > /tmp/inlets-pro && \
+  chmod +x /tmp/inlets-pro && \
+  mv /tmp/inlets-pro /usr/local/bin/inlets-pro
+curl -sLO https://raw.githubusercontent.com/inlets/inlets-pro/master/artifacts/inlets-pro.service && \
+  mv inlets-pro.service /etc/systemd/system/inlets-pro.service && \
+  echo "AUTHTOKEN=$AUTHTOKEN" >> /etc/default/inlets-pro && \
+  echo "IP=$IP" >> /etc/default/inlets-pro && \
+  systemctl start inlets-pro && \
+  systemctl enable inlets-pro
+`
 
-    constructor(name:string, args:InletsArgs, opts:pulumi.ComponentResourceOptions) {
-        super('infrastructure:Inlets', name, {}, opts)
-        let accessKeySecret = new k8s.core.v1.Secret('inlets-access-key', {
-            metadata: { 
-                name: 'inlets-access-key',
-                namespace: args.namespace
-            },
-            stringData: {
-                'inlets-access-key': args.digitalOceanToken
+const sshKey = new digitalocean.SshKey('inlets', {
+    publicKey: config.inletsConfig.publicKey
+}, { provider: config.digitalOceanProvider })
+
+const exitNode = new digitalocean.Droplet('inlets-exit-node', {
+    // ref: doctl compute image list --public
+    image: 'ubuntu-20-04-x64',
+    size: DropletSlugs.DropletS1VCPU1GB,
+    region: Regions.NYC1,
+    userData: userData,
+    sshKeys: [sshKey.id]
+}, { provider: config.digitalOceanProvider })
+
+export const exitNodeIp = exitNode.ipv4Address
+
+const labels = { 'app.kubernetes.io/name': 'inlets' }
+
+new k8s.apps.v1.Deployment('inlets', {
+    metadata: { namespace: infrastructureNamespace.metadata.name },
+    spec: {
+        selector: { matchLabels: labels },
+        replicas: 1,
+        template: {
+            metadata: { labels: labels },
+            spec: {
+                containers: [{
+                    name: 'inlets',
+                    image: `inlets/inlets-pro:${inletsProImageTag}`,
+                    imagePullPolicy: 'IfNotPresent',
+                    command: ['inlets-pro'],
+                    args: [
+                        'client',
+                        pulumi.interpolate `--url=wss://${exitNodeIp}:8123/connect`,
+                        `--token=${config.inletsConfig.token}`,
+                        pulumi.interpolate `--upstream=${ambassador.internalHost}`,
+                        '--ports=80,443',
+                        `--license=${config.inletsConfig.license}`
+                    ],
+                    resources: {
+                        limits: { memory: '128Mi' },
+                        requests: { cpu: '25m', memory: '25Mi' }
+                    }
+                }]
             }
-        }, { parent: this })
-
-        let crds = new k8s.yaml.ConfigFile('inlets-crds', {
-            file: `https://raw.githubusercontent.com/inlets/inlets-operator/${args.version}/artifacts/crds/inlets.inlets.dev_tunnels.yaml`
-        }, { parent: this })
-
-        // ref: https://github.com/inlets/inlets-operator/tree/master/chart/inlets-operator
-        const chart = new k8s.helm.v3.Chart(`${name}-inlets-operator`, {
-            chart: 'inlets-operator',
-            version: args.version,
-            fetchOpts: { repo: 'https://inlets.github.io/inlets-operator/' },
-            namespace: args.namespace,
-            values: {
-                provider: 'digitalocean',
-                region: Regions.NYC1,
-                // image: 'ameier38/inlets-operator:latest-arm32v7',
-                image: 'ghcr.io/inlets/inlets-operator:latest@sha256:c20122b628f7d91d0a40b8e88a684391ff800213b775f9fe62a8dabbdf252a94',
-                pullPolicy: 'Always',
-                proClientImage: 'ghcr.io/inlets/inlets-pro:0.7.3@sha256:3364f78abae2fc21c9724df52ee6c75b2b553f36099411f42dcecce6839455ae',
-                inletsProLicense: args.license
-            }
-        }, { parent: this, dependsOn: [ accessKeySecret, crds ] })
-
-        const traefikCrds = new k8s.yaml.ConfigFile(`${name}-traefik-crds`, {
-            file: './traefikCrds.yaml'
-        }, { parent: this })
-
-        const traefik = k8s.core.v1.Service.get('traefik', 'kube-system/traefik')
-        this.loadBalancerAddress = traefik.spec.externalIPs[0]
+        }
     }
-}
-
-export const inlets = new Inlets(config.env, {
-    zoneId: zone.id,
-    namespace: piInfrastructureNamespace.metadata.name,
-    version: '0.10.1',
-    digitalOceanToken: config.digitalOceanToken,
-    license: config.inletsLicense,
-}, { provider: piK8sProvider })
-
-export const loadBalancerAddress = inlets.loadBalancerAddress
+}, { provider: config.k8sProvider })
