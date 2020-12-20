@@ -22,7 +22,7 @@ export const kubeconfig = rawK8sConfig.require('kubeconfig')
 export const k8sProvider = new k8s.Provider(`${env}-local-k8s-provider`, {
     kubeconfig: kubeconfig,
     suppressDeprecationWarnings: true
-}, { aliases: ['urn:pulumi:prod::infrastructure::pulumi:providers:kubernetes::prod-local-k8s-provider']})
+})
 
 const rawInletsConfig = new pulumi.Config('inlets')
 export const inletsConfig = {
