@@ -3,7 +3,7 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import * as prometheus from './prometheus'
-import { exitNodeIp } from './inlets'
+import { ambassadorExitNodeIp } from './inlets'
 import { monitoringNamespace } from './namespace'
 import { zone } from './dns'
 import { oauthFilter, jwtFilter } from './filter'
@@ -14,7 +14,7 @@ const record = new cloudflare.Record(identifier, {
     zoneId: zone.id,
     name: 'grafana',
     type: 'A',
-    value: exitNodeIp
+    value: ambassadorExitNodeIp
 }, { provider: config.cloudflareProvider })
 
 // NB: generates certificate

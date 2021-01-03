@@ -13,3 +13,6 @@ Install [Pulumi](https://www.pulumi.com/docs/get-started/install/).
     ```
 3. Create PR.
 4. Merge PR.
+
+## Resources
+- [Get kubectl access to your private cluster](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)

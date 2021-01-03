@@ -3,7 +3,7 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { monitoringNamespace } from './namespace'
-import { exitNodeIp } from './inlets'
+import { ambassadorExitNodeIp } from './inlets'
 import { zone } from './dns'
 import { oauthFilter } from './filter'
 
@@ -13,7 +13,7 @@ const record = new cloudflare.Record(identifier, {
     zoneId: zone.id,
     name: 'seq',
     type: 'A',
-    value: exitNodeIp
+    value: ambassadorExitNodeIp
 }, { provider: config.cloudflareProvider })
 
 // NB: generates certificate
