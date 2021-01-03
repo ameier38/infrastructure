@@ -3,7 +3,7 @@ import * as digitalocean from '@pulumi/digitalocean'
 import * as config from './config'
 import * as path from 'path'
 
-const amIconPath = path.join(__dirname, 'etc', 'images', 'am-icon-938123e000.png')
+const amIconPath = path.join(config.pulumiRoot, 'etc', 'images', 'am-icon-938123e000.png')
 
 const uploadBucket = new digitalocean.SpacesBucket('upload', {
     acl: 'public-read'

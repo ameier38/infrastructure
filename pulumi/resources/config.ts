@@ -5,7 +5,8 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as path from 'path'
 
-export const root = path.dirname(path.dirname(__dirname))
+export const pulumiRoot = path.dirname(__dirname)
+export const root = path.dirname(pulumiRoot)
 
 export const env = pulumi.getStack()
 
@@ -19,7 +20,7 @@ export const emailClaim = `https://${zone}/email`
 const rawK8sConfig = new pulumi.Config('k8s')
 export const kubeconfig = rawK8sConfig.require('kubeconfig')
 
-export const k8sProvider = new k8s.Provider(`${env}-local-k8s-provider`, {
+export const k8sProvider = new k8s.Provider(`${env}-k8s-provider`, {
     kubeconfig: kubeconfig,
     suppressDeprecationWarnings: true
 })

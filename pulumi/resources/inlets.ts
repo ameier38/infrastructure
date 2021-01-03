@@ -9,26 +9,46 @@ import * as config from './config'
 const inletsProVersion = '0.7.2'
 const inletsProImageTag = '0.7.3'
 
+// NB: used for tunneling the k8s API
+const inletsProService = `
+[Unit]
+Description=inlets pro server
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=2
+StartLimitInterval=0
+EnvironmentFile=/etc/default/inlets-pro
+ExecStart=/usr/local/bin/inlets-pro server --auto-tls --common-name="\${IP}" --token="\${TOKEN}" --listen ":8123"
+
+[Install]
+WantedBy=multi-user.target
+`
+
 // ref: https://github.com/inlets/inletsctl/blob/a301323e3beb3eae64a116b1377c107c8a51984a/pkg/provision/userdata.go#L7
 const userData = `#!/bin/bash
-export AUTHTOKEN="${config.inletsConfig.token}"
+cat << 'EOF' > /etc/systemd/system/inlets-pro.service
+${inletsProService}
+EOF
+
 export IP=$(curl -sfSL https://checkip.amazonaws.com)
+
 curl -SLsf https://github.com/inlets/inlets-pro/releases/download/${inletsProVersion}/inlets-pro > /tmp/inlets-pro && \
-  chmod +x /tmp/inlets-pro && \
-  mv /tmp/inlets-pro /usr/local/bin/inlets-pro
-curl -sLO https://raw.githubusercontent.com/inlets/inlets-pro/master/artifacts/inlets-pro.service && \
-  mv inlets-pro.service /etc/systemd/system/inlets-pro.service && \
-  echo "AUTHTOKEN=$AUTHTOKEN" >> /etc/default/inlets-pro && \
-  echo "IP=$IP" >> /etc/default/inlets-pro && \
-  systemctl start inlets-pro && \
-  systemctl enable inlets-pro
+    chmod +x /tmp/inlets-pro && \
+    mv /tmp/inlets-pro /usr/local/bin/inlets-pro
+
+echo "IP=$IP" >> /etc/default/inlets-pro && \
+    echo "TOKEN=${config.inletsConfig.token}" >> /etc/default/inlets-pro && \
+    systemctl enable inlets-pro --now
 `
 
 const sshKey = new digitalocean.SshKey('inlets', {
     publicKey: config.inletsConfig.publicKey
 }, { provider: config.digitalOceanProvider })
 
-const exitNode = new digitalocean.Droplet('inlets-exit-node', {
+const k8sExitNode = new digitalocean.Droplet('k8s-exit-node', {
     // ref: doctl compute image list --public
     image: 'ubuntu-20-04-x64',
     size: DropletSlugs.DropletS1VCPU1GB,
@@ -37,7 +57,17 @@ const exitNode = new digitalocean.Droplet('inlets-exit-node', {
     sshKeys: [sshKey.id]
 }, { provider: config.digitalOceanProvider })
 
-export const exitNodeIp = exitNode.ipv4Address
+const ambassadorExitNode = new digitalocean.Droplet('ambassador-exit-node', {
+    // ref: doctl compute image list --public
+    image: 'ubuntu-20-04-x64',
+    size: DropletSlugs.DropletS1VCPU1GB,
+    region: Regions.NYC1,
+    userData: userData,
+    sshKeys: [sshKey.id]
+}, { provider: config.digitalOceanProvider })
+
+export const k8sExitNodeIp = k8sExitNode.ipv4Address
+export const ambassadorExitNodeIp = ambassadorExitNode.ipv4Address
 
 const labels = { 'app.kubernetes.io/name': 'inlets' }
 
@@ -56,7 +86,7 @@ new k8s.apps.v1.Deployment('inlets', {
                     command: ['inlets-pro'],
                     args: [
                         'client',
-                        pulumi.interpolate `--url=wss://${exitNodeIp}:8123/connect`,
+                        pulumi.interpolate `--url=wss://${ambassadorExitNodeIp}:8123/connect`,
                         `--token=${config.inletsConfig.token}`,
                         pulumi.interpolate `--upstream=${ambassador.internalHost}`,
                         '--ports=80,443',
