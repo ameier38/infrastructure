@@ -1,46 +1,27 @@
-import * as cloudflare from '@pulumi/cloudflare'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
+import * as cloudflare from '@pulumi/cloudflare'
 import * as config from './config'
-import * as prometheus from './prometheus'
-import { ambassadorExitNodeIp } from './inlets'
-import { monitoringNamespace } from './namespace'
-import { zone } from './dns'
 import { oauthFilter, jwtFilter } from './filter'
+import { monitoringNamespace } from './namespace'
+import * as prometheus from './prometheus'
 
-const identifier = `${config.env}-grafana`
+const identifier = 'grafana'
 
-const record = new cloudflare.Record(identifier, {
-    zoneId: zone.id,
-    name: 'grafana',
-    type: 'A',
-    value: ambassadorExitNodeIp
-}, { provider: config.cloudflareProvider })
-
-// NB: generates certificate
-new k8s.apiextensions.CustomResource(`${identifier}-host`, {
-    apiVersion: 'getambassador.io/v2',
-    kind: 'Host',
-    metadata: { namespace: monitoringNamespace.metadata.name },
-    spec: {
-        hostname: record.hostname,
-        acmeProvider: {
-            email: config.acmeEmail
-        }
-    }
-}, { provider: config.k8sProvider })
+const userKey = 'admin-user'
+const passwordKey = 'admin-password'
 
 const secret = new k8s.core.v1.Secret(identifier, {
     metadata: { namespace: monitoringNamespace.metadata.name },
     stringData: {
-        'admin-user': 'admin',
-        'admin-password': config.grafanaConfig.adminPassword
+        [userKey]: 'admin',
+        [passwordKey]: config.grafanaConfig.adminPassword
     }
 }, { provider: config.k8sProvider })
 
 const chart = new k8s.helm.v3.Chart(identifier, {
     chart: 'grafana',
-    version: '6.1.16',
+    version: '6.9.1',
     fetchOpts: {
         repo: 'https://grafana.github.io/helm-charts'
     },
@@ -55,10 +36,11 @@ const chart = new k8s.helm.v3.Chart(identifier, {
         }
     }],
     values: {
+        nodeSelector: { 'kubernetes.io/arch': 'arm' },
         admin: {
             existingSecret: secret.metadata.name,
-            userKey: 'admin-user',
-            passwordKey: 'admin-password'
+            userKey: userKey,
+            passwordKey: passwordKey
         },
         datasources: {
             'datasources.yaml': {
@@ -73,6 +55,31 @@ const chart = new k8s.helm.v3.Chart(identifier, {
             }
 
         },
+        dashboardProviders: {
+            'dashboardproviders.yaml': {
+                apiVersion: 1,
+                providers: [{
+                    name: 'default',
+                    orgId: 1,
+                    folder: '',
+                    type: 'file',
+                    disableDeletion: true,
+                    editable: false,
+                    options: {
+                        path: '/var/lib/grafana/dashboards/default'
+                    }
+                }],
+            },
+        },
+        dashboards: {
+            default: {
+                kubernetes: {
+                    gnetId: 315,
+                    revision: 3,
+                    datasource: 'Prometheus'
+                }
+            }
+       },
         'grafana.ini': {
             'auth': {
                 allow_sign_up: false,
@@ -101,8 +108,28 @@ const internalPort =
     .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, identifier, 'spec'))
     .apply(spec => spec.ports.find(port => port.name === 'service')!.port)
 
+const record = new cloudflare.Record(identifier, {
+    zoneId: config.zoneId,
+    name: 'grafana',
+    type: 'A',
+    value: config.exitNodeIp
+}, { provider: config.cloudflareProvider })
+
+// NB: generates certificate
+new k8s.apiextensions.CustomResource(`${identifier}-host`, {
+    apiVersion: 'getambassador.io/v2',
+    kind: 'Host',
+    metadata: { namespace: monitoringNamespace.metadata.name },
+    spec: {
+        hostname: record.hostname,
+        acmeProvider: {
+            email: config.acmeEmail
+        }
+    }
+}, { provider: config.k8sProvider })
+
 // NB: specifies how to direct incoming requests
-new k8s.apiextensions.CustomResource(identifier, {
+new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
     apiVersion: 'getambassador.io/v2',
     kind: 'Mapping',
     metadata: { namespace: monitoringNamespace.metadata.name },
@@ -115,8 +142,8 @@ new k8s.apiextensions.CustomResource(identifier, {
     }
 }, { provider: config.k8sProvider })
 
-// NB: add authentication
-new k8s.apiextensions.CustomResource(identifier, {
+// NB: specifies which filters to use for incoming requests
+new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
     apiVersion: 'getambassador.io/v2',
     kind: 'FilterPolicy',
     metadata: { namespace: monitoringNamespace.metadata.name },

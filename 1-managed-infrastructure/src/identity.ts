@@ -1,17 +1,17 @@
 import * as auth0 from '@pulumi/auth0'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
+import { logoUrl } from './logo'
 import { rootRecord } from './dns'
-import { amIconUrl } from './bucket'
 
-// NB: used by ambassador to validate the token
+// NB: used by gateway to validate the oauth token
 // ref: https://auth0.com/docs/applications
-export const ambassadorClient = new auth0.Client('ambassador', {
+const gatewayClient = new auth0.Client('gateway', {
     // NB: name that will show up when logging in
-    name: 'andrewmeier.dev',
+    name: config.zone,
     appType: 'non_interactive',
     tokenEndpointAuthMethod: 'client_secret_post',
-    logoUri: amIconUrl,
+    logoUri: logoUrl,
     callbacks: [
         // NB: used for testing
         'http://localhost',
@@ -21,18 +21,11 @@ export const ambassadorClient = new auth0.Client('ambassador', {
     grantTypes: ['authorization_code']
 }, { provider: config.auth0Provider })
 
-// NB: use the Auth0 management API as the audience to return an access token
-// ref: https://auth0.com/docs/tokens/access-tokens/get-access-tokens#control-access-token-audience
-export const ambassadorClientGrant = new auth0.ClientGrant('ambassador', {
-    clientId: ambassadorClient.id,
-    audience: pulumi.interpolate `${config.auth0Config.authUrl}/api/v2/`,
-    scopes: ['openid'],
-}, { provider: config.auth0Provider })
-
 const defaultConnection = new auth0.Connection('default', {
+    // NB: use the Auth0 database
     strategy: 'auth0',
     // NB: you must include the pulumi client id in order to create users
-    enabledClients: [config.auth0Config.clientId, ambassadorClient.clientId]
+    enabledClients: [config.auth0Config.clientId, gatewayClient.clientId]
 }, { provider: config.auth0Provider })
 
 const addEmailToAccessTokenRuleScript = `
@@ -49,10 +42,22 @@ new auth0.Rule('add-email-to-access-token', {
     order: 1
 }, { provider: config.auth0Provider })
 
-export const adminUser = new auth0.User('admin', {
+new auth0.User('admin', {
     name: 'admin',
     email: config.auth0Config.adminEmail,
     emailVerified: true,
     connectionName: defaultConnection.name,
     password: config.auth0Config.adminPassword,
 }, { provider: config.auth0Provider })
+
+// NB: use the Auth0 management API as the audience to return an access token
+// ref: https://auth0.com/docs/tokens/access-tokens/get-access-tokens#control-access-token-audience
+const gatewayClientGrant = new auth0.ClientGrant('gateway', {
+    clientId: gatewayClient.id,
+    audience: pulumi.interpolate `${config.auth0Config.authUrl}/api/v2/`,
+    scopes: ['openid'],
+}, { provider: config.auth0Provider })
+
+export const gatewayClientId = gatewayClient.clientId
+export const gatewayClientSecret = gatewayClient.clientSecret
+export const gatewayClientAudience = gatewayClientGrant.audience

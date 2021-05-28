@@ -3,11 +3,11 @@ import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { monitoringNamespace } from './namespace'
 
-const identifier = `${config.env}-prometheus`
+const identifier = 'prometheus'
 
 const chart = new k8s.helm.v3.Chart(identifier, {
     chart: 'prometheus',
-    version: '13.0.0',
+    version: '14.1.0',
     fetchOpts: {
         repo: 'https://prometheus-community.github.io/helm-charts'
     },

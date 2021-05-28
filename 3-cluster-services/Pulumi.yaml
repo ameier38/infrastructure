@@ -1,0 +1,3 @@
+name: cluster-services
+runtime: nodejs
+description: Pulumi project for cluster services

@@ -1,18 +1,20 @@
 # Andrew's Infrastructure
-Infrastructure for Andrew's services.
 
 ## Setup
-Install [Pulumi](https://www.pulumi.com/docs/get-started/install/).
-
-## Development
-1. Make changes.
-2. Preview changes.
+1. Install [Pulumi](https://www.pulumi.com/docs/get-started/install/).
+    ```powershell
+    iex ((New-Object System.Net.WebClient).DownloadString('https://get.pulumi.com/install.ps1'))
     ```
-    cd pulumi
-    pulumi preview
-    ```
-3. Create PR.
-4. Merge PR.
+2. Create an Auth0 Pulumi client.
 
-## Resources
-- [Get kubectl access to your private cluster](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
+
+## Usage
+Preview the changes.
+```
+pulumi preview
+```
+
+Update the resources.
+```
+pulumi up
+```
