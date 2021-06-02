@@ -13,6 +13,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+      - run: npm install
+        working-directory: ./1-managed-infrastructure
       - name: Update Managed Infrastructure
         uses: pulumi/actions@v3
         with:
@@ -21,6 +23,8 @@ jobs:
           stack-name: prod
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - run: npm install
+        working-directory: ./3-cluster-services
       - name: Update Cluster Services
         uses: pulumi/actions@v3
         with:
