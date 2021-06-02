@@ -1,6 +1,4 @@
-import * as auth0 from '@pulumi/auth0'
 import * as cloudflare from '@pulumi/cloudflare'
-import * as digitalocean from '@pulumi/digitalocean'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as path from 'path'
@@ -10,8 +8,6 @@ export const rootDir = path.dirname(__dirname)
 const env = pulumi.getStack()
 
 const managedInfrastructureStack = new pulumi.StackReference(`ameier38/managed-infrastructure/${env}`)
-
-const rawConfig = new pulumi.Config()
 
 export const zone = managedInfrastructureStack.requireOutput('zone')
 export const zoneId = managedInfrastructureStack.requireOutput('zoneId')

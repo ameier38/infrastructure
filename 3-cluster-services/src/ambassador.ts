@@ -61,3 +61,16 @@ export const internalPort =
     pulumi.all([ambassadorChart, infrastructureNamespace.metadata.name])
     .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, identifier, 'spec'))
     .apply(spec => spec.ports.find(port => port.name === 'http')!.port)
+
+// NB: generates certificate
+new k8s.apiextensions.CustomResource(`${identifier}-host`, {
+    apiVersion: 'getambassador.io/v2',
+    kind: 'Host',
+    metadata: { namespace: infrastructureNamespace.metadata.name },
+    spec: {
+        hostname: config.zone,
+        acmeProvider: {
+            email: config.acmeEmail
+        }
+    }
+}, { provider: config.k8sProvider })
