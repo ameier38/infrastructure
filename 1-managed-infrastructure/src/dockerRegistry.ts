@@ -1,22 +1,19 @@
-import * as pulumi from '@pulumi/pulumi'
 import * as digitalocean from '@pulumi/digitalocean'
 import * as docker from '@pulumi/docker'
 import * as config from './config'
 
-const identifier = `${config.env}-registry`
-
-const registry = new digitalocean.ContainerRegistry(identifier, {
+const registry = new digitalocean.ContainerRegistry('default', {
     subscriptionTierSlug: 'basic'
 }, { provider: config.digitalOceanProvider })
 
 export const registryEndpoint = registry.endpoint
 
-const writeCredentials = new digitalocean.ContainerRegistryDockerCredentials(`${identifier}-write`, {
+const writeCredentials = new digitalocean.ContainerRegistryDockerCredentials('write', {
     registryName: registry.name,
     write: true
 }, { provider: config.digitalOceanProvider })
 
-const readCredentials = new digitalocean.ContainerRegistryDockerCredentials(`${identifier}-read`, {
+const readCredentials = new digitalocean.ContainerRegistryDockerCredentials('read', {
     registryName: registry.name,
     write: false
 }, { provider: config.digitalOceanProvider })

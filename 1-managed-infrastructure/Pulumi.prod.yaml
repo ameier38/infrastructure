@@ -1,0 +1,29 @@
+config:
+  auth0:adminEmail:
+    secure: AAABAAFHWdWYQXL5PaOHq56GezgxyvEZsiHpqYbIAz0kZCRxJQeAwpcjlK1do5LoY/w=
+  auth0:adminPassword:
+    secure: AAABAN7Tg76zeCDzO/iu5W6T8+ZIFMFbH2q5byjRaF0mGJZFejFnK+F8LbHxV5w8PGyPQLoyNnw=
+  auth0:clientId:
+    secure: AAABAJHvCTUZWU2RoGf+xPtx4wi5Ox4VDRg6GKav2aNl0sZjiN/k4xdcU6p8CufRwS0++XZTGspf5b4Rlvb4ow==
+  auth0:clientSecret:
+    secure: AAABACd/1olF8z5r3oLxpk0LGWj61BszjV7fDhVrwK/lWj62RMpz569Etg0IKTaJuEhmrKM6RH4GL0lkXm2gBzHAW9ECXf6ql+y0AqA7xy1Hw+LRtvgJgdLiQSoheBxf
+  auth0:domain: ameier38.auth0.com
+  cloudflare:apiKey:
+    secure: AAABAHkU1bt0dL1cAqKam6HYJ6IR2yjfV2jojMLvj5k/9a6WbLKNf63luozvdziyiMdwxn38b8XQq8SHfokLILS1gtiB
+  cloudflare:email:
+    secure: AAABAOYFGRP5Ey5ZBDH9pbGgGJF3hlCdRZPH/1HIX7a1VDKGnMVH5ggeCxXlNl7QGO4=
+  digitalocean:spacesAccessId:
+    secure: AAABAOZBttGTfkDVGc8lKEyzx1WShrxsQpwgYmXWcOAcdP15QpCzrAmRsozxqQmXk1gojw==
+  digitalocean:spacesSecretKey:
+    secure: AAABAAzkfJOj/aaMd39UdkQPWHz/zsXD92SXMm71hisM3OFEKx/9w87BjiMHLyRmWsA2MFs9yMR7ycQI16xGLFBzdLcP9CfmkGs1
+  digitalocean:token:
+    secure: AAABAAA5Ruba3Rq7DUSAPJdzb6wvaDgvQkNcpnrri4xAxSQT769Hn3uxJpbsI0QYHSOydQ7IVCKgKvb+N9owbijWcFSiXUv5B2uXd26v+UZfkjPfCu0i1qby0l6RlQpg
+  inlets:license:
+    secure: AAABABz055J39Jics/eap54oo5mc+HiqMj/xJvdjxMexsPRnqPDv6VusmRGHfMZ/dbCyaYkYXj6Ipi3CcrjnaHDNs+mHXWTgi+TLiLF+KEsmNzx3MiPVZSZcmXtGrbU8tYP7bTeuP62yqjakZVN2l6ifXLRFg7lGdLIQZQsbUdU9o1/22UGSfuFYNoOkDop9JseuZjia748ISoVsU/T14BLnlboFx57MyHTICC2bwbWdGTmT9bg3U3hs27hEorVcrkbAILeWlL8PNhqcrxoO6ugKhqkl0aeVEG2WxEy8c6ugx1/8hoOu/nE4rqlh3YdwPzf2RsciMBehSwV+8qNQSqOsgeVHOdBNgl3qK3agq9xipUAzKz19eoKNxLJspXgDkVlRtqL43Pyey1rfZfNFKjsvnOfOEO1Gtp0AK0XTo2T65ESGf5vTyN3XvjkA86O5LwvyT7ZlYySIZv2Xsu4SbOW0N4v0afRyQmnBEiYl2IQTASA+SJT8z9/gSx1f/QA+9pcm7ZmMlSj5jLRWsHLFoxhgTN9utZ/Xf7V3IM5JxQ==
+  inlets:token:
+    secure: AAABAHQ2qpnhaDBSua6AvZvtZasBqFLWCM8eqCN7VIkJjSrnH0DLPfhRaxwxfbFMLvr7L4qyPFsCZ2fZInWKPEg2/j1dQrNb
+  managed-infrastructure:acmeEmail:
+    secure: AAABAHBCEUkA7NzxRMuqgdELXyu5UC28ifilvamk7zRppd9u/0dl5Ddx8rqFEdt7P6Y=
+  managed-infrastructure:publicKey:
+    secure: AAABANLmhTdECR+F5dFOoQQ8e4fw4/QnkM012VLlisWAx9skruIxK2moLngg9jUox4aE33CWHFOCkUlPY6CKVb4JVCWmmOXePbmoOXu+Htq1d3+9ClVMNqE0XuR6jN/hmqg7ZDZAoXlWd9MFOcymMkwwYX/JS16CQ/1L5NjzR7qphVZh73N908CneH2C2CRjMz89Be3NehJpa0VXkvgbW/HrQXralTswxjTzhM6xJpliIoqm5Am1nhbtgOACOsr+sOVeM7Xv7vAGgqqrLldJRTQFv9ZmsLtvuoMAm4gHs79U2g+J69i+cE545yhCKSjyiO3DnR9tOPC+un81FHA/XfY/IjRszW5JPRFsnAMQIEzvDSDMLx1UavKA7HUrWC6qdad2NdNzHDqCo6Vw+bi24quW3rRUtcug7OdogrRa0MCLNhPpEV0lmqHAVzVIF7DlWNx9//BCMCYEfeRwgojiRDlAnn0JxfLpRobVS8bL0iD3yymhI5quDukGT4EDvH0bOy2vLreZbP/r/f88wVCHMtSLdUMQh5Lvr+p/Ldj/dsuMHt2/I/vV
+  managed-infrastructure:zone: andrewmeier.dev

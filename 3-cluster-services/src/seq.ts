@@ -3,35 +3,13 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { monitoringNamespace } from './namespace'
-import { ambassadorExitNodeIp } from './inlets'
-import { zone } from './dns'
 import { oauthFilter } from './filter'
 
-const identifier = `${config.env}-seq`
-
-const record = new cloudflare.Record(identifier, {
-    zoneId: zone.id,
-    name: 'seq',
-    type: 'A',
-    value: ambassadorExitNodeIp
-}, { provider: config.cloudflareProvider })
-
-// NB: generates certificate
-new k8s.apiextensions.CustomResource(`${identifier}-host`, {
-    apiVersion: 'getambassador.io/v2',
-    kind: 'Host',
-    metadata: { namespace: monitoringNamespace.metadata.name },
-    spec: {
-        hostname: record.hostname,
-        acmeProvider: {
-            email: config.acmeEmail
-        }
-    }
-}, { provider: config.k8sProvider })
+const identifier = 'seq'
 
 const chart = new k8s.helm.v3.Chart(identifier, {
     chart: 'seq',
-    version: '2020.4.5070',
+    version: '2021.2.5647',
     fetchOpts: {
         repo: 'https://helm.datalust.co'
     },
@@ -56,6 +34,26 @@ const internalUiPort =
     .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, identifier, 'spec'))
     .apply(spec => spec.ports.find(port => port.name === 'ui')!.port)
 
+const record = new cloudflare.Record(identifier, {
+    zoneId: config.zoneId,
+    name: 'seq',
+    type: 'A',
+    value: config.exitNodeIp
+}, { provider: config.cloudflareProvider })
+
+// NB: generates certificate
+new k8s.apiextensions.CustomResource(`${identifier}-host`, {
+    apiVersion: 'getambassador.io/v2',
+    kind: 'Host',
+    metadata: { namespace: monitoringNamespace.metadata.name },
+    spec: {
+        hostname: record.hostname,
+        acmeProvider: {
+            email: config.acmeEmail
+        }
+    }
+}, { provider: config.k8sProvider })
+
 // NB: specifies how to direct incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
     apiVersion: 'getambassador.io/v2',
@@ -68,7 +66,7 @@ new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
     }
 }, { provider: config.k8sProvider })
 
-// NB: add authentication
+// NB: specifies how to filter incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
     apiVersion: 'getambassador.io/v2',
     kind: 'FilterPolicy',

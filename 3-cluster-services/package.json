@@ -1,0 +1,11 @@
+{
+    "name": "infra",
+    "devDependencies": {
+        "@types/node": "^15.6.1"
+    },
+    "dependencies": {
+        "@pulumi/cloudflare": "^3.0.0",
+        "@pulumi/kubernetes": "^3.2.0",
+        "@pulumi/pulumi": "^3.3.1"
+    }
+}

@@ -7,12 +7,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          fetch-depth: 1
-      - uses: docker://pulumi/actions
+          node-version: 14.x
+      - run: npm install
+        working-directory: ./1-managed-infrastructure
+      - name: Preview Managed Infrastructure
+        uses: pulumi/actions@v3
         with:
-          args: preview
+          work-dir: ./1-managed-infrastructure
+          command: preview
+          stack-name: prod
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_ROOT: pulumi
-          PULUMI_CI: pr
+      - run: npm install
+        working-directory: ./3-cluster-services
+      - name: Preview Cluster Services
+        uses: pulumi/actions@v3
+        with:
+          work-dir: ./3-cluster-services
+          command: preview
+          stack-name: prod
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
