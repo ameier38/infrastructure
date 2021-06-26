@@ -16,11 +16,10 @@ export const authUrl = managedInfrastructureStack.requireOutput('authUrl')
 export const acmeEmail = managedInfrastructureStack.requireOutput('acmeEmail')
 export const emailClaim = managedInfrastructureStack.requireOutput('emailClaim')
 
-const rawK8sConfig = new pulumi.Config('k8s')
-export const kubeconfig = rawK8sConfig.require('kubeconfig')
+const rawK8sConfig = new pulumi.Config('kubernetes')
+export const kubeconfig = rawK8sConfig.require("kubeconfig")
 export const k8sProvider = new k8s.Provider('default', {
     kubeconfig: kubeconfig,
-    suppressDeprecationWarnings: true
 })
 
 export const inletsConfig = {

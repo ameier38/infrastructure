@@ -2,8 +2,8 @@
 Kubernetes cluster for running workloads.
 
 ## Setup
-1. Follow [this tutorial](https://github.com/alexellis/k3sup#-micro-tutorial-for-raspberry-pi-2-3-or-4-)
-to install k3s on Raspberry Pis using [k3sup](https://github.com/alexellis/k3sup).
+1. Follow [this tutorial](https://blog.alexellis.io/test-drive-k3s-on-raspberry-pi/)
+to set up Raspberry Pis and install k3s using [k3sup](https://github.com/alexellis/k3sup).
 2. Get the exit node IP address from the managed infrastructure stack.
     ```
     ❯ pulumi stack output
@@ -23,7 +23,7 @@ to install k3s on Raspberry Pis using [k3sup](https://github.com/alexellis/k3sup
     ```
 3. SSH onto the master node of your Kubernetes cluster.
     ```
-    ssh pi@raspberrypi-1
+    ssh pi@<k8s master node>
     ```
 4. Download `inletsctl`.
     ```
