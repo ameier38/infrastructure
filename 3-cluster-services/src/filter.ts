@@ -1,6 +1,7 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
+import { ambassadorChart } from './ambassador'
 import { infrastructureNamespace } from './namespace'
 
 // NB: specifies oauth client to use for incoming requests
@@ -27,7 +28,7 @@ export const oauthFilter = new k8s.apiextensions.CustomResource('oauth-filter', 
             }]
         }
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
 
 // NB: inject user header from email claim
 export const jwtFilter = new k8s.apiextensions.CustomResource('jwt-filter', {
@@ -46,4 +47,4 @@ export const jwtFilter = new k8s.apiextensions.CustomResource('jwt-filter', {
             }]
         }
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })

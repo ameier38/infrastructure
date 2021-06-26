@@ -5,7 +5,7 @@ import { infrastructureNamespace } from './namespace'
 
 const identifier = 'ambassador'
 
-const ambassadorChart = new k8s.helm.v3.Chart(identifier, {
+export const ambassadorChart = new k8s.helm.v3.Chart(identifier, {
     chart: 'ambassador',
     fetchOpts: {
         repo: 'https://getambassador.io'
@@ -73,4 +73,4 @@ new k8s.apiextensions.CustomResource(`${identifier}-host`, {
             email: config.acmeEmail
         }
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })

@@ -4,6 +4,7 @@ import * as cloudflare from '@pulumi/cloudflare'
 import * as config from './config'
 import { oauthFilter, jwtFilter } from './filter'
 import { monitoringNamespace } from './namespace'
+import { ambassadorChart } from './ambassador'
 import * as prometheus from './prometheus'
 
 const identifier = 'grafana'
@@ -126,7 +127,7 @@ new k8s.apiextensions.CustomResource(`${identifier}-host`, {
             email: config.acmeEmail
         }
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
 
 // NB: specifies how to direct incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
@@ -140,7 +141,7 @@ new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
         remove_request_headers: ['authorization'],
         service: pulumi.interpolate `${internalHost}:${internalPort}`
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
 
 // NB: specifies which filters to use for incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
@@ -157,4 +158,4 @@ new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
             ]
         }]
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })

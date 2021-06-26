@@ -3,6 +3,7 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { monitoringNamespace } from './namespace'
+import { ambassadorChart } from './ambassador'
 import { oauthFilter } from './filter'
 
 const identifier = 'seq'
@@ -52,7 +53,7 @@ new k8s.apiextensions.CustomResource(`${identifier}-host`, {
             email: config.acmeEmail
         }
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
 
 // NB: specifies how to direct incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
@@ -64,7 +65,7 @@ new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
         host: record.hostname,
         service: pulumi.interpolate `${internalHost}:${internalUiPort}`
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
 
 // NB: specifies how to filter incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
@@ -80,4 +81,4 @@ new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
             ]
         }]
     }
-}, { provider: config.k8sProvider })
+}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
