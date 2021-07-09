@@ -14,3 +14,10 @@ export const rootRecord = new cloudflare.Record('root', {
     type: 'A',
     value: exitNodeIp
 }, { provider: config.cloudflareProvider })
+
+export const k8sRecord = new cloudflare.Record('k8s', {
+    zoneId: zoneId,
+    name: 'k8s',
+    type: 'A',
+    value: exitNodeIp
+}, { provider: config.cloudflareProvider })
