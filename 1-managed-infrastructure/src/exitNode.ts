@@ -13,7 +13,7 @@ Restart=always
 RestartSec=2
 StartLimitInterval=0
 EnvironmentFile=/etc/default/inlets
-ExecStart=/usr/local/bin/inlets-pro server --auto-tls=true --auto-tls-path=/tmp/inlets-ambassador --auto-tls-san="\${IP}" --token="\${TOKEN}" --control-port=8123
+ExecStart=/usr/local/bin/inlets-pro tcp server --auto-tls=true --auto-tls-path=/tmp/inlets-ambassador --auto-tls-san="\${IP}" --token="\${TOKEN}" --control-port=8123
 
 [Install]
 WantedBy=multi-user.target
@@ -31,7 +31,7 @@ Restart=always
 RestartSec=2
 StartLimitInterval=0
 EnvironmentFile=/etc/default/inlets
-ExecStart=/usr/local/bin/inlets-pro server --auto-tls=true --auto-tls-path=/tmp/inlets-kubernetes --auto-tls-san="\${IP}" --token="\${TOKEN}" --control-port=8124
+ExecStart=/usr/local/bin/inlets-pro tcp server --auto-tls=true --auto-tls-path=/tmp/inlets-kubernetes --auto-tls-san="\${IP}" --token="\${TOKEN}" --control-port=8124
 
 [Install]
 WantedBy=multi-user.target

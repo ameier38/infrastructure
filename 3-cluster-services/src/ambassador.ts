@@ -10,7 +10,7 @@ export const ambassadorChart = new k8s.helm.v3.Chart(identifier, {
     fetchOpts: {
         repo: 'https://getambassador.io'
     },
-    version: '6.7.9',
+    version: '6.7.11',
     namespace: infrastructureNamespace.metadata.name,
     transformations: [(obj:any) => {
         if (obj.metadata !== undefined) {
@@ -33,6 +33,9 @@ export const ambassadorChart = new k8s.helm.v3.Chart(identifier, {
         },
         adminService: {
             create: false
+        },
+        agent: {
+            enabled: false
         },
         createDevPortalMappings: false,
         service: { 
