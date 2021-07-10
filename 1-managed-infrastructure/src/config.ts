@@ -15,7 +15,7 @@ export const publicKey = rawConfig.require('publicKey')
 
 const rawInletsConfig = new pulumi.Config('inlets')
 export const inletsConfig = {
-    version: '0.8.4',
+    version: '0.8.5',
     license: rawInletsConfig.require('license'),
     token: rawInletsConfig.require('token')
 }

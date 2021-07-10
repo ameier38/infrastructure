@@ -18,14 +18,22 @@ const gatewayClient = new auth0.Client('gateway', {
         // ref: https://www.getambassador.io/docs/latest/topics/using/filters/oauth2/
         pulumi.interpolate `https://${rootRecord.hostname}/.ambassador/oauth2/redirection-endpoint`,
     ],
-    grantTypes: ['authorization_code']
+    jwtConfiguration: {
+        // NB: ambassador requires RS256 (Auth0 defaults to HS256)
+        alg: 'RS256'
+    },
+    grantTypes: ['authorization_code'],
+
 }, { provider: config.auth0Provider })
 
 const defaultConnection = new auth0.Connection('default', {
     // NB: use the Auth0 database
     strategy: 'auth0',
     // NB: you must include the pulumi client id in order to create users
-    enabledClients: [config.auth0Config.clientId, gatewayClient.clientId]
+    enabledClients: [
+        config.auth0Config.clientId,
+        gatewayClient.clientId
+    ]
 }, { provider: config.auth0Provider })
 
 const addEmailToAccessTokenRuleScript = `

@@ -20,6 +20,7 @@ new k8s.apps.v1.Deployment('inlets', {
                     imagePullPolicy: 'IfNotPresent',
                     command: ['inlets-pro'],
                     args: [
+                        'tcp',
                         'client',
                         pulumi.interpolate `--url=wss://${config.exitNodeIp}:8123/connect`,
                         pulumi.interpolate `--token=${config.inletsConfig.token}`,
