@@ -11,5 +11,6 @@ import * as seq from './src/seq'
 
 export const kubeconfig = pulumi.secret(config.kubeconfig)
 export const blogNamespace = namespace.blogNamespace.metadata.name
+export const ackmxNamespace = namespace.ackmxNamespace.metadata.name
 export const seqHost = seq.internalHost
 export const seqPort = seq.internalIngestionPort
