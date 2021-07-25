@@ -12,4 +12,3 @@ const cluster = new digitalocean.KubernetesCluster('default', {
 }, { provider: config.digitalOceanProvider })
 
 export const kubeconfig = cluster.kubeConfigs[0]
-export const endpoint = cluster.endpoint
