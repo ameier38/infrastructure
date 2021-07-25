@@ -1,3 +1,4 @@
+import * as cloudflare from '@pulumi/cloudflare'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
@@ -39,7 +40,7 @@ export const ambassadorChart = new k8s.helm.v3.Chart(identifier, {
         },
         createDevPortalMappings: false,
         service: { 
-            type: 'ClusterIP',
+            type: 'LoadBalancer',
             ports: [
                 { name: 'http', port: 80, targetPort: 8080 },
                 { name: 'https', port: 443, targetPort: 8443 }
@@ -65,13 +66,25 @@ export const internalPort =
     .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, identifier, 'spec'))
     .apply(spec => spec.ports.find(port => port.name === 'http')!.port)
 
+export const loadBalancerIpAddress =
+    pulumi.all([ambassadorChart, infrastructureNamespace.metadata.name])
+    .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, identifier, 'status'))
+    .apply(status => status.loadBalancer.ingress[0].ip)
+
+const record = new cloudflare.Record(identifier, {
+    zoneId: config.zoneId,
+    name: '@',
+    type: 'A',
+    value: loadBalancerIpAddress
+}, { provider: config.cloudflareProvider })
+
 // NB: generates certificate
 new k8s.apiextensions.CustomResource(`${identifier}-host`, {
     apiVersion: 'getambassador.io/v2',
     kind: 'Host',
     metadata: { namespace: infrastructureNamespace.metadata.name },
     spec: {
-        hostname: config.zone,
+        hostname: record.hostname,
         acmeProvider: {
             email: config.acmeEmail
         }

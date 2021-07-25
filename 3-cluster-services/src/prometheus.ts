@@ -2,7 +2,7 @@ import * as cloudflare from '@pulumi/cloudflare'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
-import { ambassadorChart } from './ambassador'
+import { ambassadorChart, loadBalancerIpAddress } from './ambassador'
 import { oauthFilter } from './filter'
 import { monitoringNamespace } from './namespace'
 
@@ -51,7 +51,7 @@ const record = new cloudflare.Record(identifier, {
     zoneId: config.zoneId,
     name: 'prometheus',
     type: 'A',
-    value: config.exitNodeIp
+    value: loadBalancerIpAddress
 }, { provider: config.cloudflareProvider })
 
 // NB: generates certificate

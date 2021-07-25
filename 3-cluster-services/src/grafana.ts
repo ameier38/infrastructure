@@ -4,7 +4,7 @@ import * as cloudflare from '@pulumi/cloudflare'
 import * as config from './config'
 import { oauthFilter, jwtFilter } from './filter'
 import { monitoringNamespace } from './namespace'
-import { ambassadorChart } from './ambassador'
+import { ambassadorChart, loadBalancerIpAddress } from './ambassador'
 import * as prometheus from './prometheus'
 
 const identifier = 'grafana'
@@ -37,7 +37,7 @@ const chart = new k8s.helm.v3.Chart(identifier, {
         }
     }],
     values: {
-        nodeSelector: { 'kubernetes.io/arch': 'arm' },
+        nodeSelector: { 'kubernetes.io/arch': 'amd64' },
         admin: {
             existingSecret: secret.metadata.name,
             userKey: userKey,
@@ -113,7 +113,7 @@ const record = new cloudflare.Record(identifier, {
     zoneId: config.zoneId,
     name: 'grafana',
     type: 'A',
-    value: config.exitNodeIp
+    value: loadBalancerIpAddress
 }, { provider: config.cloudflareProvider })
 
 // NB: generates certificate
@@ -127,7 +127,7 @@ new k8s.apiextensions.CustomResource(`${identifier}-host`, {
             email: config.acmeEmail
         }
     }
-}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
+}, { provider: config.k8sProvider })
 
 // NB: specifies how to direct incoming requests
 new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
