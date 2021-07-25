@@ -11,13 +11,11 @@ const managedInfrastructureStack = new pulumi.StackReference(`ameier38/managed-i
 
 export const zone = managedInfrastructureStack.requireOutput('zone')
 export const zoneId = managedInfrastructureStack.requireOutput('zoneId')
-export const exitNodeIp = managedInfrastructureStack.requireOutput('exitNodeIp')
 export const authUrl = managedInfrastructureStack.requireOutput('authUrl')
 export const acmeEmail = managedInfrastructureStack.requireOutput('acmeEmail')
 export const emailClaim = managedInfrastructureStack.requireOutput('emailClaim')
+const kubeconfig = managedInfrastructureStack.requireOutput('kubeconfig')
 
-const rawKubernetesConfig = new pulumi.Config('kubernetes')
-export const kubeconfig = rawKubernetesConfig.require('kubeconfig')
 export const k8sProvider = new k8s.Provider('default', {
     kubeconfig: kubeconfig
 })

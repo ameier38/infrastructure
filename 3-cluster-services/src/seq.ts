@@ -3,7 +3,7 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { monitoringNamespace } from './namespace'
-import { ambassadorChart } from './ambassador'
+import { ambassadorChart, loadBalancerIpAddress } from './ambassador'
 import { oauthFilter } from './filter'
 
 const identifier = 'seq'
@@ -39,7 +39,7 @@ const record = new cloudflare.Record(identifier, {
     zoneId: config.zoneId,
     name: 'seq',
     type: 'A',
-    value: config.exitNodeIp
+    value: loadBalancerIpAddress
 }, { provider: config.cloudflareProvider })
 
 // NB: generates certificate
