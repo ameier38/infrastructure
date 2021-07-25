@@ -2,7 +2,6 @@ import * as auth0 from '@pulumi/auth0'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { logoUrl } from './logo'
-import { rootRecord } from './dns'
 
 // NB: used by gateway to validate the oauth token
 // ref: https://auth0.com/docs/applications
@@ -16,7 +15,7 @@ const gatewayClient = new auth0.Client('gateway', {
         // NB: used for testing
         'http://localhost',
         // ref: https://www.getambassador.io/docs/latest/topics/using/filters/oauth2/
-        pulumi.interpolate `https://${rootRecord.hostname}/.ambassador/oauth2/redirection-endpoint`,
+        pulumi.interpolate `https://${config.zone}/.ambassador/oauth2/redirection-endpoint`,
     ],
     jwtConfiguration: {
         // NB: ambassador requires RS256 (Auth0 defaults to HS256)
