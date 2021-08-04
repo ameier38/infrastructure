@@ -3,5 +3,7 @@ config:
     secure: AAABANDngBTPRqtrmcqeWlEsO7RwUrV5+z1OmUt3UuRoiqVwQMDmduw4EDZ2qRcAcBK8tUID4+M+lDwbhLGLUdl+9sEZ
   cloudflare:email:
     secure: AAABAPZ1myEyGgVfe7+9ycViyZoh9b8qIHOE5rr3E4HMMMYcqHMZIvp52L6ZC0+rbOs=
+  digitalocean:token:
+    secure: AAABAIxtGeAd7Ly6HZ0dc/eWSgE34ErS0CGedxi/LYJgyD79rhrEgm+VoaEJYAeFpcJ99WJ8jv+YEqf8lmQvN8C/p2SwJyqXbHNJ6WBcWxQH8hVqSJM9P9xhS2LGOuJX
   grafana:adminPassword:
     secure: AAABABLcTmO/zFaYNIror+35EXjK2ZqxDWFZSyImQ7iIlLxRCraAIybhR/ESCURIINglyq0Vwx8=

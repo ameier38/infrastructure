@@ -1,4 +1,5 @@
 import * as cloudflare from '@pulumi/cloudflare'
+import * as digitalocean from '@pulumi/digitalocean'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as path from 'path'
@@ -14,7 +15,20 @@ export const zoneId = managedInfrastructureStack.requireOutput('zoneId')
 export const authUrl = managedInfrastructureStack.requireOutput('authUrl')
 export const acmeEmail = managedInfrastructureStack.requireOutput('acmeEmail')
 export const emailClaim = managedInfrastructureStack.requireOutput('emailClaim')
-const kubeconfig = managedInfrastructureStack.requireOutput('kubeconfig')
+const clusterName = managedInfrastructureStack.requireOutput('clusterName').apply(o => o as string)
+
+const rawDigitalOceanConfig = new pulumi.Config('digitalocean')
+const digitalOceanToken = rawDigitalOceanConfig.require('token')
+const digitialOceanProvider = new digitalocean.Provider('default', {
+    token: digitalOceanToken
+})
+
+const kubeconfig = clusterName.apply(name => 
+    digitalocean.getKubernetesCluster({
+        name: name
+    }, { provider: digitialOceanProvider }).then(c => 
+        c.kubeConfigs[0].rawConfig)
+) 
 
 export const k8sProvider = new k8s.Provider('default', {
     kubeconfig: kubeconfig
