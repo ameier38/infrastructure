@@ -21,4 +21,4 @@ export const authUrl = config.auth0Config.authUrl
 export const gatewayClientId = pulumi.secret(identity.gatewayClientId)
 export const gatewayClientSecret = pulumi.secret(identity.gatewayClientSecret)
 export const gatewayClientAudience = identity.gatewayClientAudience
-export const kubeconfig = pulumi.secret(cluster.kubeconfig)
+export const clusterName = cluster.clusterName

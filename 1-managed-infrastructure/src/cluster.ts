@@ -11,4 +11,4 @@ const cluster = new digitalocean.KubernetesCluster('default', {
     }
 }, { provider: config.digitalOceanProvider })
 
-export const kubeconfig = cluster.kubeConfigs[0].rawConfig
+export const clusterName = cluster.name
