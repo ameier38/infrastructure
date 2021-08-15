@@ -9,29 +9,19 @@ export const rootDir = path.dirname(__dirname)
 const env = pulumi.getStack()
 
 const managedInfrastructureStack = new pulumi.StackReference(`ameier38/managed-infrastructure/${env}`)
+const clusterStack = new pulumi.StackReference(`ameier38/cluster/${env}`)
 
 export const zone = managedInfrastructureStack.requireOutput('zone')
 export const zoneId = managedInfrastructureStack.requireOutput('zoneId')
 export const authUrl = managedInfrastructureStack.requireOutput('authUrl')
 export const acmeEmail = managedInfrastructureStack.requireOutput('acmeEmail')
 export const emailClaim = managedInfrastructureStack.requireOutput('emailClaim')
-const clusterName = managedInfrastructureStack.requireOutput('clusterName').apply(o => o as string)
 
-const rawDigitalOceanConfig = new pulumi.Config('digitalocean')
-const digitalOceanToken = rawDigitalOceanConfig.require('token')
-const digitialOceanProvider = new digitalocean.Provider('default', {
-    token: digitalOceanToken
-})
-
-const kubeconfig = clusterName.apply(name => 
-    digitalocean.getKubernetesCluster({
-        name: name
-    }, { provider: digitialOceanProvider }).then(c => 
-        c.kubeConfigs[0].rawConfig)
-) 
+const kubeconfig = clusterStack.requireOutput('kubeconfig').apply(o => o as string) 
 
 export const k8sProvider = new k8s.Provider('default', {
-    kubeconfig: kubeconfig
+    kubeconfig: kubeconfig,
+    suppressDeprecationWarnings: true
 })
 
 export const inletsConfig = {

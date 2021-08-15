@@ -9,30 +9,29 @@ export const rootDir = path.dirname(__dirname)
 const rawConfig = new pulumi.Config()
 
 export const zone = rawConfig.require('zone')
-export const acmeEmail = rawConfig.require('acmeEmail')
+export const acmeEmail = rawConfig.requireSecret('acmeEmail')
 export const emailClaim = `https://${zone}/email`
-export const publicKey = rawConfig.require('publicKey')
 
 const rawInletsConfig = new pulumi.Config('inlets')
 export const inletsConfig = {
     version: '0.8.5',
-    license: rawInletsConfig.require('license'),
-    token: rawInletsConfig.require('token')
+    license: rawInletsConfig.requireSecret('license'),
+    token: rawInletsConfig.requireSecret('token')
 }
 
 const rawCloudflareConfig = new pulumi.Config('cloudflare')
 export const cloudflareProvider = new cloudflare.Provider('default', {
-    email: rawCloudflareConfig.require('email'),
-    apiKey: rawCloudflareConfig.require('apiKey')
+    email: rawCloudflareConfig.requireSecret('email'),
+    apiKey: rawCloudflareConfig.requireSecret('apiKey')
 })
 
 const rawDigitalOceanConfig = new pulumi.Config('digitalocean')
-export const digitalOceanToken = rawDigitalOceanConfig.require('token')
+export const digitalOceanToken = rawDigitalOceanConfig.requireSecret('token')
 export const digitalOceanProvider = new digitalocean.Provider('default', {
     token: digitalOceanToken,
     spacesEndpoint: `https://nyc3.digitaloceanspaces.com`,
-    spacesAccessId: rawDigitalOceanConfig.require('spacesAccessId'),
-    spacesSecretKey: rawDigitalOceanConfig.require('spacesSecretKey')
+    spacesAccessId: rawDigitalOceanConfig.requireSecret('spacesAccessId'),
+    spacesSecretKey: rawDigitalOceanConfig.requireSecret('spacesSecretKey')
 })
 
 const rawAuth0Config = new pulumi.Config('auth0')
@@ -40,9 +39,9 @@ export const auth0Config = {
     domain: rawAuth0Config.require('domain'),
     authUrl: `https://${rawAuth0Config.require('domain')}`,
     clientId: rawAuth0Config.require('clientId'),
-    clientSecret: rawAuth0Config.require('clientSecret'),
-    adminEmail: rawAuth0Config.require('adminEmail'),
-    adminPassword: rawAuth0Config.require('adminPassword')
+    clientSecret: rawAuth0Config.requireSecret('clientSecret'),
+    adminEmail: rawAuth0Config.requireSecret('adminEmail'),
+    adminPassword: rawAuth0Config.requireSecret('adminPassword')
 }
 export const auth0Provider = new auth0.Provider('default', {
     domain: auth0Config.domain,

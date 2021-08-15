@@ -10,7 +10,7 @@ const identifier = 'prometheus'
 
 const chart = new k8s.helm.v3.Chart(identifier, {
     chart: 'prometheus',
-    version: '14.1.0',
+    version: '14.6.0',
     fetchOpts: {
         repo: 'https://prometheus-community.github.io/helm-charts'
     },
@@ -18,7 +18,13 @@ const chart = new k8s.helm.v3.Chart(identifier, {
     values: {
         alertmanager: {
             enabled: true,
-            nodeSelector: { 'kubernetes.io/arch': 'amd64' }
+            nodeSelector: { 'kubernetes.io/arch': 'amd64' },
+            securityContext: {
+                runAsNonRoot: false,
+                fsGroup: 0,
+                runAsGroup: 0,
+                runAsUser: 0
+            }
         },
         kubeStateMetrics: {
             enabled: false
@@ -29,7 +35,13 @@ const chart = new k8s.helm.v3.Chart(identifier, {
         },
         server: {
             enabled: true,
-            nodeSelector: { 'kubernetes.io/arch': 'amd64' }
+            nodeSelector: { 'kubernetes.io/arch': 'amd64' },
+            securityContext: {
+                runAsNonRoot: false,
+                fsGroup: 0,
+                runAsGroup: 0,
+                runAsUser: 0
+            }
         },
         pushgateway: {
             enabled: false
