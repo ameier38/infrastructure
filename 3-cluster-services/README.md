@@ -1,6 +1,6 @@
 # Cluster Services
 Pulumi project for Kubernetes cluster services such as 
-Ambassador, Prometheus, Grafana, and Seq.
+Ambassador, Prometheus, Grafana, Seq, and Inlets.
 
 ## Usage
 Preview changes.

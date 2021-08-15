@@ -1,7 +1,7 @@
 import './src/filter'
-import './src/grafana'
 import './src/inlets'
 import './src/prometheus'
+import './src/grafana'
 
 import * as namespace from './src/namespace'
 import * as seq from './src/seq'

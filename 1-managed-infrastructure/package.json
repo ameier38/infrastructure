@@ -1,13 +1,13 @@
 {
     "name": "managed-infrastructure",
     "devDependencies": {
-        "@types/node": "^16.4.2"
+        "@types/node": "^16.6.1"
     },
     "dependencies": {
         "@pulumi/auth0": "^2.2.0",
-        "@pulumi/cloudflare": "^3.3.0",
-        "@pulumi/digitalocean": "^4.5.0",
+        "@pulumi/cloudflare": "^3.4.0",
+        "@pulumi/digitalocean": "^4.6.0",
         "@pulumi/docker": "^3.0.0",
-        "@pulumi/pulumi": "^3.8.0"
+        "@pulumi/pulumi": "^3.10.1"
     }
 }
