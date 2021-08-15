@@ -4,7 +4,6 @@ import * as logo from './src/logo'
 import * as dockerRegistry from './src/dockerRegistry'
 import * as identity from './src/identity'
 import * as dns from './src/dns'
-import * as cluster from './src/cluster'
 
 export const zone = config.zone
 export const zoneId = dns.zoneId
@@ -21,4 +20,3 @@ export const authUrl = config.auth0Config.authUrl
 export const gatewayClientId = pulumi.secret(identity.gatewayClientId)
 export const gatewayClientSecret = pulumi.secret(identity.gatewayClientSecret)
 export const gatewayClientAudience = identity.gatewayClientAudience
-export const clusterName = cluster.clusterName
