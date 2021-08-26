@@ -13,3 +13,25 @@ Apply changes.
 ```
 pulumi up
 ```
+
+## Add Local Node
+Get the k3s master host and token from the stack outputs.
+```
+pulumi stack output --show-secrets
+```
+```
+Current stack outputs (3):
+    OUTPUT         VALUE
+    k3sMasterHost  <ip address>
+    k3sToken       <token>
+```
+
+Connect to the local node.
+```
+ssh pi@raspberrypi-1
+``` 
+
+Install the k3s agent service.
+```
+curl -sfL https://get.k3s.io | K3S_URL=https://<ip adress from above>:6443 K3S_TOKEN=<token from above> sh -
+```

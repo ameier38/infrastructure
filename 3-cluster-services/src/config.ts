@@ -24,10 +24,11 @@ export const k8sProvider = new k8s.Provider('default', {
     suppressDeprecationWarnings: true
 })
 
+const rawInletsConfig = new pulumi.Config('inlets')
 export const inletsConfig = {
-    version: managedInfrastructureStack.requireOutput('inletsVersion'),
-    license: managedInfrastructureStack.requireOutput('inletsLicense'),
-    token: managedInfrastructureStack.requireOutput('inletsToken')
+    version: '0.8.5',
+    license: rawInletsConfig.requireSecret('license'),
+    token: rawInletsConfig.requireSecret('token')
 }
 
 export const gatewayConfig = {

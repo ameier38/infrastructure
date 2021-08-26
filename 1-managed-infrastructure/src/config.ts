@@ -12,13 +12,6 @@ export const zone = rawConfig.require('zone')
 export const acmeEmail = rawConfig.requireSecret('acmeEmail')
 export const emailClaim = `https://${zone}/email`
 
-const rawInletsConfig = new pulumi.Config('inlets')
-export const inletsConfig = {
-    version: '0.8.5',
-    license: rawInletsConfig.requireSecret('license'),
-    token: rawInletsConfig.requireSecret('token')
-}
-
 const rawCloudflareConfig = new pulumi.Config('cloudflare')
 export const cloudflareProvider = new cloudflare.Provider('default', {
     email: rawCloudflareConfig.requireSecret('email'),
