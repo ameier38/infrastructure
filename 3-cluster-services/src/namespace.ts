@@ -16,3 +16,7 @@ export const blogNamespace = new k8s.core.v1.Namespace('blog', {
 export const ackmxNamespace = new k8s.core.v1.Namespace('ackmx', {
     metadata: { name: 'ackmx' }
 }, { provider: config.k8sProvider })
+
+export const easuryNamespace = new k8s.core.v1.Namespace('easury', {
+    metadata: { name: 'easury' }
+}, { provider: config.k8sProvider })
