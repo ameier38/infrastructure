@@ -2,9 +2,8 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as cloudflare from '@pulumi/cloudflare'
 import * as config from './config'
-import { oauthFilter, jwtFilter } from './filter'
 import { monitoringNamespace } from './namespace'
-import { ambassadorChart, loadBalancerIpAddress } from './ambassador'
+import { ambassadorChart, loadBalancerIpAddress, oauthFilter, jwtFilter } from './ambassador'
 import * as prometheus from './prometheus'
 
 const identifier = 'grafana'
@@ -22,7 +21,7 @@ const secret = new k8s.core.v1.Secret(identifier, {
 
 const chart = new k8s.helm.v3.Chart(identifier, {
     chart: 'grafana',
-    version: '6.9.1',
+    version: '6.16.2',
     fetchOpts: {
         repo: 'https://grafana.github.io/helm-charts'
     },

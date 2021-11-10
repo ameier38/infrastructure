@@ -209,7 +209,7 @@ class K3sCluster extends pulumi.ComponentResource {
 }
 
 const cluster = new K3sCluster('default', {
-    nodeCount: 2,
+    nodeCount: 3,
     sshKeyId: sshKeyId,
     privateKey: config.privateKey
 }, { provider: config.digitalOceanProvider })
