@@ -4,7 +4,7 @@ import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 import { monitoringNamespace } from './namespace'
 import { ambassadorChart, loadBalancerIpAddress } from './ambassador'
-import { oauthFilter } from './filter'
+import { oauthFilter } from './ambassador'
 
 const identifier = 'seq'
 
