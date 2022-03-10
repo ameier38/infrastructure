@@ -1,0 +1,21 @@
+name: Cluster Services Pull Request
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '3-cluster-services/**'
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/start_k8s_api_tunnel.yml
+        secrets:
+          service-token-id: ${{ secrets.CF_SERVICE_TOKEN_ID }}
+          service-token-secret: ${{ secrets.CF_SERVICE_TOKEN_SECRET }}
+      - uses: ./.github/workflows/pulumi_update.yml
+        with:
+          project: ./3-cluster-services
+        secrets:
+          token: ${{ secrets.PULUMI_ACCESS_TOKEN }}

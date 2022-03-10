@@ -1,0 +1,17 @@
+name: Managed Infrastructure Pull Request
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '1-managed-infrastructure/**'
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/pulumi_update.yml
+        with:
+          project: ./1-managed-infrastructure
+        secrets:
+          token: ${{ secrets.PULUMI_ACCESS_TOKEN }}

@@ -1,0 +1,31 @@
+name: Pulumi Update
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node 
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install Packages
+        run: npm install
+        working-directory: ${{ inputs.project }}
+      - name: Apply Changes
+        uses: pulumi/actions@v3
+        with:
+          work-dir: ${{ inputs.project }}
+          command: up
+          stack-name: prod
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.token }}
