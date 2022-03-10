@@ -7,15 +7,10 @@ on:
       - '3-cluster-services/**'
 jobs:
   preview:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/workflows/start_k8s_api_tunnel.yml
-        secrets:
-          service-token-id: ${{ secrets.CF_SERVICE_TOKEN_ID }}
-          service-token-secret: ${{ secrets.CF_SERVICE_TOKEN_SECRET }}
-      - uses: ./.github/workflows/pulumi_preview.yml
-        with:
-          project: ./3-cluster-services
-        secrets:
-          token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+    uses: ./.github/workflows/pull_request.yml
+    with:
+      pulumi-project: ./3-cluster-serivces
+    secrets:
+      pulumi-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      tunnel-token-id: ${{ secrets.TUNNEL_TOKEN_ID }}
+      tunnel-token-secret: ${{ secrets.TUNNEL_TOKEN_SECRET }}
