@@ -1,5 +1,5 @@
-# Cluster Services
-Pulumi project for Kubernetes cluster services.
+# App Services
+Pulumi project for app services.
 
 ## Usage
 Preview changes.

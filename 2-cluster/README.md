@@ -13,7 +13,7 @@ Uses [k3s](https://k3s.io/) on Raspberry Pis in my apartment.
 6. Change hostname to `raspberrypi-<index>`
 7. Change GPU memory to 16
 8. Exit config (do not reboot)
-9. Open boot command `sudo vi /boot/cmdline.txt` and add `cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1` to the end of the first line.
+9. Open boot command `sudo vi /boot/cmdline.txt` and add `cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1` to the end of the first line (Needed for k3s). 
 10. Open ssh config `sudo vi /etc/ssh/sshd_config` and update the following lines.
     ```
     PubkeyAuthentication yes
@@ -42,5 +42,5 @@ pulumi up
 ## Outputs
 Get the `kubeconfig`.
 ```
-pulumi stack output kubeconfig --show-secrets >> ~/.kube/kubeconfig
+pulumi stack output kubeconfig --show-secrets > ~/.kube/kubeconfig
 ```
