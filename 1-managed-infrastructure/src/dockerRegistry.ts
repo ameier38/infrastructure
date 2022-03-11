@@ -1,22 +1,21 @@
 import * as digitalocean from '@pulumi/digitalocean'
 import * as docker from '@pulumi/docker'
-import * as config from './config'
 
 const registry = new digitalocean.ContainerRegistry('default', {
     subscriptionTierSlug: 'basic'
-}, { provider: config.digitalOceanProvider })
+})
 
 export const registryEndpoint = registry.endpoint
 
 const writeCredentials = new digitalocean.ContainerRegistryDockerCredentials('write', {
     registryName: registry.name,
     write: true
-}, { provider: config.digitalOceanProvider })
+})
 
 const readCredentials = new digitalocean.ContainerRegistryDockerCredentials('read', {
     registryName: registry.name,
     write: false
-}, { provider: config.digitalOceanProvider })
+})
 
 // NB: used for pulling images in Kubernetes
 export const dockerCredentials = readCredentials.dockerCredentials

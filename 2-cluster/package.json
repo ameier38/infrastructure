@@ -1,15 +1,10 @@
 {
     "name": "cluster",
     "devDependencies": {
-        "@types/node": "^16.6.1",
-        "@types/ssh2": "^0.5.47",
-        "@types/uuid": "^8.3.1"
+        "@types/node": "^17.0.21"
     },
     "dependencies": {
-        "@pulumi/digitalocean": "^4.6.0",
-        "@pulumi/kubernetes": "^3.0.0",
-        "@pulumi/pulumi": "^3.0.0",
-        "ssh2": "^1.2.0",
-        "uuid": "^7.0.3"
+        "@pulumi/command": "0.0.3",
+        "@pulumi/pulumi": "^3.26.1"
     }
 }

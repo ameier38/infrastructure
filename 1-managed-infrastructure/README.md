@@ -1,6 +1,5 @@
 # Managed Infrastructure Stack
-Pulumi project for managed infrastructure such as a Docker registry,
-S3 buckets, DNS records, and authentication.
+Pulumi project for managed infrastructure.
 
 ## Usage
 Preview changes.

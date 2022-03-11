@@ -1,22 +1,22 @@
 import * as k8s from '@pulumi/kubernetes'
-import * as config from './config'
 
-export const infrastructureNamespace = new k8s.core.v1.Namespace('infrastructure', {
-    metadata: { name: 'infrastructure' }
-}, { provider: config.k8sProvider })
+const createNamespace = (name:string) => {
+    const namespace = new k8s.core.v1.Namespace(name, {
+        metadata: { name: name },
+    })
+    new k8s.core.v1.LimitRange(name, {
+        spec: {
+            limits: [{
+                type: 'Container',
+                default: { memory: '512Mi' },
+                defaultRequest: { memory: '512Mi' }
+            }]
+        }
+    }, { dependsOn: namespace})
+    return namespace.metadata.name
+}
 
-export const monitoringNamespace = new k8s.core.v1.Namespace('monitoring', {
-    metadata: { name: 'monitoring' }
-}, { provider: config.k8sProvider })
-
-export const blogNamespace = new k8s.core.v1.Namespace('blog', {
-    metadata: { name: 'blog' }
-}, { provider: config.k8sProvider })
-
-export const ackmxNamespace = new k8s.core.v1.Namespace('ackmx', {
-    metadata: { name: 'ackmx' }
-}, { provider: config.k8sProvider })
-
-export const easuryNamespace = new k8s.core.v1.Namespace('easury', {
-    metadata: { name: 'easury' }
-}, { provider: config.k8sProvider })
+export const cloudflaredNamespace = createNamespace('cloudflared')
+export const monitoringNamespace = createNamespace('monitoring')
+export const ackmxNamespace = createNamespace('ackmx')
+export const blogNamespace = createNamespace('blog')

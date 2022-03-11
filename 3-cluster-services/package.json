@@ -1,12 +1,10 @@
 {
     "name": "cluster-services",
     "devDependencies": {
-        "@types/node": "^16.4.13"
+        "@types/node": "^17.0.21"
     },
     "dependencies": {
-        "@pulumi/cloudflare": "^3.3.0",
-        "@pulumi/digitalocean": "^4.5.0",
-        "@pulumi/kubernetes": "^3.6.0",
-        "@pulumi/pulumi": "^3.9.1"
+        "@pulumi/kubernetes": "^3.16.0",
+        "@pulumi/pulumi": "^3.26.1"
     }
 }

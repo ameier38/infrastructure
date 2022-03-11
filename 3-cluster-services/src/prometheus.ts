@@ -1,107 +1,32 @@
-import * as cloudflare from '@pulumi/cloudflare'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
-import * as config from './config'
-import { ambassadorChart, loadBalancerIpAddress, oauthFilter } from './ambassador'
-import { monitoringNamespace } from './namespace'
+import * as namespace from './namespace'
 
-const identifier = 'prometheus'
-
-const chart = new k8s.helm.v3.Chart(identifier, {
+const chart = new k8s.helm.v3.Chart('prometheus', {
     chart: 'prometheus',
-    version: '14.6.0',
-    fetchOpts: {
-        repo: 'https://prometheus-community.github.io/helm-charts'
-    },
-    namespace: monitoringNamespace.metadata.name,
+    version: '15.5.3',
+    fetchOpts: { repo: 'https://prometheus-community.github.io/helm-charts' },
+    namespace: namespace.monitoringNamespace,
     values: {
-        alertmanager: {
-            enabled: true,
-            nodeSelector: { 'kubernetes.io/arch': 'amd64' },
-            securityContext: {
-                runAsNonRoot: false,
-                fsGroup: 0,
-                runAsGroup: 0,
-                runAsUser: 0
-            }
+        serviceAccounts: {
+            alertmanager: { create: false },
+            pushgateway: { create: false }
         },
-        kubeStateMetrics: {
-            enabled: false
-        },
-        nodeExporter: {
-            enabled: true,
-            nodeSelector: { 'kubernetes.io/arch': 'amd64' }
-        },
-        server: {
-            enabled: true,
-            nodeSelector: { 'kubernetes.io/arch': 'amd64' },
-            securityContext: {
-                runAsNonRoot: false,
-                fsGroup: 0,
-                runAsGroup: 0,
-                runAsUser: 0
-            }
-        },
-        pushgateway: {
-            enabled: false
-        }
+        alertmanager: { enabled: false },
+        pushgateway: { enabled: false }
     }
-}, { provider: config.k8sProvider })
+})
 
-export const internalHost =
-    pulumi.all([chart, monitoringNamespace.metadata.name])
-    .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, `${identifier}-server`, 'metadata'))
-    .apply(meta => `${meta.name}.${meta.namespace}.svc.cluster.local`)
+const internalHost =
+    pulumi.all([chart, namespace.monitoringNamespace]).apply(([chart, namespace]) => {
+        const meta = chart.getResourceProperty('v1/Service', namespace, 'prometheus-server', 'metadata')
+        return pulumi.interpolate `${meta.name}.${meta.namespace}.svc.cluster.local`
+    })
 
-export const internalPort =
-    pulumi.all([chart, monitoringNamespace.metadata.name])
-    .apply(([chart, namespace]) => chart.getResourceProperty('v1/Service', namespace, `${identifier}-server`, 'spec'))
-    .apply(spec => spec.ports.find(port => port.name === 'http')!.port)
+const internalPort =
+    pulumi.all([chart, namespace.monitoringNamespace]).apply(([chart, namespace]) => {
+        const spec = chart.getResourceProperty('v1/Service', namespace, 'prometheus-server', 'spec')
+        return spec.ports[0].port
+    })
 
-const record = new cloudflare.Record(identifier, {
-    zoneId: config.zoneId,
-    name: 'prometheus',
-    type: 'A',
-    value: loadBalancerIpAddress
-}, { provider: config.cloudflareProvider })
-
-// NB: generates certificate
-new k8s.apiextensions.CustomResource(`${identifier}-host`, {
-    apiVersion: 'getambassador.io/v2',
-    kind: 'Host',
-    metadata: { namespace: monitoringNamespace.metadata.name },
-    spec: {
-        hostname: record.hostname,
-        acmeProvider: {
-            email: config.acmeEmail
-        }
-    }
-}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
-
-// NB: specifies how to direct incoming requests
-new k8s.apiextensions.CustomResource(`${identifier}-mapping`, {
-    apiVersion: 'getambassador.io/v2',
-    kind: 'Mapping',
-    metadata: { namespace: monitoringNamespace.metadata.name },
-    spec: {
-        prefix: '/',
-        host: record.hostname,
-        service: pulumi.interpolate `${internalHost}:${internalPort}`
-    }
-}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
-
-// NB: specifies which filters to use for incoming requests
-new k8s.apiextensions.CustomResource(`${identifier}-filter-policy`, {
-    apiVersion: 'getambassador.io/v2',
-    kind: 'FilterPolicy',
-    metadata: { namespace: monitoringNamespace.metadata.name },
-    spec: {
-        rules: [{
-            host: record.hostname,
-            path: '*',
-            filters: [
-                { name: oauthFilter.metadata.name, namespace: oauthFilter.metadata.namespace, arguments: { scopes: ['openid'] } },
-            ]
-        }]
-    }
-}, { provider: config.k8sProvider, dependsOn: ambassadorChart })
+export const internalUrl = pulumi.interpolate `http://${internalHost}:${internalPort}`

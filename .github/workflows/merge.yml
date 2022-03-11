@@ -1,48 +1,47 @@
 name: Merge
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      pulumi-project:
+        required: true
+        type: string
+    secrets:
+      pulumi-token:
+        required: true
+      tunnel-token-id:
+        required: true
+      tunnel-token-secret:
+        required: true
+
 jobs:
-  up:
+  update:
     name: Update
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Node
+      - name: Start Tunnel
+        run: |
+          docker run \
+            -d \
+            -p 1234:1234 \
+            cloudflare/cloudflared:2022.3.1 \
+            access tcp \
+              --hostname=k8s.andrewmeier.dev \
+              --url=0.0.0.0:1234 \
+              --service-token-id=${{ secrets.tunnel-token-id }} \
+              --service-token-secret=${{ secrets.tunnel-token-secret }}
+      - name: Setup Node 
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: Install Managed Infrastructure Packages
+      - name: Install Packages
         run: npm install
-        working-directory: ./1-managed-infrastructure
-      - name: Update Managed Infrastructure
+        working-directory: ${{ inputs.pulumi-project }}
+      - name: Apply Changes
         uses: pulumi/actions@v3
         with:
-          work-dir: ./1-managed-infrastructure
+          work-dir: ${{ inputs.pulumi-project }}
           command: up
           stack-name: prod
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      - name: Install Cluster Packages
-        run: npm install
-        working-directory: ./2-cluster
-      - name: Update Cluster
-        uses: pulumi/actions@v3
-        with:
-          work-dir: ./2-cluster
-          command: up
-          stack-name: prod
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      - name: Install Cluster Services Packages
-        run: npm install
-        working-directory: ./3-cluster-services
-      - name: Update Cluster Services
-        uses: pulumi/actions@v3
-        with:
-          work-dir: ./3-cluster-services
-          command: up
-          stack-name: prod
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ secrets.pulumi-token }}

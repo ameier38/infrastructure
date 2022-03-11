@@ -1,0 +1,10 @@
+{
+    "name": "managed-apps",
+    "devDependencies": {
+        "@types/node": "^17"
+    },
+    "dependencies": {
+        "@pulumi/kubernetes": "^3.0.0",
+        "@pulumi/pulumi": "^3.26.1"
+    }
+}

@@ -1,0 +1,3 @@
+name: managed-apps
+runtime: nodejs
+description: Pulumi project for managed apps
