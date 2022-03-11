@@ -1,7 +1,5 @@
 # Andrew's Infrastructure
-Repo for my infrastructure. Check out [my post](https://andrewmeier.dev/personal-infrastructure)
-which describes the hardware setup. Loosely based on
-[Pulumi's Kubernetes Playbook](https://www.pulumi.com/docs/guides/crosswalk/kubernetes/playbooks/).
+Loosely based on [Pulumi's Kubernetes Playbook](https://www.pulumi.com/docs/guides/crosswalk/kubernetes/playbooks/).
 
 ## Setup
 Install [Pulumi](https://www.pulumi.com/docs/get-started/install/).
@@ -11,6 +9,8 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://get.pulumi.com/in
 ```
 
 ## Stacks
-1. [Managed Infrastructure](./1-managed-infrastructure): Docker regisitry, S3 Buckets, DNS records, etc.
-2. [Cluster](./2-cluster): Hybrid Kubernetes cluster using k3s.
-3. [Cluster Services](./3-cluster-services): Tools such as Ambassador, Prometheus, Grafana, and Seq.
+1. [Managed Infrastructure](./1-managed-infrastructure): Docker regisitry, S3 Buckets, DNS zones, etc.
+2. [Cluster](./2-cluster): Kubernetes cluster using k3s.
+3. [Cluster Services](./3-cluster-services): Namespaces and cluster wide services such as Prometheus and Loki.
+4. [App Services](./4-app-services): Services used by apps such as DNS records, authentication, and ingress.
+5. [Managed Apps](./5-managed-apps): Managed applications such as Grafana.
