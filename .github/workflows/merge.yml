@@ -20,7 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use buildx as default
-        run: docker buildx install
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
       - name: Start Tunnel
         run: |
           docker run \
