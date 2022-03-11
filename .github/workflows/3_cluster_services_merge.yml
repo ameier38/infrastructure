@@ -9,7 +9,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/merge.yml
     with:
-      pulumi-project: ./3-cluster-serivces
+      pulumi-project: ./3-cluster-services
     secrets:
       pulumi-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       tunnel-token-id: ${{ secrets.TUNNEL_TOKEN_ID }}
