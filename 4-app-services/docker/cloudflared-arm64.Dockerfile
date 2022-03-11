@@ -13,3 +13,4 @@ RUN cloudflared version
 
 ENTRYPOINT [ "cloudflared", "--no-autoupdate" ]
 CMD [ "version" ]
+
