@@ -8,7 +8,7 @@ const cloudflaredArm64 = new docker.Image('cloudflared-arm64', {
     build: {
         context: path.join(config.rootDir, 'docker'),
         dockerfile: path.join(config.rootDir, 'docker', 'cloudflared-arm64.Dockerfile'),
-        extraOptions: ['--quiet', '--platform', 'linux/arm64']
+        extraOptions: ['--quiet']
     },
     registry: config.imageRegistry
 })
