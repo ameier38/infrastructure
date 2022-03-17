@@ -23,7 +23,7 @@ const k8sApiApplication = new cloudflare.AccessApplication('k8s.andrewmeier.dev'
 
 new cloudflare.AccessPolicy('k8s.andrewmeier.dev', {
     name: 'Kubernetes API Access',
-    precedence: 1,
+    precedence: 0,
     zoneId: zone.andrewmeierDotDevZoneId,
     applicationId: k8sApiApplication.id,
     decision: 'allow',

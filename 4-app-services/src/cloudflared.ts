@@ -64,7 +64,6 @@ new k8s.apps.v1.Deployment(identifier, {
                         args: [
                             'tunnel',
                             '--config', '/var/secrets/cloudflared/config.yaml',
-                            '--loglevel', 'debug',
                             'run'
                         ],
                         livenessProbe: {
