@@ -42,7 +42,7 @@ ingress:
 EOF
 
 echo "Downloading cloudflared"
-curl -sfLO https://github.com/cloudflare/cloudflared/releases/download/2022.3.1/cloudflared-linux-arm64
+curl -sfLO https://github.com/cloudflare/cloudflared/releases/download/2022.3.2/cloudflared-linux-arm64
 
 echo "Updating cloudflared permissions"
 chmod +x cloudflared-linux-arm64
@@ -50,8 +50,10 @@ chmod +x cloudflared-linux-arm64
 echo "Moving cloudflared to bin"
 mv cloudflared-linux-arm64 /usr/local/bin/cloudflared
 
-echo "Installing cloudflared service"
-cloudflared service install
+if [ ! -f /etc/systemd/system/cloudflared.service ]; then
+    echo "Installing cloudflared service"
+    cloudflared service install
+fi
 
 echo "Starting cloudflared service"
 systemctl start cloudflared 
