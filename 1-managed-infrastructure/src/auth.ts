@@ -21,14 +21,24 @@ const k8sApiApplication = new cloudflare.AccessApplication('k8s.andrewmeier.dev'
     type: 'self_hosted'
 })
 
-new cloudflare.AccessPolicy('k8s.andrewmeier.dev', {
-    name: 'Kubernetes API Access',
+new cloudflare.AccessPolicy('k8s-api-user-access', {
+    name: 'Kubernetes API User Access',
     precedence: 0,
     zoneId: zone.andrewmeierDotDevZoneId,
     applicationId: k8sApiApplication.id,
     decision: 'allow',
     includes: [{
         emails: [ 'ameier38@gmail.com' ],
+    }]
+})
+
+new cloudflare.AccessPolicy('k8s-api-bot-access', {
+    name: 'Kubernetes API Bot Access',
+    precedence: 1,
+    zoneId: zone.andrewmeierDotDevZoneId,
+    applicationId: k8sApiApplication.id,
+    decision: 'non_identity',
+    includes: [{
         serviceTokens: [ githubServiceToken.id ]
     }]
 })
