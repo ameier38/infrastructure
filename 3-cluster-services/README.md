@@ -11,4 +11,3 @@ Apply changes.
 ```
 pulumi up
 ```
-

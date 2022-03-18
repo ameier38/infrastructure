@@ -1,3 +1,8 @@
+[![Managed Infrastructure Merge](https://github.com/ameier38/infrastructure/actions/workflows/1_managed_infrastructure_merge.yml/badge.svg)](https://github.com/ameier38/infrastructure/actions/workflows/1_managed_infrastructure_merge.yml)
+[![Cluster Services Merge](https://github.com/ameier38/infrastructure/actions/workflows/3_cluster_services_merge.yml/badge.svg)](https://github.com/ameier38/infrastructure/actions/workflows/3_cluster_services_merge.yml)
+[![App Services Merge](https://github.com/ameier38/infrastructure/actions/workflows/4_app_services_merge.yml/badge.svg)](https://github.com/ameier38/infrastructure/actions/workflows/4_app_services_merge.yml)
+[![Managed Apps Merge](https://github.com/ameier38/infrastructure/actions/workflows/5_managed_apps_merge.yml/badge.svg)](https://github.com/ameier38/infrastructure/actions/workflows/5_managed_apps_merge.yml)
+
 # Andrew's Infrastructure
 Loosely based on [Pulumi's Kubernetes Playbook](https://www.pulumi.com/docs/guides/crosswalk/kubernetes/playbooks/).
 
