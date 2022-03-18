@@ -12,7 +12,7 @@ const secret = new k8s.core.v1.Secret('grafana', {
 
 const chart = new k8s.helm.v3.Chart('grafana', {
     chart: 'grafana',
-    version: '6.23.2',
+    version: '6.24.1',
     fetchOpts: { repo: 'https://grafana.github.io/helm-charts' },
     namespace: config.monitoringNamespace,
     values: {
