@@ -17,7 +17,7 @@ for (const [key, value] of Object.entries(sendgridRecords)) {
     })
 }
 
-const k8sApiRecord = new cloudflare.Record('k8s.andrewmeier.dev', {
+const k8sApiTunnel = new cloudflare.Record('k8s.andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: 'k8s',
     type: 'CNAME',
@@ -25,4 +25,12 @@ const k8sApiRecord = new cloudflare.Record('k8s.andrewmeier.dev', {
     proxied: true
 })
 
-export const k8sApiHostname = k8sApiRecord.hostname
+new cloudflare.Record('andrewmeier.dev', {
+    zoneId: zone.andrewmeierDotDevZoneId,
+    name: '@',
+    type: 'CNAME',
+    value: tunnel.k8sTunnelHost,
+    proxied: true
+})
+
+export const k8sApiTunnelHost = k8sApiTunnel.hostname

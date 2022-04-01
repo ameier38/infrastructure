@@ -1,21 +1,34 @@
+import * as docker from '@pulumi/docker'
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
-import * as config from './config'
-import * as record from './record'
-import * as dockerImage from './dockerImage'
+import * as path from 'path'
+import * as config from '../config'
+import * as record from '../cloudflare/record'
 
 const identifier = 'cloudflared'
 
+const cloudflaredArm64 = new docker.Image('cloudflared-arm64', {
+    imageName: pulumi.interpolate `${config.registryServer}/${config.registryName}/cloudflared-arm64`,
+    build: {
+        context: path.join(config.srcDir, 'docker'),
+        dockerfile: path.join(config.srcDir, 'docker', 'cloudflared-arm64.Dockerfile'),
+        extraOptions: ['--quiet']
+    },
+    registry: {
+        server: config.registryServer,
+        username: config.registryUser,
+        password: config.registryPassword
+    }
+})
+
 const cloudflaredConfig = pulumi.interpolate `
-tunnel: ${config.tunnelId}
+tunnel: ${config.k8sTunnelId}
 credentials-file: /var/secrets/cloudflared/credentials.json
 metrics: 0.0.0.0:2000
 no-autoupdate: true
 ingress:
-  - hostname: ${record.andrewmeierDotDevHostname}
-    service: http://blog.blog
-  - hostname: ${record.grafanaDotAndrewmeierDotDevHostname}
-    service: http://grafana.monitoring
+  - hostname: '*.${record.andrewmeierDotDevHostname}'
+    service: http://traefik.kube-system
   - service: http_status:404
 `
 
@@ -23,7 +36,7 @@ const cloudflaredSecret = new k8s.core.v1.Secret(identifier, {
     metadata: { namespace: config.cloudflaredNamespace },
     stringData: {
         'config.yaml': cloudflaredConfig,
-        'credentials.json': config.tunnelCredentials
+        'credentials.json': config.k8sTunnelCredentials
     }
 })
 
@@ -60,7 +73,7 @@ new k8s.apps.v1.Deployment(identifier, {
                 }],
                 containers: [{
                         name: identifier,
-                        image: dockerImage.cloudflaredArm64ImageName,
+                        image: cloudflaredArm64.imageName,
                         args: [
                             'tunnel',
                             '--config', '/var/secrets/cloudflared/config.yaml',

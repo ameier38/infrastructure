@@ -1,5 +1,5 @@
 import * as cloudflare from '@pulumi/cloudflare'
-import * as config from './config'
+import * as config from '../config'
 
 const githubIdentityProvider = new cloudflare.AccessIdentityProvider('github', {
     name: 'github',
