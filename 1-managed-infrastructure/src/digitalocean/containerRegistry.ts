@@ -1,11 +1,11 @@
 import * as digitalocean from '@pulumi/digitalocean'
-import * as docker from '@pulumi/docker'
 
 const registry = new digitalocean.ContainerRegistry('default', {
     subscriptionTierSlug: 'basic'
 })
 
-export const registryEndpoint = registry.endpoint
+export const registryName = registry.name
+export const registryServer = registry.serverUrl
 
 const writeCredentials = new digitalocean.ContainerRegistryDockerCredentials('write', {
     registryName: registry.name,
@@ -18,19 +18,18 @@ const readCredentials = new digitalocean.ContainerRegistryDockerCredentials('rea
 })
 
 // NB: used for pulling images in Kubernetes
-export const dockerCredentials = readCredentials.dockerCredentials
+export const dockerconfigjson = readCredentials.dockerCredentials
 
 // NB: used for pushing images
-export const imageRegistry = writeCredentials.dockerCredentials.apply(creds => {
+const authParts = writeCredentials.dockerCredentials.apply(creds => {
     const auth = JSON.parse(creds)['auths']['registry.digitalocean.com']['auth']
-    const decoded = Buffer.from(auth, 'base64').toString('ascii')
+    const decoded = Buffer.from(auth, 'base64').toString('utf8')
     const parts = decoded.split(':')
     if (parts.length != 2) {
-        throw new Error(`Invalid credentials: ${decoded}`)
+        throw new Error('Invalid credentials')
     }
-    return {
-        server: registry.serverUrl,
-        username: parts[0],
-        password: parts[1]
-    } as docker.ImageRegistry
+    return parts
 })
+
+export const registryUser = authParts.apply(parts => parts[0])
+export const registryPassword = authParts.apply(parts => parts[1])

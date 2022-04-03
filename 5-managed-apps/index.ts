@@ -1,3 +1,2 @@
-import * as grafana from './src/grafana'
-
-export const grafanaUrl = grafana.internalUrl
+import './src/grafana'
+import './src/whoami'

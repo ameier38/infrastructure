@@ -1,0 +1,6 @@
+import './cloudflared'
+import './loki'
+import './namespace'
+import './prometheus'
+import './promtail'
+import './traefik'

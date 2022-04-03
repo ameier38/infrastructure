@@ -1,17 +1,18 @@
 import * as pulumi from '@pulumi/pulumi'
 
+const managedInfrastructureStack = new pulumi.StackReference('ameier38/managed-infrastructure/prod')
 const clusterServicesStack = new pulumi.StackReference('ameier38/cluster-services/prod')
 
 export const monitoringNamespace = clusterServicesStack.requireOutput('monitoringNamespace')
 export const prometheusUrl = clusterServicesStack.requireOutput('prometheusUrl')
 export const lokiUrl = clusterServicesStack.requireOutput('lokiUrl')
+export const grafanaHost = managedInfrastructureStack.requireOutput('grafanaHost')
+export const whoamiHost = managedInfrastructureStack.requireOutput('whoamiHost')
 
-const rawGrafanaConfig = new pulumi.Config('grafana')
-export const grafanaConfig = {
-    user: rawGrafanaConfig.require('user'),
-    password: rawGrafanaConfig.requireSecret('password'),
-    smtpUser: rawGrafanaConfig.require('smtpUser'),
-    smtpPassword: rawGrafanaConfig.requireSecret('smtpPassword'),
-    smtpHost: rawGrafanaConfig.require('smtpHost'),
-    smtpPort: rawGrafanaConfig.require('smtpPort')
+const rawSmtpConfig = new pulumi.Config('smtp')
+export const smtpConfig = {
+    user: rawSmtpConfig.require('user'),
+    password: rawSmtpConfig.requireSecret('password'),
+    host: rawSmtpConfig.require('host'),
+    port: rawSmtpConfig.require('port')
 }

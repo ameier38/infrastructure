@@ -2,19 +2,6 @@ import * as command from '@pulumi/command'
 import * as pulumi from '@pulumi/pulumi'
 import * as config from './config'
 
-const installK3sMasterScript = `
-echo "Installing k3s"
-
-echo "Creating config directory"
-mkdir -p /etc/rancher/k3s
-
-cat << EOF > /etc/rancher/k3s/config.yaml
-disable: traefik
-EOF
-
-curl -sfL https://get.k3s.io | sh -
-`
-
 // ref: https://developers.cloudflare.com/cloudflare-one/tutorials/kubectl/
 const installCloudflaredScript = pulumi.interpolate `
 echo "Installing cloudflared"
@@ -26,15 +13,15 @@ mkdir -p /etc/cloudflared
 
 echo "Writing credentials"
 cat << EOF > /etc/cloudflared/credentials.json
-${config.tunnelCredentials}
+${config.k8sApiTunnelCredentials}
 EOF
 
 echo "Writing config"
 cat << EOF > /etc/cloudflared/config.yml
-tunnel: ${config.tunnelId}
+tunnel: ${config.k8sApiTunnelId}
 credentials-file: /etc/cloudflared/credentials.json
 ingress:
-  - hostname: ${config.k8sHostname}
+  - hostname: ${config.k8sApiTunnelHost}
     service: tcp://localhost:6443
     originRequest:
       proxyType: socks
@@ -42,7 +29,7 @@ ingress:
 EOF
 
 echo "Downloading cloudflared"
-curl -sfLO https://github.com/cloudflare/cloudflared/releases/download/2022.3.2/cloudflared-linux-arm64
+curl -sfLO https://github.com/cloudflare/cloudflared/releases/download/2022.3.4/cloudflared-linux-arm64
 
 echo "Updating cloudflared permissions"
 chmod +x cloudflared-linux-arm64
@@ -50,19 +37,21 @@ chmod +x cloudflared-linux-arm64
 echo "Moving cloudflared to bin"
 mv cloudflared-linux-arm64 /usr/local/bin/cloudflared
 
-if [ ! -f /etc/systemd/system/cloudflared.service ]; then
+if [ ! -f /etc/systemd/system/cloudflared.service ]
+then
     echo "Installing cloudflared service"
     cloudflared service install
+    echo "Starting cloudflared service"
+    systemctl start cloudflared 
+else
+    echo "Restarting cloudflared service"
+    systemctl restart cloudflared
 fi
-
-echo "Starting cloudflared service"
-systemctl start cloudflared 
 `
 
-const installK3s = new command.remote.Command('install-k3s-master', {
+const installK3sMaster = new command.remote.Command('install-k3s-master', {
     connection: config.masterConn,
-    create: installK3sMasterScript,
-    triggers: [ installK3sMasterScript ]
+    create: 'curl -sfL https://get.k3s.io | sh -'
 })
 
 new command.remote.Command('install-cloudflared', {
@@ -73,17 +62,18 @@ new command.remote.Command('install-cloudflared', {
 
 const readKubeconfig = new command.remote.Command('read-kubeconfig', {
     connection: config.masterConn,
-    create: 'cat /etc/rancher/k3s/k3s.yaml',
-    triggers: [ installK3sMasterScript ]
-}, { dependsOn: installK3s })
+    create: 'cat /etc/rancher/k3s/k3s.yaml'
+}, { dependsOn: installK3sMaster })
 
-export const kubeconfig = readKubeconfig.stdout.apply(pulumi.secret)
+export const kubeconfig =
+    pulumi
+        .all([readKubeconfig.stdout, config.k8sApiTunnelHost])
+        .apply(([kubeconfig, host]) => kubeconfig.replace('127.0.0.1', host))
 
 const readToken = new command.remote.Command('read-token', {
     connection: config.masterConn,
-    create: 'cat /var/lib/rancher/k3s/server/node-token',
-    triggers: [installK3sMasterScript]
-}, {dependsOn: installK3s })
+    create: 'cat /var/lib/rancher/k3s/server/node-token'
+}, {dependsOn: installK3sMaster })
 
 const token = readToken.stdout.apply(token => token.replace('\n', ''))
 
