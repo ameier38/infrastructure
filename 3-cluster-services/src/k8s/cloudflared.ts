@@ -3,7 +3,6 @@ import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as path from 'path'
 import * as config from '../config'
-import * as record from '../cloudflare/record'
 
 const identifier = 'cloudflared'
 
@@ -27,13 +26,15 @@ credentials-file: /var/secrets/cloudflared/credentials.json
 metrics: 0.0.0.0:2000
 no-autoupdate: true
 ingress:
-  - hostname: '*.${record.andrewmeierDotDevHostname}'
+  - hostname: ${config.andrewmeierDotDevDomain}
+    service: http://traefik.kube-system
+  - hostname: '*.${config.andrewmeierDotDevDomain}'
     service: http://traefik.kube-system
   - service: http_status:404
 `
 
 const cloudflaredSecret = new k8s.core.v1.Secret(identifier, {
-    metadata: { namespace: config.cloudflaredNamespace },
+    metadata: { namespace: 'kube-system' },
     stringData: {
         'config.yaml': cloudflaredConfig,
         'credentials.json': config.k8sTunnelCredentials
@@ -41,10 +42,10 @@ const cloudflaredSecret = new k8s.core.v1.Secret(identifier, {
 })
 
 const registrySecret = new k8s.core.v1.Secret(`${identifier}-registry`, {
-    metadata: { namespace: config.cloudflaredNamespace },
+    metadata: { namespace: 'kube-system' },
     type: 'kubernetes.io/dockerconfigjson',
     stringData: {
-        '.dockerconfigjson': config.dockerCredentials
+        '.dockerconfigjson': config.dockerconfigjson
     }
 })
 
@@ -53,7 +54,7 @@ const labels = { 'app.kubernetes.io/name': identifier }
 new k8s.apps.v1.Deployment(identifier, {
     metadata: {
         name: identifier,
-        namespace: config.cloudflaredNamespace
+        namespace: 'kube-system'
     },
     spec: {
         replicas: 1,

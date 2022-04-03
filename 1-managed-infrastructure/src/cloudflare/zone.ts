@@ -12,3 +12,4 @@ new cloudflare.ZoneSettingsOverride('andrewmeier.dev', {
 })
 
 export const andrewmeierDotDevZoneId = andrewmeierDotDev.id
+export const andrewmeierDotDevDomain = andrewmeierDotDev.zone

@@ -16,7 +16,6 @@ const createNamespace = (name:string) => {
     return namespace.metadata.name
 }
 
-export const cloudflaredNamespace = createNamespace('cloudflared')
 export const monitoringNamespace = createNamespace('monitoring')
 export const ackmxNamespace = createNamespace('ackmx')
-export const blogNamespace = createNamespace('blog')
+export const andrewmeierNamespace = createNamespace('andrewmeier')
