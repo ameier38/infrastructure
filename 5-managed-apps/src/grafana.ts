@@ -1,8 +1,23 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
+import * as random from '@pulumi/random'
 import * as config from './config'
 
 const identifier = 'grafana'
+
+const rawAdminPassword = new random.RandomPassword('admin-password', {
+    length: 20
+})
+
+export const adminPassword = rawAdminPassword.result
+
+const secret = new k8s.core.v1.Secret(identifier, {
+    metadata: { namespace: config.monitoringNamespace},
+    stringData: {
+        user: 'admin',
+        password: adminPassword
+    }
+})
 
 const chart = new k8s.helm.v3.Chart(identifier, {
     chart: 'grafana',
@@ -15,6 +30,11 @@ const chart = new k8s.helm.v3.Chart(identifier, {
         testFramework: { enabled: false },
         persistence: {
             inMemory: { enabled: true }
+        },
+        admin: {
+            existingSecret: secret.metadata.name,
+            userKey: 'user',
+            passwordKey: 'password'
         },
         'grafana.ini': {
             server: {
