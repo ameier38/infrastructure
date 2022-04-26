@@ -10,7 +10,7 @@ const internalApplication = new cloudflare.AccessApplication('internal', {
     autoRedirectToIdentity: true,
     logoUrl: bucketObject.logoUrl,
     type: 'self_hosted',
-    httpOnlyCookieAttribute: true
+    httpOnlyCookieAttribute: false
 })
 
 export const internalApplicationId = internalApplication.id
