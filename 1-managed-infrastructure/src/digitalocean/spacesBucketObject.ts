@@ -10,7 +10,7 @@ const logoPath = path.join(config.rootDir, 'images', logoKey)
 const logoObject = new digitalocean.SpacesBucketObject('logo', {
     bucket: bucket.bucketName,
     key: logoKey,
-    region: 'nyc3',
+    region: digitalocean.Region.NYC3,
     source: logoPath,
     acl: 'public-read'
 })

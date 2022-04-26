@@ -1,7 +1,8 @@
 import * as digitalocean from '@pulumi/digitalocean'
 
 const registry = new digitalocean.ContainerRegistry('default', {
-    subscriptionTierSlug: 'basic'
+    subscriptionTierSlug: 'basic',
+    region: digitalocean.Region.NYC3
 })
 
 export const registryName = registry.name

@@ -4,7 +4,7 @@ import * as serviceToken from './serviceToken'
 
 new cloudflare.AccessPolicy('internal-user-access', {
     name: 'Internal User Access',
-    precedence: 4,
+    precedence: 1,
     accountId: cloudflare.config.accountId,
     applicationId: application.internalApplicationId,
     decision: 'allow',
@@ -15,7 +15,7 @@ new cloudflare.AccessPolicy('internal-user-access', {
 
 new cloudflare.AccessPolicy('internal-bot-access', {
     name: 'Internal Bot Access',
-    precedence: 1,
+    precedence: 2,
     accountId: cloudflare.config.accountId,
     applicationId: application.internalApplicationId,
     decision: 'non_identity',

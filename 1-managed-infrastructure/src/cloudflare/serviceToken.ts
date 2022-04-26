@@ -1,9 +1,8 @@
 import * as cloudflare from '@pulumi/cloudflare'
-import * as zone from './zone'
 
 const githubServiceToken = new cloudflare.AccessServiceToken('github', {
     name: 'GitHub',
-    zoneId: zone.andrewmeierDotDevZoneId
+    accountId: cloudflare.config.accountId!
 })
 
 export const githubServiceTokenId = githubServiceToken.id
