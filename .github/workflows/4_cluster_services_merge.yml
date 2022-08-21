@@ -1,0 +1,17 @@
+name: Cluster Services Merge
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '4-cluster-services/**'
+jobs:
+  deploy:
+    uses: ./.github/workflows/merge.yml
+    with:
+      pulumi-project: ./4-cluster-services
+      assume-role: infrastructure-deployer
+    secrets:
+      pulumi-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      tunnel-token-id: ${{ secrets.TUNNEL_TOKEN_ID }}
+      tunnel-token-secret: ${{ secrets.TUNNEL_TOKEN_SECRET }}
