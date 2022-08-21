@@ -1,0 +1,17 @@
+name: Managed Infrastructure Pull Request
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '2-managed-infrastructure/**'
+jobs:
+  preview:
+    uses: ./.github/workflows/pull_request.yml
+    with:
+      pulumi-project: ./2-managed-infrastructure
+      assume-role: infrastructure-deployer
+    secrets:
+      pulumi-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      tunnel-token-id: ${{ secrets.TUNNEL_TOKEN_ID }}
+      tunnel-token-secret: ${{ secrets.TUNNEL_TOKEN_SECRET }}

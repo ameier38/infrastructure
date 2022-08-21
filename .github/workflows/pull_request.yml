@@ -5,6 +5,9 @@ on:
       pulumi-project:
         required: true
         type: string
+      assume-role:
+        required: true
+        type: string
     secrets:
       pulumi-token:
         required: true
@@ -17,8 +20,18 @@ jobs:
   preview:
     name: Preview
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::400689721046:role/${{ inputs.assume-role }}
+          role-session-name: github
       - name: Start Tunnel
         run: |
           docker run \

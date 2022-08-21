@@ -1,0 +1,12 @@
+secretsprovider: awskms://alias/pulumi?region=us-east-1
+encryptedkey: AQICAHifTFjHoHTfyxI4Gks07Z4b1JH2QH6P7ijxiHQl4Mb98wGN77uTqutcrAM0GJiAd/e3AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtdgqKWgpVleRKOWcAgEQgDsC9sn1SoZ7KCKeh3i/yX1pyJe1dlS9mXvcVmzdbxSOEmq0zxCtHCwQ8ILHSJ+cB7SpWYI1frVcShnSFw==
+config:
+  aws:region: us-east-1
+  cloudflare:accountId:
+    secure: v1:B9ctAMiEgGz6uhsb:UOQyf/8CzzfQzf2TTlqmOYQfIrC97J+7fFazr5B8Ayp8mkfiHfTXg4W81k8TUnLD
+  cloudflare:apiToken:
+    secure: v1:8WCO61Ue+mzMnnLh:KbWfvDlpE9p9zNNDCUCalFosYWH6ouwwMy+YhGsEKLlzmut2b+L6og2lu0GxPPDQHVVxGQF25u8=
+  github:clientId:
+    secure: v1:Erz9qpTRAeRhDnl8:OsQO/tXgldoct16UZrrbVKJYLnGDGd6k29GS5UfpTo0wxeZW
+  github:clientSecret:
+    secure: v1:zJDwY928hGK3Bmkm:kZh/FnkdvQ+KMLRUP3FqAydx/WkvyRkxOB+f0HV/duahonFft9LzX0qTmU5joPbykgnLrS8saYs=
