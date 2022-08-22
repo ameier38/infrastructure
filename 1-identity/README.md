@@ -50,6 +50,8 @@ Pulumi project to manage identity resources.
     }
     ```
 3. Create a user `admin` with the `assume-identity-deployer` policy attached.
+4. Add `admin` user keys to `~/.aws/credentials` file.
+5. Add profile to assume `identity-deployer` role to `~/.aws/config` file.
 
 ## Usage
 Make sure you have assumed the `identity-deployer` AWS role.
