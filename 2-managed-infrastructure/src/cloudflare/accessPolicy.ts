@@ -1,25 +1,60 @@
 import * as cloudflare from '@pulumi/cloudflare'
-import * as application from './accessApplication'
-import * as serviceToken from './serviceToken'
+import * as app from './accessApplication'
+import { githubServiceToken } from './serviceToken'
 
-new cloudflare.AccessPolicy('internal-user-access', {
-    name: 'Internal User Access',
+const emails = [ 'ameier38@gmail.com' ]
+
+new cloudflare.AccessPolicy('k8s-api-user-access', {
+    name: 'Kubernetes API User Access',
     precedence: 1,
     accountId: cloudflare.config.accountId,
-    applicationId: application.internalApplicationId,
+    applicationId: app.k8sApi.id,
     decision: 'allow',
     includes: [{
-        emails: [ 'ameier38@gmail.com' ],
+        emails: emails
     }]
 })
 
-new cloudflare.AccessPolicy('internal-bot-access', {
-    name: 'Internal Bot Access',
+new cloudflare.AccessPolicy('k8s-api-github-access', {
+    name: 'Kubernetes API GitHub Access',
     precedence: 2,
     accountId: cloudflare.config.accountId,
-    applicationId: application.internalApplicationId,
+    applicationId: app.k8sApi.id,
     decision: 'non_identity',
     includes: [{
-        serviceTokens: [ serviceToken.githubServiceTokenId ]
+        serviceTokens: [ githubServiceToken.id ]
+    }]
+})
+
+new cloudflare.AccessPolicy('traefik-user-access', {
+    name: 'Traefik User Access',
+    precedence: 1,
+    accountId: cloudflare.config.accountId,
+    applicationId: app.traefik.id,
+    decision: 'allow',
+    includes: [{
+        emails: emails
+    }]
+})
+
+new cloudflare.AccessPolicy('whoami-user-access', {
+    name: 'Whoami User Access',
+    precedence: 1,
+    accountId: cloudflare.config.accountId,
+    applicationId: app.whoami.id,
+    decision: 'allow',
+    includes: [{
+        emails: emails
+    }]
+})
+
+new cloudflare.AccessPolicy('grafana-user-access', {
+    name: 'Grafana User Access',
+    precedence: 1,
+    accountId: cloudflare.config.accountId,
+    applicationId: app.grafana.id,
+    decision: 'allow',
+    includes: [{
+        emails: emails
     }]
 })

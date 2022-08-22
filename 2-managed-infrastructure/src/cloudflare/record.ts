@@ -40,52 +40,42 @@ email.dkimTokens.apply((tokens:string[]) => {
     }
 })
 
-const k8sApiTunnel = new cloudflare.Record('k8s.andrewmeier.dev', {
+export const k8sApiRecord = new cloudflare.Record('k8s.andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: 'k8s',
     type: 'CNAME',
-    value: tunnel.k8sApiTunnelHost,
+    value: tunnel.k8sApiTunnel.host,
     proxied: true
 })
 
-export const k8sApiTunnelHost = k8sApiTunnel.hostname
-
-const traefikDotAndrewmeierDotDev = new cloudflare.Record('traefik.andrewmeier.dev', {
+export const traefikRecord = new cloudflare.Record('traefik.andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: 'traefik',
     type: 'CNAME',
-    value: tunnel.k8sTunnelHost,
+    value: tunnel.k8sTunnel.host,
     proxied: true
 })
 
-export const traefikHost = traefikDotAndrewmeierDotDev.hostname
-
-const whoamiDotAndrewmeierDotDev = new cloudflare.Record('whoami.andrewmeier.dev', {
+export const whoamiRecord = new cloudflare.Record('whoami.andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: 'whoami',
     type: 'CNAME',
-    value: tunnel.k8sTunnelHost,
+    value: tunnel.k8sTunnel.host,
     proxied: true
 })
 
-export const whoamiHost = whoamiDotAndrewmeierDotDev.hostname
-
-const grafanaDotAndrewmeierDotDev = new cloudflare.Record('grafana.andrewmeier.dev', {
+export const grafanaRecord = new cloudflare.Record('grafana.andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: 'grafana',
     type: 'CNAME',
-    value: tunnel.k8sTunnelHost,
+    value: tunnel.k8sTunnel.host,
     proxied: true
 })
 
-export const grafanaHost = grafanaDotAndrewmeierDotDev.hostname
-
-const andrewmeierDotDev = new cloudflare.Record('andrewmeier.dev', {
+export const andrewmeierRecord = new cloudflare.Record('andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: '@',
     type: 'CNAME',
-    value: tunnel.k8sTunnelHost,
+    value: tunnel.k8sTunnel.host,
     proxied: true
 })
-
-export const blogHost = andrewmeierDotDev.hostname

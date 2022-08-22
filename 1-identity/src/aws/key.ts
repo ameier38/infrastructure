@@ -6,9 +6,7 @@ const pulumiKey = new aws.kms.Key('pulumi', {
 
 export const pulumiKeyArn = pulumiKey.arn
 
-const pulumiKeyAlias = new aws.kms.Alias('pulumi', {
+new aws.kms.Alias('pulumi', {
     name: 'alias/pulumi',
     targetKeyId: pulumiKey.keyId
 })
-
-export const pulumiKeyAliasName = pulumiKeyAlias.name

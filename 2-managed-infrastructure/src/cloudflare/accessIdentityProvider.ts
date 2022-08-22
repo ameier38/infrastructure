@@ -1,7 +1,7 @@
 import * as cloudflare from '@pulumi/cloudflare'
 import * as config from '../config'
 
-const githubIdentityProvider = new cloudflare.AccessIdentityProvider('github', {
+export const githubIdentityProvider = new cloudflare.AccessIdentityProvider('github', {
     name: 'github',
     type: 'github',
     accountId: cloudflare.config.accountId!,
@@ -10,5 +10,3 @@ const githubIdentityProvider = new cloudflare.AccessIdentityProvider('github', {
         clientSecret: config.githubConfig.clientSecret
     }]
 })
-
-export const githubIdentityProviderId = githubIdentityProvider.id
