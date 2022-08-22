@@ -43,12 +43,5 @@ class Tunnel extends pulumi.ComponentResource {
     }
 }
 
-const k8sTunnel = new Tunnel('k8s')
-export const k8sTunnelId = k8sTunnel.id
-export const k8sTunnelHost = k8sTunnel.host
-export const k8sTunnelCredentials = k8sTunnel.credentials
-
-const k8sApiTunnel = new Tunnel('k8s-api')
-export const k8sApiTunnelId = k8sApiTunnel.id
-export const k8sApiTunnelHost = k8sApiTunnel.host
-export const k8sApiTunnelCredentials = k8sApiTunnel.credentials
+export const k8sTunnel = new Tunnel('k8s')
+export const k8sApiTunnel = new Tunnel('k8s-api')

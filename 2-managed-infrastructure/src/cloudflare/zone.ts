@@ -7,7 +7,7 @@ const andrewmeierDotDev = new cloudflare.Zone('andrewmeier.dev', {
 new cloudflare.ZoneSettingsOverride('andrewmeier.dev', {
     zoneId: andrewmeierDotDev.id,
     settings: {
-        alwaysUseHttps: 'on'
+        ssl: 'strict'
     }
 })
 

@@ -1,14 +1,14 @@
 {
     "name": "cluster-services",
     "devDependencies": {
-        "@types/node": "^17.0.21"
+        "@types/node": "^16"
     },
     "dependencies": {
         "@pulumi/aws": "^5.11.0",
         "@pulumi/awsx": "^0.40.0",
         "@pulumi/cloudflare": "^4.9.0",
-        "@pulumi/docker": "^3.4.1",
         "@pulumi/kubernetes": "^3.20.5",
-        "@pulumi/pulumi": "^3.38.0"
+        "@pulumi/pulumi": "^3.38.0",
+        "@pulumi/tls": "^4.6.0"
     }
 }
