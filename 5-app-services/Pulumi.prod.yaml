@@ -1,0 +1,9 @@
+secretsprovider: awskms://alias/pulumi?region=us-east-1
+encryptedkey: AQICAHi6fS37CC1xGkkwmN6uHQqQTcchrxqeetPF35rigzUKNwEOTUj0rg17KqtZa4cX46dGAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMeUmd2qGvgqtvkFZ8AgEQgDuegzj34Tqc7Ndg7Y5dWKkGzPt0QeaRYHTmxZVYnXWPikNQwNcrgIVGnInzDHxXYIKN+/ByoHZZgtRa4g==
+config:
+  app-services:email:
+    secure: v1:iUSmurudIJYp+Ayc:r27FDPrNX8UBclUbRfCBaYcD81ZJJjNnEvz0wheBz2m2Qg==
+  cloudflare:accountId:
+    secure: v1:73Q2WKoUtb63yAlz:PnE8pTJMSBsepZKjMP+JnTX7N9oBD5qIaEH2C0PzYWACh7XMw3wf5Dgt08QxYWcj
+  cloudflare:apiToken:
+    secure: v1:Jqtu6o/Bwv38Laxz:NH7k5eoyJHkLwUGz/aT7vXOZhqgfeo+X+IM+/vS9006akgUYVHQuJ59CWvYkfBNV5NSuL893f4A=

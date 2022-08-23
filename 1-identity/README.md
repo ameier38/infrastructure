@@ -1,8 +1,8 @@
-# Identity Stack
+# Identity
 Pulumi project to manage identity resources.
 
 ## Setup
-1. Create `identity-deployer` role in AWS console with the following managed policies:
+1. Create a role `identity-deployer` with the following managed policies:
     - `IAMFullAccess`
     - `AWSKeyManagementServicePowerUser`
 
@@ -36,6 +36,7 @@ Pulumi project to manage identity resources.
         ]
     }
     ```
+
 2. Create a policy `assume-identity-deployer`:
     ```json
     {
@@ -49,7 +50,7 @@ Pulumi project to manage identity resources.
         ]
     }
     ```
-3. Create a user `admin` with the `assume-identity-deployer` policy attached.
+3. Create an `admin` user with the `assume-identity-deployer` policy attached.
 4. Add `admin` user keys to `~/.aws/credentials` file.
 5. Add profile to assume `identity-deployer` role to `~/.aws/config` file.
 

@@ -1,6 +1,6 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
-import * as config from './config'
+import * as config from '../config'
 
 const identifier = 'whoami'
 

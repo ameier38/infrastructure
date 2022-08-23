@@ -3,10 +3,10 @@ encryptedkey: AQICAHifTFjHoHTfyxI4Gks07Z4b1JH2QH6P7ijxiHQl4Mb98wGN77uTqutcrAM0GJ
 config:
   aws:region: us-east-1
   cloudflare:accountId:
-    secure: v1:B9ctAMiEgGz6uhsb:UOQyf/8CzzfQzf2TTlqmOYQfIrC97J+7fFazr5B8Ayp8mkfiHfTXg4W81k8TUnLD
+    secure: v1:u2mm6qrJwk+0W2bo:GMUisOzei6VlIw+AccP6b2tfByVEixKqvKvSmRkuTIKDeXFv50RcBSxeQ05X2hOH
   cloudflare:apiToken:
-    secure: v1:8WCO61Ue+mzMnnLh:KbWfvDlpE9p9zNNDCUCalFosYWH6ouwwMy+YhGsEKLlzmut2b+L6og2lu0GxPPDQHVVxGQF25u8=
+    secure: v1:pB3o+zsxjVr5Vne6:/HD+hR6Jcx1Xc34AcnS3eih2RVvE4OWQILiHO3pmD3qKSbQcE0/YoR/yt7cwfFjLPplSQTkGB+A=
   github:clientId:
-    secure: v1:Erz9qpTRAeRhDnl8:OsQO/tXgldoct16UZrrbVKJYLnGDGd6k29GS5UfpTo0wxeZW
+    secure: v1:rgkdR+WqbFtJT821:9DPeREH7WO/zxJl10Ycjp0FgVhUImP+Kat8jtoUcyxPADHZP
   github:clientSecret:
-    secure: v1:zJDwY928hGK3Bmkm:kZh/FnkdvQ+KMLRUP3FqAydx/WkvyRkxOB+f0HV/duahonFft9LzX0qTmU5joPbykgnLrS8saYs=
+    secure: v1:VvgPnmfU1j5ZhkOq:0YT9qn+1An66heSMXGwr6n98RuVyNkwZxpexo5wtUtydWOft7qDtP/hQiYsf9P/PaX/zXtGm44k=

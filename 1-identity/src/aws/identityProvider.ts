@@ -1,5 +1,5 @@
 import * as aws from '@pulumi/aws'
-import * as config from './config'
+import * as config from '../config'
 
 // Manually added via console
 const githubIdentityProvider = config.accountId.apply(accountId => {

@@ -1,9 +1,9 @@
 import * as aws from '@pulumi/aws'
 import * as pulumi from '@pulumi/pulumi'
+import * as key from './key'
 import * as role from './role'
 import * as user from './user'
-import * as key from './key'
-import * as config from './config'
+import * as config from '../config'
 
 new aws.iam.UserPolicy('admin', {
     name: 'admin',
@@ -55,7 +55,14 @@ new aws.iam.RolePolicy('infrastructure-deployer', {
                     'kms:Decrypt',
                     'kms:Encrypt'
                 ],
-                Resource: key.pulumiKeyArn
+                Resource: key.pulumiKeyAlias.targetKeyArn
+            },
+            {
+                Effect: 'Allow',
+                Action: [
+                    'kms:*'
+                ],
+                Resource: '*'
             },
             // Allow management of cloudflared ecr repository
             {
@@ -106,7 +113,14 @@ new aws.iam.RolePolicy('blog-deployer', {
                     'kms:Decrypt',
                     'kms:Encrypt'
                 ],
-                Resource: key.pulumiKeyArn
+                Resource: key.pulumiKeyAlias.targetKeyArn
+            },
+            {
+                Effect: 'Allow',
+                Action: [
+                    'kms:*'
+                ],
+                Resource: '*'
             },
             // Allow management of blog ecr repository
             {

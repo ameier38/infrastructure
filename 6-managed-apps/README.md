@@ -1,5 +1,5 @@
 # Managed Apps
-Pulumi project for managed apps.
+Pulumi project for managed applications.
 
 ## Usage
 Make sure you have assumed the `infrastructure-deployer` AWS role.

@@ -1,0 +1,17 @@
+name: App Services Merge
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '5-app-services/**'
+jobs:
+  deploy:
+    uses: ./.github/workflows/merge.yml
+    with:
+      pulumi-project: ./5-app-services
+      assume-role: infrastructure-deployer
+    secrets:
+      pulumi-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      tunnel-token-id: ${{ secrets.TUNNEL_TOKEN_ID }}
+      tunnel-token-secret: ${{ secrets.TUNNEL_TOKEN_SECRET }}

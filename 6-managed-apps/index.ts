@@ -1,2 +1,1 @@
-import './src/grafana'
-import './src/whoami'
+import './src/k8s'
