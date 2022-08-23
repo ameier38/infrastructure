@@ -55,14 +55,7 @@ new aws.iam.RolePolicy('infrastructure-deployer', {
                     'kms:Decrypt',
                     'kms:Encrypt'
                 ],
-                Resource: key.pulumiKeyAlias.targetKeyArn
-            },
-            {
-                Effect: 'Allow',
-                Action: [
-                    'kms:*'
-                ],
-                Resource: '*'
+                Resource: key.pulumiKey.arn
             },
             // Allow management of cloudflared ecr repository
             {
@@ -113,14 +106,7 @@ new aws.iam.RolePolicy('blog-deployer', {
                     'kms:Decrypt',
                     'kms:Encrypt'
                 ],
-                Resource: key.pulumiKeyAlias.targetKeyArn
-            },
-            {
-                Effect: 'Allow',
-                Action: [
-                    'kms:*'
-                ],
-                Resource: '*'
+                Resource: key.pulumiKey.arn
             },
             // Allow management of blog ecr repository
             {

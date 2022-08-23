@@ -8,7 +8,8 @@ export const traefik = new cloudflare.AccessApplication('traefik', {
     allowedIdps: [ config.githubIdentityProviderId ],
     autoRedirectToIdentity: true,
     accountId: cloudflare.config.accountId,
-    logoUrl: config.logoUrl
+    logoUrl: config.logoUrl,
+    httpOnlyCookieAttribute: false
 })
 
 export const whoami = new cloudflare.AccessApplication('whoami', {
@@ -17,7 +18,8 @@ export const whoami = new cloudflare.AccessApplication('whoami', {
     allowedIdps: [ config.githubIdentityProviderId ],
     autoRedirectToIdentity: true,
     accountId: cloudflare.config.accountId,
-    logoUrl: config.logoUrl
+    logoUrl: config.logoUrl,
+    httpOnlyCookieAttribute: false
 })
 
 export const grafana = new cloudflare.AccessApplication('grafana', {
@@ -26,5 +28,6 @@ export const grafana = new cloudflare.AccessApplication('grafana', {
     allowedIdps: [ config.githubIdentityProviderId ],
     autoRedirectToIdentity: true,
     accountId: cloudflare.config.accountId,
-    logoUrl: config.logoUrl
+    logoUrl: config.logoUrl,
+    httpOnlyCookieAttribute: false
 })

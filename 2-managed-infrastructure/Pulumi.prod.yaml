@@ -1,12 +1,12 @@
-secretsprovider: awskms://alias/pulumi?region=us-east-1
-encryptedkey: AQICAHifTFjHoHTfyxI4Gks07Z4b1JH2QH6P7ijxiHQl4Mb98wGN77uTqutcrAM0GJiAd/e3AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtdgqKWgpVleRKOWcAgEQgDsC9sn1SoZ7KCKeh3i/yX1pyJe1dlS9mXvcVmzdbxSOEmq0zxCtHCwQ8ILHSJ+cB7SpWYI1frVcShnSFw==
+secretsprovider: awskms://f23fd537-b8d1-4534-8496-0cf21e000fe0?region=us-east-1
+encryptedkey: AQICAHi6fS37CC1xGkkwmN6uHQqQTcchrxqeetPF35rigzUKNwGaBxyqdcrLJtwf8FEOksz8AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMw83S83aNm9usCyYGAgEQgDt6qlwoK3dikejKmMZaxRTmI8jQQgaoG70I5+CTYjlVqqi/OXpHoOTl2aSdGwhPzmhiSDcELGicYq9fkg==
 config:
   aws:region: us-east-1
   cloudflare:accountId:
-    secure: v1:u2mm6qrJwk+0W2bo:GMUisOzei6VlIw+AccP6b2tfByVEixKqvKvSmRkuTIKDeXFv50RcBSxeQ05X2hOH
+    secure: v1:RR5DFFmjzWOtfrtJ:a8d7Igr/1MO6qddGp0hauyykSvA7FjKzkbBc3w1Ph4SL1ngt97iJXPQf4CNq8R59
   cloudflare:apiToken:
-    secure: v1:pB3o+zsxjVr5Vne6:/HD+hR6Jcx1Xc34AcnS3eih2RVvE4OWQILiHO3pmD3qKSbQcE0/YoR/yt7cwfFjLPplSQTkGB+A=
+    secure: v1:sdufnu6aA1AFKiWG:6xBf1N7WaCgrR7hr6jhQ/oMl69I5wn2U/Rbdj/8flHPMaq3iU43qi08+NCYL0c1tIF36i50MX5Y=
   github:clientId:
-    secure: v1:rgkdR+WqbFtJT821:9DPeREH7WO/zxJl10Ycjp0FgVhUImP+Kat8jtoUcyxPADHZP
+    secure: v1:bhNBd/QXoHncnVPK:ppT/CtiRtV5iy5pbKcBiYHBunx0IdBuRjXkcSmB52BUxEyJu
   github:clientSecret:
-    secure: v1:VvgPnmfU1j5ZhkOq:0YT9qn+1An66heSMXGwr6n98RuVyNkwZxpexo5wtUtydWOft7qDtP/hQiYsf9P/PaX/zXtGm44k=
+    secure: v1:0u8f14549+V3GXij:hK3LpiiPVedkjyLvxEAsRryHCCQhs9Nem2Zy6vj/K+jV5mma2o+8PkFr0DCTl5G0HiOK0mWSkVA=
