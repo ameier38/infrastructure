@@ -44,38 +44,6 @@ export const k8sApiRecord = new cloudflare.Record('k8s.andrewmeier.dev', {
     zoneId: zone.andrewmeierDotDevZoneId,
     name: 'k8s',
     type: 'CNAME',
-    value: tunnel.k8sApiTunnel.host,
-    proxied: true
-})
-
-export const traefikRecord = new cloudflare.Record('traefik.andrewmeier.dev', {
-    zoneId: zone.andrewmeierDotDevZoneId,
-    name: 'traefik',
-    type: 'CNAME',
-    value: tunnel.k8sTunnel.host,
-    proxied: true
-})
-
-export const whoamiRecord = new cloudflare.Record('whoami.andrewmeier.dev', {
-    zoneId: zone.andrewmeierDotDevZoneId,
-    name: 'whoami',
-    type: 'CNAME',
-    value: tunnel.k8sTunnel.host,
-    proxied: true
-})
-
-export const grafanaRecord = new cloudflare.Record('grafana.andrewmeier.dev', {
-    zoneId: zone.andrewmeierDotDevZoneId,
-    name: 'grafana',
-    type: 'CNAME',
-    value: tunnel.k8sTunnel.host,
-    proxied: true
-})
-
-export const andrewmeierRecord = new cloudflare.Record('andrewmeier.dev', {
-    zoneId: zone.andrewmeierDotDevZoneId,
-    name: '@',
-    type: 'CNAME',
-    value: tunnel.k8sTunnel.host,
+    value: tunnel.k8sApiTunnel.cname,
     proxied: true
 })

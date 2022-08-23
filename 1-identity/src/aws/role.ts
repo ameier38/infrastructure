@@ -1,6 +1,6 @@
 import * as aws from '@pulumi/aws'
 import * as identityProvider from './identityProvider'
-import * as config from './config'
+import * as config from '../config'
 
 const infrastructureDeployer = new aws.iam.Role('infrastructure-deployer', {
     name: 'infrastructure-deployer',

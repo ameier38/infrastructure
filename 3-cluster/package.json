@@ -1,10 +1,10 @@
 {
     "name": "cluster",
     "devDependencies": {
-        "@types/node": "^17.0.21"
+        "@types/node": "^16"
     },
     "dependencies": {
-        "@pulumi/command": "0.0.3",
-        "@pulumi/pulumi": "^3.26.1"
+        "@pulumi/command": "0.4.1",
+        "@pulumi/pulumi": "^3.38.0"
     }
 }

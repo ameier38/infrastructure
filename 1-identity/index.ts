@@ -1,4 +1,4 @@
-import './src/aws/identityProvider'
-import './src/aws/policy'
-import './src/aws/role'
-import './src/aws/user'
+import './src/aws'
+import * as key from './src/aws/key'
+
+export const pulumiKeyId = key.pulumiKey.keyId

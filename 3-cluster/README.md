@@ -1,5 +1,5 @@
 # Cluster
-Kubernetes cluster for running workloads.
+Pulumi project for Kubernetes cluster.
 
 Uses [k3s](https://k3s.io/) on Raspberry Pis in my apartment.
 

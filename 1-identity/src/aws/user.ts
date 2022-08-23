@@ -1,5 +1,6 @@
 import * as aws from '@pulumi/aws'
 
+// Manually added via console
 const admin = aws.iam.User.get('admin', 'admin')
 
 export const adminName = admin.name

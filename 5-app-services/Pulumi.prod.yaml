@@ -1,0 +1,9 @@
+secretsprovider: awskms://f23fd537-b8d1-4534-8496-0cf21e000fe0?region=us-east-1
+encryptedkey: AQICAHi6fS37CC1xGkkwmN6uHQqQTcchrxqeetPF35rigzUKNwEOXisorEZaWHlEHnjn3UaEAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMsxkPzF7nGRJ+J9z2AgEQgDu7WrhKw6eM/z7Fr55SIa6mycL37sMtPqd355qUOthmUNWuueTifH8OStARTwZLIk4tzXgsEOGIiwiCdg==
+config:
+  app-services:email:
+    secure: v1:AvFwLWeeiWBUMDp9:n26tcpJQe7Ew9VZQWA6ZldEpet6mJWloL8UuSw+HBaJ6bA==
+  cloudflare:accountId:
+    secure: v1:ZkEn5emQUqH9tEsU:7fgX+pBbnE3wBib1pih+lY06GliVvZz+/8R0vT17ec2zjxjOnRh0lJQSYucGVoB1
+  cloudflare:apiToken:
+    secure: v1:kxGW/bdCtXF9HUtw:jfz8kfSvSWGjOCOglaYXebOB4NyY+Se26yaSqirlgs9dHbWUqn7kI7vNx8oDT5HTDN/p+GuPGug=

@@ -1,5 +1,5 @@
 # App Services
-Pulumi project for app services.
+Pulumi project for application services.
 
 ## Usage
 Make sure you have assumed the `infrastructure-deployer` AWS role.

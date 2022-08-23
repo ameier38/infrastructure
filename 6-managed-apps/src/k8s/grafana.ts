@@ -1,7 +1,7 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
 import * as random from '@pulumi/random'
-import * as config from './config'
+import * as config from '../config'
 
 const identifier = 'grafana'
 
@@ -86,7 +86,7 @@ const chart = new k8s.helm.v3.Chart(identifier, {
                         uid: 'email1',
                         org_id: 1,
                         is_default: true,
-                        settings: { addresses: 'ameier38@gmail.com' }
+                        settings: { addresses: config.email }
                     }
                 ]
             }

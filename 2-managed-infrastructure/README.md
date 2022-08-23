@@ -1,4 +1,4 @@
-# Managed Infrastructure Stack
+# Managed Infrastructure
 Pulumi project for managed infrastructure.
 
 ## Usage

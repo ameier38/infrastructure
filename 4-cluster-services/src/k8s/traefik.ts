@@ -1,7 +1,5 @@
 import * as k8s from '@pulumi/kubernetes'
-import * as pulumi from '@pulumi/pulumi'
 import { originCert, originCertPrivateKey } from '../cloudflare/originCertificate'
-import * as config from '../config'
 
 // Traefik is deployed as part of k3s
 
@@ -25,23 +23,5 @@ new k8s.apiextensions.CustomResource('tls-store', {
         defaultCertificate: {
             secretName: originCertSecret.metadata.name
         }
-    }
-})
-
-
-new k8s.apiextensions.CustomResource('traefik-dashboard', {
-    apiVersion: 'traefik.containo.us/v1alpha1',
-    kind: 'IngressRoute',
-    metadata: { namespace: 'kube-system' },
-    spec: {
-        entryPoints: ['web'],
-        routes: [{
-            kind: 'Rule',
-            match: pulumi.interpolate `Host(\`${config.traefikHost}\`)`,
-            services: [{
-                kind: 'TraefikService',
-                name: 'api@internal'
-            }]
-        }]
     }
 })
