@@ -10,3 +10,5 @@ config:
     secure: v1:bhNBd/QXoHncnVPK:ppT/CtiRtV5iy5pbKcBiYHBunx0IdBuRjXkcSmB52BUxEyJu
   github:clientSecret:
     secure: v1:0u8f14549+V3GXij:hK3LpiiPVedkjyLvxEAsRryHCCQhs9Nem2Zy6vj/K+jV5mma2o+8PkFr0DCTl5G0HiOK0mWSkVA=
+  managed-infrastructure:email:
+    secure: v1:l4SOzPRCylIhuZ4m:lr80maRoNqzVc3Innrv8GQKuzawdQFI4UzvK+DpAAEFP1A==

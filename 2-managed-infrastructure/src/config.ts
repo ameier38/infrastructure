@@ -5,6 +5,9 @@ export const rootDir = path.dirname(__dirname)
 
 export const domain = 'andrewmeier.dev'
 
+const rawConfig = new pulumi.Config()
+export const email = rawConfig.requireSecret('email')
+
 const rawGithubConfig = new pulumi.Config('github')
 export const githubConfig = {
     clientId: rawGithubConfig.requireSecret('clientId'),

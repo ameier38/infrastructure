@@ -1,6 +1,7 @@
 import * as cloudflare from '@pulumi/cloudflare'
 import * as app from './accessApplication'
 import { githubServiceToken } from './serviceToken'
+import { email } from '../config'
 
 new cloudflare.AccessPolicy('k8s-api-user-access', {
     name: 'Kubernetes API User Access',
@@ -9,7 +10,7 @@ new cloudflare.AccessPolicy('k8s-api-user-access', {
     applicationId: app.k8sApi.id,
     decision: 'allow',
     includes: [{
-        emails: [ 'ameier38@gmail.com' ]
+        emails: [ email ]
     }]
 })
 
