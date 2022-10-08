@@ -16,7 +16,7 @@ export const andrewmeierDotDevDomain = andrewmeierDotDev.zone
 
 const meiermadeDotCom = new cloudflare.Zone('meiermade.com', {
     zone: 'meiermade.com'
-}, { import: '2ab0669f80cdb97b14e5e77a85686803'})
+})
 
 new cloudflare.ZoneSettingsOverride('meiermade.com', {
     zoneId: meiermadeDotCom.id,
