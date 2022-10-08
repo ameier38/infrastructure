@@ -19,3 +19,4 @@ const createNamespace = (name:string) => {
 export const monitoringNamespace = createNamespace('monitoring')
 export const ackmxNamespace = createNamespace('ackmx')
 export const andrewmeierNamespace = createNamespace('andrewmeier')
+export const meiermadeNamespace = createNamespace('meiermade')

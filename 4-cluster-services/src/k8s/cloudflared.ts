@@ -1,6 +1,5 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
-import * as repository from '../aws/repository'
 import * as tunnel from '../cloudflare/tunnel'
 import * as config from '../config'
 
@@ -27,14 +26,6 @@ const cloudflaredSecret = new k8s.core.v1.Secret(identifier, {
     }
 })
 
-const registrySecret = new k8s.core.v1.Secret(`${identifier}-registry`, {
-    metadata: { namespace: 'kube-system' },
-    type: 'kubernetes.io/dockerconfigjson',
-    stringData: {
-        '.dockerconfigjson': repository.cloudflaredDockerconfigjson
-    }
-})
-
 const labels = { 'app.kubernetes.io/name': identifier }
 
 new k8s.apps.v1.Deployment(identifier, {
@@ -55,12 +46,9 @@ new k8s.apps.v1.Deployment(identifier, {
                 }
             },
             spec: {
-                imagePullSecrets: [{
-                    name: registrySecret.metadata.name
-                }],
                 containers: [{
                         name: identifier,
-                        image: repository.cloudflaredImageName,
+                        image: 'cloudflare/cloudflared:2022.10.0-arm64',
                         args: [
                             'tunnel',
                             '--config', '/var/secrets/cloudflared/config.yaml',
