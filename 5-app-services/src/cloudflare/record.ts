@@ -32,3 +32,11 @@ export const andrewmeierRecord = new cloudflare.Record('andrewmeier.dev', {
     value: config.k8sTunnelHost,
     proxied: true
 })
+
+export const meiermadeRecord = new cloudflare.Record('meiermade.com', {
+    zoneId: config.meiermadeDotComZoneId,
+    name: '@',
+    type: 'CNAME',
+    value: config.k8sTunnelHost,
+    proxied: true
+})
