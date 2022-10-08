@@ -13,3 +13,17 @@ new cloudflare.ZoneSettingsOverride('andrewmeier.dev', {
 
 export const andrewmeierDotDevZoneId = andrewmeierDotDev.id
 export const andrewmeierDotDevDomain = andrewmeierDotDev.zone
+
+const meiermadeDotCom = new cloudflare.Zone('meiermade.com', {
+    zone: 'meiermade.com'
+})
+
+new cloudflare.ZoneSettingsOverride('meiermade.com', {
+    zoneId: meiermadeDotCom.id,
+    settings: {
+        ssl: 'strict'
+    }
+})
+
+export const meiermadeDotComZoneId = meiermadeDotCom.id
+export const meiermadeDotComDomain = meiermadeDotCom.zone
