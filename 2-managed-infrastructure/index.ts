@@ -16,4 +16,6 @@ export const k8sApiTunnelCredentials = pulumi.secret(tunnel.k8sApiTunnelCredenti
 export const k8sApiTunnelHost = record.k8sApiRecord.hostname
 export const andrewmeierDotDevZoneId = zone.andrewmeierDotDevZoneId
 export const andrewmeierDotDevDomain = zone.andrewmeierDotDevDomain
+export const meiermadeDotComZoneId = zone.meiermadeDotComZoneId
+export const meiermadeDotComDomain = zone.meiermadeDotComDomain
 export const githubIdentityProviderId = identityProvider.githubIdentityProvider.id

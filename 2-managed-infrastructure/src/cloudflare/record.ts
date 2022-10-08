@@ -6,9 +6,9 @@ import * as email from '../aws/email'
 
 new cloudflare.Record('ses-verification', {
     zoneId: zone.andrewmeierDotDevZoneId,
-    name: pulumi.interpolate `_amazonses.${email.identityId}`,
+    name: pulumi.interpolate `_amazonses.${email.andrewmeierDotDevDomainVerification.identityId}`,
     type: 'TXT',
-    value: email.verificationToken,
+    value: email.andrewmeierDotDevDomainVerification.verificationToken,
     ttl: 600
 })
 
@@ -29,7 +29,7 @@ new cloudflare.Record('ses-spf', {
     value: 'v=spf1 include:amazonses.com ~all'
 })
 
-email.dkimTokens.apply((tokens:string[]) => {
+email.andrewmeierDotDevDomainVerification.dkimTokens.apply((tokens:string[]) => {
     for (let idx = 0; idx < tokens.length; idx++) {
         new cloudflare.Record(`ses-dkim-${idx}`, {
             zoneId: zone.andrewmeierDotDevZoneId,

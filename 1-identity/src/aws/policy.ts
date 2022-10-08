@@ -124,3 +124,35 @@ new aws.iam.RolePolicy('blog-deployer', {
         ]
     }
 })
+
+new aws.iam.RolePolicy('meiermade-deployer', {
+    name: 'meiermade-deployer',
+    role: role.meiermadeDeployerName,
+    policy: {
+        Version: '2012-10-17',
+        Statement: [
+            // Allow usage of `pulumi` key
+            {
+                Effect: 'Allow',
+                Action: [
+                    'kms:Decrypt',
+                    'kms:Encrypt'
+                ],
+                Resource: key.pulumiKey.arn
+            },
+            // Allow management of meiermade ecr repository
+            {
+                Effect: 'Allow',
+                Action: 'ecr:GetAuthorizationToken',
+                Resource: '*'
+            },
+            {
+                Effect: 'Allow',
+                Action: [
+                    'ecr:*'
+                ],
+                Resource: pulumi.interpolate `arn:aws:ecr:${config.region}:${config.accountId}:repository/meiermade-*`
+            }
+        ]
+    }
+})

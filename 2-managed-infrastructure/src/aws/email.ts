@@ -2,26 +2,43 @@ import * as aws from '@pulumi/aws'
 import * as pulumi from '@pulumi/pulumi'
 import * as zone from '../cloudflare/zone'
 
-const domainIdentity = new aws.ses.DomainIdentity('andrewmeier.dev', {
-    domain: zone.andrewmeierDotDevDomain
+class DomainVerification extends pulumi.ComponentResource {
+    public readonly domain: pulumi.Output<string>
+    public readonly identityId: pulumi.Output<string>
+    public readonly verificationToken: pulumi.Output<string>
+    public readonly dkimTokens: pulumi.Output<string[]>
+    constructor(name:string, domain:pulumi.Input<string>, opts?:pulumi.ComponentResourceOptions) {
+        super('managed-infrastructure:DomainVerification', name, {}, opts)
+        const domainIdentity = new aws.ses.DomainIdentity(name, {
+            domain: domain
+        }, { parent: this })
+
+        this.domain = domainIdentity.domain
+        this.identityId = domainIdentity.id
+        this.verificationToken = domainIdentity.verificationToken
+
+        new aws.ses.DomainIdentityVerification(name, {
+            domain: domainIdentity.domain
+        }, { parent: this })
+
+        const domainDkim = new aws.ses.DomainDkim(name, {
+            domain: domainIdentity.domain
+        }, { parent: this })
+
+        this.dkimTokens = domainDkim.dkimTokens
+
+        this.registerOutputs({
+            identityId: this.identityId,
+            verificationToken: this.verificationToken,
+            dkimTokens: this.dkimTokens
+        })
+    }
+}
+
+export const andrewmeierDotDevDomainVerification = new DomainVerification('andrewmeier.dev',
+    zone.andrewmeierDotDevDomain)
+
+export const sesDotAndrewmeierDotDevMailFrom = new aws.ses.MailFrom('andrewmeier.dev', {
+    domain: andrewmeierDotDevDomainVerification.domain,
+    mailFromDomain: pulumi.interpolate `ses.${andrewmeierDotDevDomainVerification.domain}`
 })
-
-export const identityId = domainIdentity.id
-export const verificationToken = domainIdentity.verificationToken
-
-new aws.ses.DomainIdentityVerification('andrewmeier.dev', {
-    domain: domainIdentity.domain
-})
-
-const domainDkim = new aws.ses.DomainDkim('andrewmeier.dev', {
-    domain: domainIdentity.domain
-})
-
-export const dkimTokens = domainDkim.dkimTokens
-
-const mailFrom = new aws.ses.MailFrom('andrewmeier.dev', {
-    domain: domainIdentity.domain,
-    mailFromDomain: pulumi.interpolate `ses.${domainIdentity.domain}`
-})
-
-export const mailFromDomain = mailFrom.mailFromDomain
