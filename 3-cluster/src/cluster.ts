@@ -29,7 +29,7 @@ ingress:
 EOF
 
 echo "Downloading cloudflared"
-curl -sfLO https://github.com/cloudflare/cloudflared/releases/download/2022.3.4/cloudflared-linux-arm64
+curl -sfLO https://github.com/cloudflare/cloudflared/releases/download/2022.10.0/cloudflared-linux-arm64
 
 echo "Updating cloudflared permissions"
 chmod +x cloudflared-linux-arm64
