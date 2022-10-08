@@ -22,6 +22,12 @@ new aws.iam.UserPolicy('admin', {
                 Effect: 'Allow',
                 Action: 'sts:AssumeRole',
                 Resource: role.blogDeployerArn
+            },
+            // Allow `admin` user to assume `meiermade-deployer` role
+            {
+                Effect: 'Allow',
+                Action: 'sts:AssumeRole',
+                Resource: role.meiermadeDeployerArn
             }
         ]
     }
