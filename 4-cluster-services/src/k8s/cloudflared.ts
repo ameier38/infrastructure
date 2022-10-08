@@ -15,6 +15,10 @@ ingress:
     service: http://traefik.kube-system
   - hostname: '*.${config.andrewmeierDotDevDomain}'
     service: http://traefik.kube-system
+  - hostname: ${config.meiermadeDotComDomain}
+    service: http://traefik.kube-system
+  - hostname: '*.${config.meiermadeDotComDomain}'
+    service: http://traefik.kube-system
   - service: http_status:404
 `
 

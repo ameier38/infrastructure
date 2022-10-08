@@ -8,5 +8,6 @@ import './src/k8s'
 export const k8sTunnelHost = tunnel.k8sTunnel.cname
 export const monitoringNamespace = namespace.monitoringNamespace
 export const andrewmeierNamespace = namespace.andrewmeierNamespace
+export const meiermadeNamespace = namespace.meiermadeNamespace
 export const prometheusUrl = prometheus.internalUrl
 export const lokiUrl = loki.internalUrl
