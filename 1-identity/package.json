@@ -5,7 +5,7 @@
         "@types/node": "^16"
     },
     "dependencies": {
-        "@pulumi/aws": "^5.16.2",
-        "@pulumi/pulumi": "^3.42.0"
+        "@pulumi/aws": "^5.39.0",
+        "@pulumi/pulumi": "^3.65.1"
     }
 }
