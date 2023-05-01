@@ -2,13 +2,13 @@ secretsprovider: awskms://f23fd537-b8d1-4534-8496-0cf21e000fe0?region=us-east-1
 encryptedkey: AQICAHi6fS37CC1xGkkwmN6uHQqQTcchrxqeetPF35rigzUKNwGaBxyqdcrLJtwf8FEOksz8AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMw83S83aNm9usCyYGAgEQgDt6qlwoK3dikejKmMZaxRTmI8jQQgaoG70I5+CTYjlVqqi/OXpHoOTl2aSdGwhPzmhiSDcELGicYq9fkg==
 config:
   aws:region: us-east-1
-  cloudflare:accountId:
-    secure: v1:RR5DFFmjzWOtfrtJ:a8d7Igr/1MO6qddGp0hauyykSvA7FjKzkbBc3w1Ph4SL1ngt97iJXPQf4CNq8R59
   cloudflare:apiToken:
-    secure: v1:sdufnu6aA1AFKiWG:6xBf1N7WaCgrR7hr6jhQ/oMl69I5wn2U/Rbdj/8flHPMaq3iU43qi08+NCYL0c1tIF36i50MX5Y=
+    secure: v1:PMRY4XaBxkuOqmH4:EX1Tzu/O9iQssYXTlbF4VbitGgNczK3PlqJugaSwFExkb/2IbvpLZczTjgC4bYLw6nEgSpwt8v0=
   github:clientId:
     secure: v1:bhNBd/QXoHncnVPK:ppT/CtiRtV5iy5pbKcBiYHBunx0IdBuRjXkcSmB52BUxEyJu
   github:clientSecret:
     secure: v1:0u8f14549+V3GXij:hK3LpiiPVedkjyLvxEAsRryHCCQhs9Nem2Zy6vj/K+jV5mma2o+8PkFr0DCTl5G0HiOK0mWSkVA=
+  managed-infrastructure:cloudflareAccountId:
+    secure: v1:beiiof+MZZCRoHJw:SqrjOI2FsIOoAHFRT0dBnk3EXupCjgsiiwhe7vGDL14osCX+zT9DOA/6pfJPAJkj
   managed-infrastructure:email:
     secure: v1:l4SOzPRCylIhuZ4m:lr80maRoNqzVc3Innrv8GQKuzawdQFI4UzvK+DpAAEFP1A==

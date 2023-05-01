@@ -1,6 +1,8 @@
 import * as cloudflare from '@pulumi/cloudflare'
+import { cloudflareAccountId } from '../config'
 
 const andrewmeierDotDev = new cloudflare.Zone('andrewmeier.dev', {
+    accountId: cloudflareAccountId, 
     zone: 'andrewmeier.dev'
 })
 
@@ -16,6 +18,7 @@ export const andrewmeierDotDevZoneId = andrewmeierDotDev.id
 export const andrewmeierDotDevDomain = andrewmeierDotDev.zone
 
 const meiermadeDotCom = new cloudflare.Zone('meiermade.com', {
+    accountId: cloudflareAccountId,
     zone: 'meiermade.com'
 })
 

@@ -1,0 +1,1589 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2023-05-01T16:18:13.9423306-04:00",
+            "magic": "283c0263a4f0fe10c4020a8cbbe404631813b432c26c68fe35e0299bbc739440",
+            "version": "v3.58.0"
+        },
+        "secrets_providers": {
+            "type": "cloud",
+            "state": {
+                "url": "awskms://f23fd537-b8d1-4534-8496-0cf21e000fe0?region=us-east-1",
+                "encryptedkey": "AQICAHi6fS37CC1xGkkwmN6uHQqQTcchrxqeetPF35rigzUKNwGaBxyqdcrLJtwf8FEOksz8AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMw83S83aNm9usCyYGAgEQgDt6qlwoK3dikejKmMZaxRTmI8jQQgaoG70I5+CTYjlVqqi/OXpHoOTl2aSdGwhPzmhiSDcELGicYq9fkg=="
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "andrewmeierDotDevDomain": "andrewmeier.dev",
+                    "andrewmeierDotDevZoneId": "3567e9b11e8d451f7b5e75c0188b98b4",
+                    "githubIdentityProviderId": "e282d067-779f-4786-b1dd-c72b753e67d8",
+                    "githubServiceTokenClientId": "4f9f39012930be7b3731c3896c2ddffd.access",
+                    "githubServiceTokenClientSecret": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"b4729f099f6db02a85df1649c75d34ce751c05e44529f7c8b7e587c06a7ef171\""
+                    },
+                    "logoUrl": "https://ameier38-public.s3.amazonaws.com/logo.png",
+                    "meiermadeDotComDomain": "meiermade.com",
+                    "meiermadeDotComZoneId": "2ab0669f80cdb97b14e5e77a85686803"
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification::andrewmeier.dev",
+                "custom": false,
+                "type": "managed-infrastructure:DomainVerification",
+                "outputs": {
+                    "dkimTokens": [
+                        "jojr3pcevvzba53oahh353576qyusxjm",
+                        "7ghw5scn5ceossjsmzmg3wx52444gzfu",
+                        "am23xz7xh767wieajcc5w2dt7pvutenm"
+                    ],
+                    "identityId": "andrewmeier.dev",
+                    "verificationToken": "AXYw9fN9ZOIjrOahe5EL8YECZH1by8BOheXAu5EpjKI="
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod"
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0",
+                "custom": true,
+                "id": "7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "region": "us-east-1",
+                    "version": "5.39.0"
+                },
+                "outputs": {
+                    "region": "us-east-1",
+                    "version": "5.39.0"
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0",
+                "custom": true,
+                "id": "d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "type": "pulumi:providers:cloudflare",
+                "inputs": {
+                    "apiToken": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"CXcbzK4z_KvaBhubJEd9Fpew6kE19PxkYqR9TddG\""
+                    },
+                    "version": "5.0.0"
+                },
+                "outputs": {
+                    "apiToken": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"CXcbzK4z_KvaBhubJEd9Fpew6kE19PxkYqR9TddG\""
+                    },
+                    "version": "5.0.0"
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::aws:s3/bucket:Bucket::ameier38-public",
+                "custom": true,
+                "id": "ameier38-public",
+                "type": "aws:s3/bucket:Bucket",
+                "inputs": {
+                    "__defaults": [
+                        "forceDestroy"
+                    ],
+                    "acl": "public-read",
+                    "bucket": "ameier38-public",
+                    "forceDestroy": false
+                },
+                "outputs": {
+                    "accelerationStatus": "",
+                    "acl": "public-read",
+                    "arn": "arn:aws:s3:::ameier38-public",
+                    "bucket": "ameier38-public",
+                    "bucketDomainName": "ameier38-public.s3.amazonaws.com",
+                    "bucketRegionalDomainName": "ameier38-public.s3.amazonaws.com",
+                    "corsRules": [],
+                    "forceDestroy": false,
+                    "grants": [],
+                    "hostedZoneId": "Z3AQBSTGFYJSTF",
+                    "id": "ameier38-public",
+                    "lifecycleRules": [],
+                    "loggings": [],
+                    "objectLockConfiguration": null,
+                    "region": "us-east-1",
+                    "replicationConfiguration": null,
+                    "requestPayer": "BucketOwner",
+                    "serverSideEncryptionConfiguration": null,
+                    "tags": {},
+                    "tagsAll": {},
+                    "versioning": {
+                        "enabled": false,
+                        "mfaDelete": false
+                    },
+                    "website": null
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0::7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "propertyDependencies": {
+                    "acl": null,
+                    "bucket": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::meiermade.com",
+                "custom": true,
+                "id": "2ab0669f80cdb97b14e5e77a85686803",
+                "type": "cloudflare:index/zone:Zone",
+                "inputs": {
+                    "__defaults": [
+                        "paused",
+                        "type"
+                    ],
+                    "accountId": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"aeae03df101c2ec82f1fe57f5af4ab6e\""
+                    },
+                    "paused": false,
+                    "type": "full",
+                    "zone": "meiermade.com"
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "id": "2ab0669f80cdb97b14e5e77a85686803",
+                    "meta": {
+                        "phishing_detected": false,
+                        "wildcard_proxiable": false
+                    },
+                    "nameServers": [
+                        "joan.ns.cloudflare.com",
+                        "lee.ns.cloudflare.com"
+                    ],
+                    "paused": false,
+                    "plan": "free",
+                    "status": "active",
+                    "type": "full",
+                    "vanityNameServers": [],
+                    "verificationKey": "",
+                    "zone": "meiermade.com"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "zone": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessServiceToken:AccessServiceToken::github",
+                "custom": true,
+                "id": "77ca27a5-8716-4529-bbda-aa9d0ffd36e7",
+                "type": "cloudflare:index/accessServiceToken:AccessServiceToken",
+                "inputs": {
+                    "__defaults": [
+                        "minDaysForRenewal"
+                    ],
+                    "accountId": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"aeae03df101c2ec82f1fe57f5af4ab6e\""
+                    },
+                    "minDaysForRenewal": 0,
+                    "name": "GitHub"
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "clientId": "4f9f39012930be7b3731c3896c2ddffd.access",
+                    "clientSecret": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"b4729f099f6db02a85df1649c75d34ce751c05e44529f7c8b7e587c06a7ef171\""
+                    },
+                    "expiresAt": "2023-03-10T10:30:25Z",
+                    "id": "77ca27a5-8716-4529-bbda-aa9d0ffd36e7",
+                    "minDaysForRenewal": 0,
+                    "name": "GitHub",
+                    "zoneId": ""
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "name": null
+                },
+                "additionalSecretOutputs": [
+                    "clientSecret"
+                ]
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev",
+                "custom": true,
+                "id": "3567e9b11e8d451f7b5e75c0188b98b4",
+                "type": "cloudflare:index/zone:Zone",
+                "inputs": {
+                    "__defaults": [
+                        "paused",
+                        "type"
+                    ],
+                    "accountId": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"aeae03df101c2ec82f1fe57f5af4ab6e\""
+                    },
+                    "paused": false,
+                    "type": "full",
+                    "zone": "andrewmeier.dev"
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "id": "3567e9b11e8d451f7b5e75c0188b98b4",
+                    "meta": {
+                        "phishing_detected": false,
+                        "wildcard_proxiable": false
+                    },
+                    "nameServers": [
+                        "joan.ns.cloudflare.com",
+                        "lee.ns.cloudflare.com"
+                    ],
+                    "paused": false,
+                    "plan": "free",
+                    "status": "active",
+                    "type": "full",
+                    "vanityNameServers": [],
+                    "verificationKey": "",
+                    "zone": "andrewmeier.dev"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "zone": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessIdentityProvider:AccessIdentityProvider::github",
+                "custom": true,
+                "id": "e282d067-779f-4786-b1dd-c72b753e67d8",
+                "type": "cloudflare:index/accessIdentityProvider:AccessIdentityProvider",
+                "inputs": {
+                    "__defaults": [],
+                    "accountId": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"aeae03df101c2ec82f1fe57f5af4ab6e\""
+                    },
+                    "configs": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "[{\"__defaults\":[],\"clientId\":\"ca36b9365ef698e7c788\",\"clientSecret\":\"32355df14fc2cf5e8b0c66a2c8acd7d5fb5a458e\"}]"
+                    },
+                    "name": "github",
+                    "type": "github"
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "configs": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "[{\"apiToken\":\"\",\"appsDomain\":\"\",\"attributes\":[],\"authUrl\":\"\",\"centrifyAccount\":\"\",\"centrifyAppId\":\"\",\"certsUrl\":\"\",\"clientId\":\"ca36b9365ef698e7c788\",\"clientSecret\":\"**********************************\",\"directoryId\":\"\",\"emailAttributeName\":\"\",\"idpPublicCert\":\"\",\"issuerUrl\":\"\",\"oktaAccount\":\"\",\"oneloginAccount\":\"\",\"pkceEnabled\":false,\"redirectUrl\":\"https://ameier38.cloudflareaccess.com/cdn-cgi/access/callback\",\"signRequest\":false,\"ssoTargetUrl\":\"\",\"supportGroups\":false,\"tokenUrl\":\"\"}]"
+                    },
+                    "id": "e282d067-779f-4786-b1dd-c72b753e67d8",
+                    "name": "github",
+                    "type": "github"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "configs": null,
+                    "name": null,
+                    "type": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::aws:s3/bucketObjectv2:BucketObjectv2::logo",
+                "custom": true,
+                "id": "logo.png",
+                "type": "aws:s3/bucketObjectv2:BucketObjectv2",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy"
+                    ],
+                    "acl": "private",
+                    "bucket": "ameier38-public",
+                    "forceDestroy": false,
+                    "key": "logo.png",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "a710270b17e99bd6ae4300ad973ba895bf0c6fa1c5e560a889f6e563e083c70b",
+                        "path": "C:\\repos\\github\\ameier38\\infrastructure\\2-managed-infrastructure\\images\\logo.png"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "ameier38-public",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "binary/octet-stream",
+                    "etag": "dbe5e27acb43f234fd85686b84e1032a",
+                    "forceDestroy": false,
+                    "id": "logo.png",
+                    "key": "logo.png",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "a710270b17e99bd6ae4300ad973ba895bf0c6fa1c5e560a889f6e563e083c70b",
+                        "path": "/home/runner/work/infrastructure/infrastructure/2-managed-infrastructure/images/logo.png"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::aws:s3/bucket:Bucket::ameier38-public"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0::7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:prod::managed-infrastructure::aws:s3/bucket:Bucket::ameier38-public"
+                    ],
+                    "key": null,
+                    "source": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zoneSettingsOverride:ZoneSettingsOverride::meiermade.com",
+                "custom": true,
+                "id": "2ab0669f80cdb97b14e5e77a85686803",
+                "type": "cloudflare:index/zoneSettingsOverride:ZoneSettingsOverride",
+                "inputs": {
+                    "__defaults": [],
+                    "settings": {
+                        "__defaults": [],
+                        "alwaysUseHttps": "on",
+                        "ssl": "strict"
+                    },
+                    "zoneId": "2ab0669f80cdb97b14e5e77a85686803"
+                },
+                "outputs": {
+                    "id": "2ab0669f80cdb97b14e5e77a85686803",
+                    "initialSettings": [
+                        {
+                            "alwaysOnline": "off",
+                            "alwaysUseHttps": "off",
+                            "automaticHttpsRewrites": "on",
+                            "binaryAst": "off",
+                            "brotli": "on",
+                            "browserCacheTtl": 14400,
+                            "browserCheck": "on",
+                            "cacheLevel": "aggressive",
+                            "challengeTtl": 1800,
+                            "ciphers": [],
+                            "cnameFlattening": "flatten_at_root",
+                            "developmentMode": "off",
+                            "earlyHints": "off",
+                            "emailObfuscation": "on",
+                            "filterLogsToCloudflare": "off",
+                            "h2Prioritization": "off",
+                            "hotlinkProtection": "off",
+                            "http2": "on",
+                            "http3": "on",
+                            "imageResizing": "off",
+                            "ipGeolocation": "on",
+                            "ipv6": "on",
+                            "logToCloudflare": "on",
+                            "maxUpload": 100,
+                            "minTlsVersion": "1.0",
+                            "minify": {
+                                "css": "off",
+                                "html": "off",
+                                "js": "off"
+                            },
+                            "mirage": "off",
+                            "mobileRedirect": {
+                                "mobileSubdomain": "",
+                                "status": "off",
+                                "stripUri": false
+                            },
+                            "opportunisticEncryption": "on",
+                            "opportunisticOnion": "on",
+                            "orangeToOrange": "off",
+                            "originErrorPagePassThru": "off",
+                            "originMaxHttpVersion": "",
+                            "polish": "off",
+                            "prefetchPreload": "off",
+                            "privacyPass": "on",
+                            "proxyReadTimeout": "100",
+                            "pseudoIpv4": "off",
+                            "responseBuffering": "off",
+                            "rocketLoader": "off",
+                            "securityHeader": {
+                                "enabled": false,
+                                "includeSubdomains": false,
+                                "maxAge": 0,
+                                "nosniff": false,
+                                "preload": false
+                            },
+                            "securityLevel": "medium",
+                            "serverSideExclude": "on",
+                            "sortQueryStringForCache": "off",
+                            "ssl": "flexible",
+                            "tls12Only": "",
+                            "tls13": "",
+                            "tlsClientAuth": "off",
+                            "trueClientIpHeader": "off",
+                            "universalSsl": "",
+                            "visitorIp": "on",
+                            "waf": "off",
+                            "webp": "off",
+                            "websockets": "on",
+                            "zeroRtt": "off"
+                        }
+                    ],
+                    "initialSettingsReadAt": "2022-10-08T13:11:10.4401534Z",
+                    "readonlySettings": [
+                        "advanced_ddos",
+                        "cname_flattening",
+                        "http2",
+                        "long_lived_grpc",
+                        "mirage",
+                        "origin_error_page_pass_thru",
+                        "polish",
+                        "prefetch_preload",
+                        "proxy_read_timeout",
+                        "response_buffering",
+                        "sort_query_string_for_cache",
+                        "true_client_ip_header",
+                        "webp",
+                        "image_resizing"
+                    ],
+                    "settings": {
+                        "alwaysOnline": "off",
+                        "alwaysUseHttps": "on",
+                        "automaticHttpsRewrites": "on",
+                        "binaryAst": "off",
+                        "brotli": "on",
+                        "browserCacheTtl": 14400,
+                        "browserCheck": "on",
+                        "cacheLevel": "aggressive",
+                        "challengeTtl": 1800,
+                        "ciphers": [],
+                        "cnameFlattening": "flatten_at_root",
+                        "developmentMode": "off",
+                        "earlyHints": "off",
+                        "emailObfuscation": "on",
+                        "filterLogsToCloudflare": "off",
+                        "h2Prioritization": "off",
+                        "hotlinkProtection": "off",
+                        "http2": "on",
+                        "http3": "on",
+                        "imageResizing": "off",
+                        "ipGeolocation": "on",
+                        "ipv6": "on",
+                        "logToCloudflare": "on",
+                        "maxUpload": 100,
+                        "minTlsVersion": "1.0",
+                        "minify": {
+                            "css": "off",
+                            "html": "off",
+                            "js": "off"
+                        },
+                        "mirage": "off",
+                        "mobileRedirect": {
+                            "mobileSubdomain": "",
+                            "status": "off",
+                            "stripUri": false
+                        },
+                        "opportunisticEncryption": "on",
+                        "opportunisticOnion": "on",
+                        "orangeToOrange": "off",
+                        "originErrorPagePassThru": "off",
+                        "originMaxHttpVersion": "",
+                        "polish": "off",
+                        "prefetchPreload": "off",
+                        "privacyPass": "on",
+                        "proxyReadTimeout": "100",
+                        "pseudoIpv4": "off",
+                        "responseBuffering": "off",
+                        "rocketLoader": "off",
+                        "securityHeader": {
+                            "enabled": false,
+                            "includeSubdomains": false,
+                            "maxAge": 0,
+                            "nosniff": false,
+                            "preload": false
+                        },
+                        "securityLevel": "medium",
+                        "serverSideExclude": "on",
+                        "sortQueryStringForCache": "off",
+                        "ssl": "strict",
+                        "tls12Only": "off",
+                        "tls13": "on",
+                        "tlsClientAuth": "off",
+                        "trueClientIpHeader": "off",
+                        "universalSsl": "",
+                        "visitorIp": "on",
+                        "waf": "off",
+                        "webp": "",
+                        "websockets": "on",
+                        "zeroRtt": "off"
+                    },
+                    "zoneId": "2ab0669f80cdb97b14e5e77a85686803",
+                    "zoneStatus": "active",
+                    "zoneType": "full"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::meiermade.com"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "settings": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::meiermade.com"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::ses-spf",
+                "custom": true,
+                "id": "1cac240cb563ae1d047e5f563ba2326f",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "ses",
+                    "type": "TXT",
+                    "value": "v=spf1 include:amazonses.com ~all",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-08-21T09:43:44.158448Z",
+                    "data": null,
+                    "hostname": "ses.andrewmeier.dev",
+                    "id": "1cac240cb563ae1d047e5f563ba2326f",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-08-21T09:43:44.158448Z",
+                    "name": "ses",
+                    "proxiable": false,
+                    "proxied": false,
+                    "ttl": 1,
+                    "type": "TXT",
+                    "value": "v=spf1 include:amazonses.com ~all",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "name": null,
+                    "type": null,
+                    "value": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev",
+                "custom": true,
+                "id": "andrewmeier.dev",
+                "type": "aws:ses/domainIdentity:DomainIdentity",
+                "inputs": {
+                    "__defaults": [],
+                    "domain": "andrewmeier.dev"
+                },
+                "outputs": {
+                    "arn": "arn:aws:ses:us-east-1:400689721046:identity/andrewmeier.dev",
+                    "domain": "andrewmeier.dev",
+                    "id": "andrewmeier.dev",
+                    "verificationToken": "AXYw9fN9ZOIjrOahe5EL8YECZH1by8BOheXAu5EpjKI="
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification::andrewmeier.dev",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0::7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "propertyDependencies": {
+                    "domain": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::ses-feedback",
+                "custom": true,
+                "id": "5c5a7309b2255763771693273fb76710",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "ses",
+                    "priority": 10,
+                    "type": "MX",
+                    "value": "feedback-smtp.us-east-1.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-08-21T09:43:44.291116Z",
+                    "data": null,
+                    "hostname": "ses.andrewmeier.dev",
+                    "id": "5c5a7309b2255763771693273fb76710",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-08-21T09:43:44.291116Z",
+                    "name": "ses",
+                    "priority": 10,
+                    "proxiable": false,
+                    "proxied": false,
+                    "ttl": 1,
+                    "type": "MX",
+                    "value": "feedback-smtp.us-east-1.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "name": null,
+                    "priority": null,
+                    "type": null,
+                    "value": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zoneSettingsOverride:ZoneSettingsOverride::andrewmeier.dev",
+                "custom": true,
+                "id": "3567e9b11e8d451f7b5e75c0188b98b4",
+                "type": "cloudflare:index/zoneSettingsOverride:ZoneSettingsOverride",
+                "inputs": {
+                    "__defaults": [],
+                    "settings": {
+                        "__defaults": [],
+                        "alwaysUseHttps": "on",
+                        "ssl": "strict"
+                    },
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "id": "3567e9b11e8d451f7b5e75c0188b98b4",
+                    "initialSettings": [
+                        {
+                            "alwaysOnline": "on",
+                            "alwaysUseHttps": "off",
+                            "automaticHttpsRewrites": "on",
+                            "binaryAst": "off",
+                            "brotli": "on",
+                            "browserCacheTtl": 14400,
+                            "browserCheck": "on",
+                            "cacheLevel": "aggressive",
+                            "challengeTtl": 1800,
+                            "ciphers": [],
+                            "cnameFlattening": "flatten_at_root",
+                            "developmentMode": "off",
+                            "earlyHints": "off",
+                            "emailObfuscation": "on",
+                            "filterLogsToCloudflare": "off",
+                            "h2Prioritization": "off",
+                            "hotlinkProtection": "off",
+                            "http2": "on",
+                            "http3": "on",
+                            "imageResizing": "off",
+                            "ipGeolocation": "on",
+                            "ipv6": "on",
+                            "logToCloudflare": "on",
+                            "maxUpload": 100,
+                            "minTlsVersion": "1.0",
+                            "minify": {
+                                "css": "off",
+                                "html": "off",
+                                "js": "off"
+                            },
+                            "mirage": "off",
+                            "mobileRedirect": {
+                                "mobileSubdomain": "",
+                                "status": "off",
+                                "stripUri": false
+                            },
+                            "opportunisticEncryption": "on",
+                            "opportunisticOnion": "on",
+                            "orangeToOrange": "off",
+                            "originErrorPagePassThru": "off",
+                            "originMaxHttpVersion": "",
+                            "polish": "off",
+                            "prefetchPreload": "off",
+                            "privacyPass": "on",
+                            "proxyReadTimeout": "100",
+                            "pseudoIpv4": "off",
+                            "responseBuffering": "off",
+                            "rocketLoader": "off",
+                            "securityHeader": {
+                                "enabled": false,
+                                "includeSubdomains": false,
+                                "maxAge": 0,
+                                "nosniff": false,
+                                "preload": false
+                            },
+                            "securityLevel": "medium",
+                            "serverSideExclude": "on",
+                            "sortQueryStringForCache": "off",
+                            "ssl": "flexible",
+                            "tls12Only": "",
+                            "tls13": "",
+                            "tlsClientAuth": "off",
+                            "trueClientIpHeader": "off",
+                            "universalSsl": "",
+                            "visitorIp": "on",
+                            "waf": "off",
+                            "webp": "off",
+                            "websockets": "on",
+                            "zeroRtt": "off"
+                        }
+                    ],
+                    "initialSettingsReadAt": "2022-03-08T09:51:11.6118528Z",
+                    "readonlySettings": [
+                        "advanced_ddos",
+                        "cname_flattening",
+                        "http2",
+                        "long_lived_grpc",
+                        "mirage",
+                        "origin_error_page_pass_thru",
+                        "polish",
+                        "prefetch_preload",
+                        "proxy_read_timeout",
+                        "response_buffering",
+                        "sort_query_string_for_cache",
+                        "true_client_ip_header",
+                        "webp",
+                        "image_resizing"
+                    ],
+                    "settings": {
+                        "alwaysOnline": "off",
+                        "alwaysUseHttps": "on",
+                        "automaticHttpsRewrites": "on",
+                        "binaryAst": "off",
+                        "brotli": "on",
+                        "browserCacheTtl": 14400,
+                        "browserCheck": "on",
+                        "cacheLevel": "aggressive",
+                        "challengeTtl": 1800,
+                        "ciphers": [],
+                        "cnameFlattening": "flatten_at_root",
+                        "developmentMode": "off",
+                        "earlyHints": "off",
+                        "emailObfuscation": "on",
+                        "filterLogsToCloudflare": "off",
+                        "h2Prioritization": "off",
+                        "hotlinkProtection": "off",
+                        "http2": "on",
+                        "http3": "on",
+                        "imageResizing": "off",
+                        "ipGeolocation": "on",
+                        "ipv6": "on",
+                        "logToCloudflare": "on",
+                        "maxUpload": 100,
+                        "minTlsVersion": "1.0",
+                        "minify": {
+                            "css": "off",
+                            "html": "off",
+                            "js": "off"
+                        },
+                        "mirage": "off",
+                        "mobileRedirect": {
+                            "mobileSubdomain": "",
+                            "status": "off",
+                            "stripUri": false
+                        },
+                        "opportunisticEncryption": "on",
+                        "opportunisticOnion": "on",
+                        "orangeToOrange": "off",
+                        "originErrorPagePassThru": "off",
+                        "originMaxHttpVersion": "",
+                        "polish": "off",
+                        "prefetchPreload": "off",
+                        "privacyPass": "on",
+                        "proxyReadTimeout": "100",
+                        "pseudoIpv4": "off",
+                        "responseBuffering": "off",
+                        "rocketLoader": "off",
+                        "securityHeader": {
+                            "enabled": false,
+                            "includeSubdomains": false,
+                            "maxAge": 0,
+                            "nosniff": false,
+                            "preload": false
+                        },
+                        "securityLevel": "medium",
+                        "serverSideExclude": "on",
+                        "sortQueryStringForCache": "off",
+                        "ssl": "strict",
+                        "tls12Only": "off",
+                        "tls13": "on",
+                        "tlsClientAuth": "off",
+                        "trueClientIpHeader": "off",
+                        "universalSsl": "",
+                        "visitorIp": "on",
+                        "waf": "off",
+                        "webp": "",
+                        "websockets": "on",
+                        "zeroRtt": "off"
+                    },
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4",
+                    "zoneStatus": "active",
+                    "zoneType": "full"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "settings": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentityVerification:DomainIdentityVerification::andrewmeier.dev",
+                "custom": true,
+                "id": "andrewmeier.dev",
+                "type": "aws:ses/domainIdentityVerification:DomainIdentityVerification",
+                "inputs": {
+                    "__defaults": [],
+                    "domain": "andrewmeier.dev"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":2700000000000}}",
+                    "arn": "arn:aws:ses:us-east-1:400689721046:identity/andrewmeier.dev",
+                    "domain": "andrewmeier.dev",
+                    "id": "andrewmeier.dev"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification::andrewmeier.dev",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0::7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "propertyDependencies": {
+                    "domain": [
+                        "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainDkim:DomainDkim::andrewmeier.dev",
+                "custom": true,
+                "id": "andrewmeier.dev",
+                "type": "aws:ses/domainDkim:DomainDkim",
+                "inputs": {
+                    "__defaults": [],
+                    "domain": "andrewmeier.dev"
+                },
+                "outputs": {
+                    "dkimTokens": [
+                        "jojr3pcevvzba53oahh353576qyusxjm",
+                        "7ghw5scn5ceossjsmzmg3wx52444gzfu",
+                        "am23xz7xh767wieajcc5w2dt7pvutenm"
+                    ],
+                    "domain": "andrewmeier.dev",
+                    "id": "andrewmeier.dev"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification::andrewmeier.dev",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0::7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "propertyDependencies": {
+                    "domain": [
+                        "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::aws:ses/mailFrom:MailFrom::andrewmeier.dev",
+                "custom": true,
+                "id": "andrewmeier.dev",
+                "type": "aws:ses/mailFrom:MailFrom",
+                "inputs": {
+                    "__defaults": [
+                        "behaviorOnMxFailure"
+                    ],
+                    "behaviorOnMxFailure": "UseDefaultValue",
+                    "domain": "andrewmeier.dev",
+                    "mailFromDomain": "ses.andrewmeier.dev"
+                },
+                "outputs": {
+                    "behaviorOnMxFailure": "UseDefaultValue",
+                    "domain": "andrewmeier.dev",
+                    "id": "andrewmeier.dev",
+                    "mailFromDomain": "ses.andrewmeier.dev"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_39_0::7dcada46-0b36-4ff6-ba19-b9565850952d",
+                "propertyDependencies": {
+                    "domain": [
+                        "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                    ],
+                    "mailFromDomain": [
+                        "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::ses-verification",
+                "custom": true,
+                "id": "3361d2836099f1f9f7d7287c1ca26e1a",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "_amazonses.andrewmeier.dev",
+                    "ttl": 600,
+                    "type": "TXT",
+                    "value": "AXYw9fN9ZOIjrOahe5EL8YECZH1by8BOheXAu5EpjKI=",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-08-21T09:43:45.358992Z",
+                    "data": null,
+                    "hostname": "_amazonses.andrewmeier.dev",
+                    "id": "3361d2836099f1f9f7d7287c1ca26e1a",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-08-21T09:43:45.358992Z",
+                    "name": "_amazonses.andrewmeier.dev",
+                    "proxiable": false,
+                    "proxied": false,
+                    "ttl": 600,
+                    "type": "TXT",
+                    "value": "AXYw9fN9ZOIjrOahe5EL8YECZH1by8BOheXAu5EpjKI=",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev",
+                    "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "name": [
+                        "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                    ],
+                    "ttl": null,
+                    "type": null,
+                    "value": [
+                        "urn:pulumi:prod::managed-infrastructure::managed-infrastructure:DomainVerification$aws:ses/domainIdentity:DomainIdentity::andrewmeier.dev"
+                    ],
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::ses-dkim-1",
+                "custom": true,
+                "id": "63d32b80d1779c2d87ca2c1f6a3a117b",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "7ghw5scn5ceossjsmzmg3wx52444gzfu._domainkey",
+                    "type": "CNAME",
+                    "value": "7ghw5scn5ceossjsmzmg3wx52444gzfu.dkim.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-08-21T09:43:46.740205Z",
+                    "data": null,
+                    "hostname": "7ghw5scn5ceossjsmzmg3wx52444gzfu._domainkey.andrewmeier.dev",
+                    "id": "63d32b80d1779c2d87ca2c1f6a3a117b",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-08-21T09:43:46.740205Z",
+                    "name": "7ghw5scn5ceossjsmzmg3wx52444gzfu._domainkey",
+                    "proxiable": false,
+                    "proxied": false,
+                    "ttl": 1,
+                    "type": "CNAME",
+                    "value": "7ghw5scn5ceossjsmzmg3wx52444gzfu.dkim.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "name": null,
+                    "type": null,
+                    "value": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::ses-dkim-0",
+                "custom": true,
+                "id": "4b53d25c8adf69e350c24d352a9cb1a5",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "jojr3pcevvzba53oahh353576qyusxjm._domainkey",
+                    "type": "CNAME",
+                    "value": "jojr3pcevvzba53oahh353576qyusxjm.dkim.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-08-21T09:43:46.455657Z",
+                    "data": null,
+                    "hostname": "jojr3pcevvzba53oahh353576qyusxjm._domainkey.andrewmeier.dev",
+                    "id": "4b53d25c8adf69e350c24d352a9cb1a5",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-08-21T09:43:46.455657Z",
+                    "name": "jojr3pcevvzba53oahh353576qyusxjm._domainkey",
+                    "proxiable": false,
+                    "proxied": false,
+                    "ttl": 1,
+                    "type": "CNAME",
+                    "value": "jojr3pcevvzba53oahh353576qyusxjm.dkim.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "name": null,
+                    "type": null,
+                    "value": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::ses-dkim-2",
+                "custom": true,
+                "id": "cfdd0ac0ce17411ba4b222a8b8e4a0bc",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "am23xz7xh767wieajcc5w2dt7pvutenm._domainkey",
+                    "type": "CNAME",
+                    "value": "am23xz7xh767wieajcc5w2dt7pvutenm.dkim.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-08-21T09:43:46.976528Z",
+                    "data": null,
+                    "hostname": "am23xz7xh767wieajcc5w2dt7pvutenm._domainkey.andrewmeier.dev",
+                    "id": "cfdd0ac0ce17411ba4b222a8b8e4a0bc",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-08-21T09:43:46.976528Z",
+                    "name": "am23xz7xh767wieajcc5w2dt7pvutenm._domainkey",
+                    "proxiable": false,
+                    "proxied": false,
+                    "ttl": 1,
+                    "type": "CNAME",
+                    "value": "am23xz7xh767wieajcc5w2dt7pvutenm.dkim.amazonses.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_5_0_0::d9b9c7d3-50c9-4b79-99be-162f54591aa6",
+                "propertyDependencies": {
+                    "name": null,
+                    "type": null,
+                    "value": null,
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:random::default_4_13_0",
+                "custom": true,
+                "id": "9d6de8ae-20e0-4c09-bd05-f6c755f84896",
+                "type": "pulumi:providers:random",
+                "inputs": {
+                    "version": "4.13.0"
+                },
+                "outputs": {
+                    "version": "4.13.0"
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::random:index/randomPassword:RandomPassword::k8s-api-tunnel",
+                "custom": true,
+                "id": "none",
+                "type": "random:index/randomPassword:RandomPassword",
+                "inputs": {
+                    "length": 32
+                },
+                "outputs": {
+                    "id": "none",
+                    "length": 32,
+                    "lower": true,
+                    "minLower": 0,
+                    "minNumeric": 0,
+                    "minSpecial": 0,
+                    "minUpper": 0,
+                    "number": true,
+                    "result": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"+=YTc51]Z)@RJd*RYipQkFlh6Fz#*kTf\""
+                    },
+                    "special": true,
+                    "upper": true
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:random::default_4_13_0::9d6de8ae-20e0-4c09-bd05-f6c755f84896",
+                "propertyDependencies": {
+                    "length": null
+                },
+                "additionalSecretOutputs": [
+                    "bcryptHash",
+                    "result"
+                ]
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:random::default_4_8_2",
+                "custom": true,
+                "id": "669b2427-cffb-4235-8b65-3d75cd4d3b5f",
+                "type": "pulumi:providers:random",
+                "inputs": {
+                    "version": "4.8.2"
+                },
+                "outputs": {
+                    "version": "4.8.2"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod"
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:aws::default_5_16_2",
+                "custom": true,
+                "id": "6dcdb7e9-cb9b-42ee-ac26-c1ecf56e37f1",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "region": "us-east-1",
+                    "version": "5.16.2"
+                },
+                "outputs": {
+                    "region": "us-east-1",
+                    "version": "5.16.2"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod"
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_4_12_1",
+                "custom": true,
+                "id": "1e56977c-6a0b-4125-b4fa-7da6bbef7a58",
+                "type": "pulumi:providers:cloudflare",
+                "inputs": {
+                    "accountId": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"aeae03df101c2ec82f1fe57f5af4ab6e\""
+                    },
+                    "apiToken": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"CXcbzK4z_KvaBhubJEd9Fpew6kE19PxkYqR9TddG\""
+                    },
+                    "version": "4.12.1"
+                },
+                "outputs": {
+                    "accountId": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"aeae03df101c2ec82f1fe57f5af4ab6e\""
+                    },
+                    "apiToken": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"CXcbzK4z_KvaBhubJEd9Fpew6kE19PxkYqR9TddG\""
+                    },
+                    "version": "4.12.1"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod"
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/argoTunnel:ArgoTunnel::k8s-api",
+                "custom": true,
+                "id": "ab2fc487-526f-4770-b9b4-cbe4547138f7",
+                "type": "cloudflare:index/argoTunnel:ArgoTunnel",
+                "inputs": {
+                    "__defaults": [],
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "name": "k8s-api",
+                    "secret": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"Kz1ZVGM1MV1aKUBSSmQqUllpcFFrRmxoNkZ6IyprVGY=\""
+                    }
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "cname": "ab2fc487-526f-4770-b9b4-cbe4547138f7.cfargotunnel.com",
+                    "id": "ab2fc487-526f-4770-b9b4-cbe4547138f7",
+                    "name": "k8s-api",
+                    "secret": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "\"Kz1ZVGM1MV1aKUBSSmQqUllpcFFrRmxoNkZ6IyprVGY=\""
+                    },
+                    "tunnelToken": "eyJhIjoiYWVhZTAzZGYxMDFjMmVjODJmMWZlNTdmNWFmNGFiNmUiLCJ0IjoiYWIyZmM0ODctNTI2Zi00NzcwLWI5YjQtY2JlNDU0NzEzOGY3IiwicyI6Ikt6MVpWR00xTVYxYUtVQlNTbVFxVWxscGNGRnJSbXhvTmtaNkl5cHJWR1k9In0="
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::random:index/randomPassword:RandomPassword::k8s-api-tunnel"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_4_12_1::1e56977c-6a0b-4125-b4fa-7da6bbef7a58",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "name": null,
+                    "secret": [
+                        "urn:pulumi:prod::managed-infrastructure::random:index/randomPassword:RandomPassword::k8s-api-tunnel"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::k8s.andrewmeier.dev",
+                "custom": true,
+                "id": "4ac7f272d4a17d5d0aecd97c73964df9",
+                "type": "cloudflare:index/record:Record",
+                "inputs": {
+                    "__defaults": [
+                        "allowOverwrite"
+                    ],
+                    "allowOverwrite": false,
+                    "name": "k8s",
+                    "proxied": true,
+                    "type": "CNAME",
+                    "value": "ab2fc487-526f-4770-b9b4-cbe4547138f7.cfargotunnel.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":30000000000,\"update\":30000000000},\"schema_version\":\"2\"}",
+                    "allowOverwrite": false,
+                    "createdOn": "2022-04-01T10:21:54.786799Z",
+                    "data": null,
+                    "hostname": "k8s.andrewmeier.dev",
+                    "id": "4ac7f272d4a17d5d0aecd97c73964df9",
+                    "metadata": {
+                        "auto_added": "false",
+                        "managed_by_apps": "false",
+                        "managed_by_argo_tunnel": "false",
+                        "source": "primary"
+                    },
+                    "modifiedOn": "2022-04-01T10:21:54.786799Z",
+                    "name": "k8s",
+                    "proxiable": true,
+                    "proxied": true,
+                    "ttl": 1,
+                    "type": "CNAME",
+                    "value": "ab2fc487-526f-4770-b9b4-cbe4547138f7.cfargotunnel.com",
+                    "zoneId": "3567e9b11e8d451f7b5e75c0188b98b4"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/argoTunnel:ArgoTunnel::k8s-api",
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_4_12_1::1e56977c-6a0b-4125-b4fa-7da6bbef7a58",
+                "propertyDependencies": {
+                    "name": null,
+                    "proxied": null,
+                    "type": null,
+                    "value": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/argoTunnel:ArgoTunnel::k8s-api"
+                    ],
+                    "zoneId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/zone:Zone::andrewmeier.dev"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessApplication:AccessApplication::k8s-api",
+                "custom": true,
+                "id": "2c30e656-70a4-4de0-9dbe-d0f20d7d803f",
+                "type": "cloudflare:index/accessApplication:AccessApplication",
+                "inputs": {
+                    "__defaults": [
+                        "appLauncherVisible",
+                        "enableBindingCookie",
+                        "serviceAuth401Redirect",
+                        "sessionDuration",
+                        "skipInterstitial"
+                    ],
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "allowedIdps": [
+                        "e282d067-779f-4786-b1dd-c72b753e67d8"
+                    ],
+                    "appLauncherVisible": true,
+                    "autoRedirectToIdentity": true,
+                    "domain": "k8s.andrewmeier.dev",
+                    "enableBindingCookie": false,
+                    "httpOnlyCookieAttribute": true,
+                    "name": "Kubernetes API",
+                    "serviceAuth401Redirect": false,
+                    "sessionDuration": "24h",
+                    "skipInterstitial": false,
+                    "type": "self_hosted"
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "allowedIdps": [
+                        "e282d067-779f-4786-b1dd-c72b753e67d8"
+                    ],
+                    "appLauncherVisible": true,
+                    "aud": "cfb2cbb312e4804cf60585387c22d678431fc361bdb88007d0d8b72a5df6e396",
+                    "autoRedirectToIdentity": true,
+                    "corsHeaders": [],
+                    "customDenyMessage": "",
+                    "customDenyUrl": "",
+                    "domain": "k8s.andrewmeier.dev",
+                    "enableBindingCookie": false,
+                    "httpOnlyCookieAttribute": true,
+                    "id": "2c30e656-70a4-4de0-9dbe-d0f20d7d803f",
+                    "logoUrl": "",
+                    "name": "Kubernetes API",
+                    "saasApp": null,
+                    "sameSiteCookieAttribute": "",
+                    "serviceAuth401Redirect": false,
+                    "sessionDuration": "24h",
+                    "skipInterstitial": false,
+                    "type": "self_hosted"
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessIdentityProvider:AccessIdentityProvider::github",
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::k8s.andrewmeier.dev"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_4_12_1::1e56977c-6a0b-4125-b4fa-7da6bbef7a58",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "allowedIdps": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessIdentityProvider:AccessIdentityProvider::github"
+                    ],
+                    "autoRedirectToIdentity": null,
+                    "domain": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/record:Record::k8s.andrewmeier.dev"
+                    ],
+                    "httpOnlyCookieAttribute": null,
+                    "name": null,
+                    "type": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessPolicy:AccessPolicy::k8s-api-user-access",
+                "custom": true,
+                "id": "d9e357e3-edfa-4324-b494-ba8770b08ad8",
+                "type": "cloudflare:index/accessPolicy:AccessPolicy",
+                "inputs": {
+                    "__defaults": [],
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "applicationId": "2c30e656-70a4-4de0-9dbe-d0f20d7d803f",
+                    "decision": "allow",
+                    "includes": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "plaintext": "[{\"__defaults\":[],\"emails\":[\"ameier38@gmail.com\"]}]"
+                    },
+                    "name": "Kubernetes API User Access",
+                    "precedence": 1
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "applicationId": "2c30e656-70a4-4de0-9dbe-d0f20d7d803f",
+                    "approvalGroups": [],
+                    "decision": "allow",
+                    "excludes": [],
+                    "id": "d9e357e3-edfa-4324-b494-ba8770b08ad8",
+                    "includes": [
+                        {
+                            "anyValidServiceToken": false,
+                            "authMethod": "",
+                            "azures": [],
+                            "certificate": false,
+                            "commonName": "",
+                            "devicePostures": [],
+                            "emailDomains": [],
+                            "emails": [
+                                "ameier38@gmail.com"
+                            ],
+                            "everyone": false,
+                            "externalEvaluation": null,
+                            "geos": [],
+                            "githubs": [],
+                            "groups": [],
+                            "gsuites": [],
+                            "ips": [],
+                            "loginMethods": [],
+                            "oktas": [],
+                            "samls": [],
+                            "serviceTokens": []
+                        }
+                    ],
+                    "name": "Kubernetes API User Access",
+                    "precedence": 1,
+                    "requires": []
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessApplication:AccessApplication::k8s-api"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_4_12_1::1e56977c-6a0b-4125-b4fa-7da6bbef7a58",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "applicationId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessApplication:AccessApplication::k8s-api"
+                    ],
+                    "decision": null,
+                    "includes": null,
+                    "name": null,
+                    "precedence": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessPolicy:AccessPolicy::k8s-api-github-access",
+                "custom": true,
+                "id": "2b669897-a3e0-4b1f-8a24-47f606f1e776",
+                "type": "cloudflare:index/accessPolicy:AccessPolicy",
+                "inputs": {
+                    "__defaults": [],
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "applicationId": "2c30e656-70a4-4de0-9dbe-d0f20d7d803f",
+                    "decision": "non_identity",
+                    "includes": [
+                        {
+                            "__defaults": [],
+                            "serviceTokens": [
+                                "77ca27a5-8716-4529-bbda-aa9d0ffd36e7"
+                            ]
+                        }
+                    ],
+                    "name": "Kubernetes API GitHub Access",
+                    "precedence": 2
+                },
+                "outputs": {
+                    "accountId": "aeae03df101c2ec82f1fe57f5af4ab6e",
+                    "applicationId": "2c30e656-70a4-4de0-9dbe-d0f20d7d803f",
+                    "approvalGroups": [],
+                    "decision": "non_identity",
+                    "excludes": [],
+                    "id": "2b669897-a3e0-4b1f-8a24-47f606f1e776",
+                    "includes": [
+                        {
+                            "anyValidServiceToken": false,
+                            "authMethod": "",
+                            "azures": [],
+                            "certificate": false,
+                            "commonName": "",
+                            "devicePostures": [],
+                            "emailDomains": [],
+                            "emails": [],
+                            "everyone": false,
+                            "externalEvaluation": null,
+                            "geos": [],
+                            "githubs": [],
+                            "groups": [],
+                            "gsuites": [],
+                            "ips": [],
+                            "loginMethods": [],
+                            "oktas": [],
+                            "samls": [],
+                            "serviceTokens": [
+                                "77ca27a5-8716-4529-bbda-aa9d0ffd36e7"
+                            ]
+                        }
+                    ],
+                    "name": "Kubernetes API GitHub Access",
+                    "precedence": 2,
+                    "requires": []
+                },
+                "parent": "urn:pulumi:prod::managed-infrastructure::pulumi:pulumi:Stack::managed-infrastructure-prod",
+                "dependencies": [
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessApplication:AccessApplication::k8s-api",
+                    "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessServiceToken:AccessServiceToken::github"
+                ],
+                "provider": "urn:pulumi:prod::managed-infrastructure::pulumi:providers:cloudflare::default_4_12_1::1e56977c-6a0b-4125-b4fa-7da6bbef7a58",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "applicationId": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessApplication:AccessApplication::k8s-api"
+                    ],
+                    "decision": null,
+                    "includes": [
+                        "urn:pulumi:prod::managed-infrastructure::cloudflare:index/accessServiceToken:AccessServiceToken::github"
+                    ],
+                    "name": null,
+                    "precedence": null
+                }
+            }
+        ]
+    }
+}

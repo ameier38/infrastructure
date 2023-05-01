@@ -4,7 +4,7 @@ import * as config from '../config'
 export const githubIdentityProvider = new cloudflare.AccessIdentityProvider('github', {
     name: 'github',
     type: 'github',
-    accountId: cloudflare.config.accountId!,
+    accountId: config.cloudflareAccountId,
     configs: [{
         clientId: config.githubConfig.clientId,
         clientSecret: config.githubConfig.clientSecret

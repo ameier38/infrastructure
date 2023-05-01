@@ -1,6 +1,7 @@
 import * as cloudflare from '@pulumi/cloudflare'
+import { cloudflareAccountId } from '../config'
 
 export const githubServiceToken = new cloudflare.AccessServiceToken('github', {
     name: 'GitHub',
-    accountId: cloudflare.config.accountId!
+    accountId: cloudflareAccountId
 })
