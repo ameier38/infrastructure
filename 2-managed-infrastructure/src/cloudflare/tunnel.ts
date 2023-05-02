@@ -3,26 +3,46 @@ import * as pulumi from '@pulumi/pulumi'
 import * as random from '@pulumi/random'
 import * as config from '../config'
 
-const tunnelSecret = new random.RandomPassword('k8s-api-tunnel', {
-    length: 32
-})
+class Tunnel extends pulumi.ComponentResource {
+    public readonly id: pulumi.Output<string>
+    public readonly cname: pulumi.Output<string>
+    public readonly credentials: pulumi.Output<string>
 
-export const k8sApiTunnel = new cloudflare.Tunnel('k8s-api', {
-    accountId: config.cloudflareAccountId,
-    name: 'k8s-api',
-    secret: tunnelSecret.result.apply(s => Buffer.from(s).toString('base64'))
-})
+    constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
+        super('managed-infrastructure:Tunnel', name, {}, opts)
+        const tunnelSecret = new random.RandomPassword(`${name}-tunnel`, {
+            length: 32
+        }, { parent: this })
 
-export const k8sApiTunnelCredentials = pulumi.all([
-    k8sApiTunnel.accountId,
-    k8sApiTunnel.id,
-    k8sApiTunnel.name,
-    k8sApiTunnel.secret
-]).apply(([accountId, tunnelId, tunnelName, tunnelSecret]) => {
-    return JSON.stringify({
-        AccountTag: accountId,
-        TunnelID: tunnelId,
-        TunnelName: tunnelName,
-        TunnelSecret: tunnelSecret
-    })
-})
+        const tunnel = new cloudflare.Tunnel(name, {
+            accountId: config.cloudflareAccountId,
+            name: name,
+            secret: tunnelSecret.result.apply(s => Buffer.from(s).toString('base64'))
+        }, { parent: this})
+
+        this.id = tunnel.id
+        this.cname = tunnel.cname
+        this.credentials = pulumi.all([
+            tunnel.accountId,
+            tunnel.id,
+            tunnel.name,
+            tunnel.secret
+        ]).apply(([accountId, tunnelId, tunnelName, tunnelSecret]) => {
+            return JSON.stringify({
+                AccountTag: accountId,
+                TunnelID: tunnelId,
+                TunnelName: tunnelName,
+                TunnelSecret: tunnelSecret
+            })
+        })
+
+        this.registerOutputs({
+            id: this.id,
+            cname: this.cname,
+            credentials: this.credentials
+        })
+    }
+}
+
+export const k8sApiTunnel = new Tunnel('k8s-api')
+export const k8sTunnel = new Tunnel('k8s')

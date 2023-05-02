@@ -9,8 +9,12 @@ export const domain = 'andrewmeier.dev'
 const rawConfig = new pulumi.Config()
 export const email = rawConfig.requireSecret('email')
 
-const rawCloudflareConfig = new pulumi.Config('cloudflare')
 export const cloudflareAccountId = rawConfig.requireSecret('cloudflareAccountId')
+
+const cloudflareOriginCertificateKey = rawConfig.requireSecret('cloudflareOriginCertificateKey')
+export const cloudflareOriginCertificateProvider = new cloudflare.Provider('origin-certificate', {
+    apiUserServiceKey: cloudflareOriginCertificateKey
+})
 
 const rawGithubConfig = new pulumi.Config('github')
 export const githubConfig = {

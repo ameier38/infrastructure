@@ -1,6 +1,8 @@
 import './accessApplication'
 import './accessIdentityProvider'
 import './accessPolicy'
+import './originCertificate'
 import './record'
 import './serviceToken'
+import './tunnel'
 import './zone'
