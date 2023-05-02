@@ -1,12 +1,11 @@
 import * as k8s from '@pulumi/kubernetes'
 import * as pulumi from '@pulumi/pulumi'
-import * as tunnel from '../cloudflare/tunnel'
 import * as config from '../config'
 
 const identifier = 'cloudflared'
 
 const cloudflaredConfig = pulumi.interpolate `
-tunnel: ${tunnel.k8sTunnel.id}
+tunnel: ${config.k8sTunnelId}
 credentials-file: /var/secrets/cloudflared/credentials.json
 metrics: 0.0.0.0:2000
 no-autoupdate: true
@@ -26,7 +25,7 @@ const cloudflaredSecret = new k8s.core.v1.Secret(identifier, {
     metadata: { namespace: 'kube-system' },
     stringData: {
         'config.yaml': cloudflaredConfig,
-        'credentials.json': tunnel.k8sTunnelCredentials
+        'credentials.json': config.k8sTunnelCredentials
     }
 })
 
@@ -52,7 +51,7 @@ new k8s.apps.v1.Deployment(identifier, {
             spec: {
                 containers: [{
                         name: identifier,
-                        image: 'cloudflare/cloudflared:2022.10.0-arm64',
+                        image: 'cloudflare/cloudflared:2023.3.1-arm64',
                         args: [
                             'tunnel',
                             '--config', '/var/secrets/cloudflared/config.yaml',
