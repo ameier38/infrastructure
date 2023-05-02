@@ -4,7 +4,7 @@
         "@types/node": "^16"
     },
     "dependencies": {
-        "@pulumi/command": "0.5.2",
-        "@pulumi/pulumi": "^3.42.0"
+        "@pulumi/command": "0.7.2",
+        "@pulumi/pulumi": "^3.65.1"
     }
 }

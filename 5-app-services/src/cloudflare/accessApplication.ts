@@ -7,7 +7,7 @@ export const traefik = new cloudflare.AccessApplication('traefik', {
     domain: record.traefikRecord.hostname,
     allowedIdps: [ config.githubIdentityProviderId ],
     autoRedirectToIdentity: true,
-    accountId: cloudflare.config.accountId,
+    accountId: config.cloudflareAccountId,
     logoUrl: config.logoUrl,
     httpOnlyCookieAttribute: false
 })
@@ -17,17 +17,7 @@ export const whoami = new cloudflare.AccessApplication('whoami', {
     domain: record.whoamiRecord.hostname,
     allowedIdps: [ config.githubIdentityProviderId ],
     autoRedirectToIdentity: true,
-    accountId: cloudflare.config.accountId,
-    logoUrl: config.logoUrl,
-    httpOnlyCookieAttribute: false
-})
-
-export const grafana = new cloudflare.AccessApplication('grafana', {
-    name: 'Grafana',
-    domain: record.grafanaRecord.hostname,
-    allowedIdps: [ config.githubIdentityProviderId ],
-    autoRedirectToIdentity: true,
-    accountId: cloudflare.config.accountId,
+    accountId: config.cloudflareAccountId,
     logoUrl: config.logoUrl,
     httpOnlyCookieAttribute: false
 })

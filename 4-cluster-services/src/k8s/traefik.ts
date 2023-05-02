@@ -1,13 +1,13 @@
 import * as k8s from '@pulumi/kubernetes'
-import { originCert, originCertPrivateKey } from '../cloudflare/originCertificate'
+import * as config from '../config'
 
 // Traefik is deployed as part of k3s
 
 const originCertSecret = new k8s.core.v1.Secret('origin-cert', {
     metadata: { namespace: 'kube-system' },
     stringData: {
-        'tls.crt': originCert.certificate,
-        'tls.key': originCertPrivateKey.privateKeyPem
+        'tls.crt': config.originCertificate,
+        'tls.key': config.originPrivateKey
     }
 })
 

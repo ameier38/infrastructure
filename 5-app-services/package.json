@@ -4,7 +4,7 @@
         "@types/node": "^16"
     },
     "dependencies": {
-        "@pulumi/cloudflare": "^4.9.0",
-        "@pulumi/pulumi": "^3.42.0"
+        "@pulumi/cloudflare": "^5.0.0",
+        "@pulumi/pulumi": "^3.65.1"
     }
 }
