@@ -20,12 +20,14 @@ ingress:
   - service: http_status:404
 `
 
-const cloudflaredSecret = new k8s.core.v1.Secret(identifier, {
+const configMap = new k8s.core.v1.ConfigMap(identifier, {
     metadata: { namespace: 'kube-system' },
-    stringData: {
-        'config.yaml': cloudflaredConfig,
-        'credentials.json': config.k8sTunnelCredentials
-    }
+    data: { 'config.yaml': cloudflaredConfig }
+})
+
+const secret = new k8s.core.v1.Secret(identifier, {
+    metadata: { namespace: 'kube-system' },
+    stringData: { 'token': config.k8sTunnelToken }
 })
 
 const labels = { 'app.kubernetes.io/name': identifier }
@@ -53,9 +55,18 @@ new k8s.apps.v1.Deployment(identifier, {
                         image: 'cloudflare/cloudflared:2023.5.0-arm64',
                         args: [
                             'tunnel',
-                            '--config', '/var/secrets/cloudflared/config.yaml',
+                            '--config', '/var/cloudflared/config.yaml',
                             'run'
                         ],
+                        env: [{
+                            name: 'TUNNEL_TOKEN',
+                            valueFrom: {
+                                secretKeyRef: {
+                                    name: secret.metadata.name,
+                                    key: 'token'
+                                }
+                            }
+                        }],
                         livenessProbe: {
                             httpGet: { path: '/ready', port: 2000 },
                             failureThreshold: 1,
@@ -64,13 +75,13 @@ new k8s.apps.v1.Deployment(identifier, {
                         },
                         volumeMounts: [{
                             name: 'cloudflared',
-                            mountPath: '/var/secrets/cloudflared',
+                            mountPath: '/var/cloudflared',
                             readOnly: true
                         }]
                 }],
                 volumes: [{
                     name: 'cloudflared',
-                    secret: { secretName: cloudflaredSecret.metadata.name }
+                    configMap: { name: configMap.metadata.name }
                 }],
                 nodeSelector: { 'kubernetes.io/arch': 'arm64' }
             }            
