@@ -6,7 +6,6 @@ const identifier = 'cloudflared'
 
 const cloudflaredConfig = pulumi.interpolate `
 tunnel: ${config.k8sTunnelId}
-credentials-file: /var/secrets/cloudflared/credentials.json
 metrics: 0.0.0.0:2000
 no-autoupdate: true
 ingress:
@@ -51,7 +50,7 @@ new k8s.apps.v1.Deployment(identifier, {
             spec: {
                 containers: [{
                         name: identifier,
-                        image: 'cloudflare/cloudflared:2023.3.1-arm64',
+                        image: 'cloudflare/cloudflared:2023.5.0-arm64',
                         args: [
                             'tunnel',
                             '--config', '/var/secrets/cloudflared/config.yaml',

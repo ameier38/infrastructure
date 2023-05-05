@@ -9,6 +9,6 @@ export const githubIdentityProviderId = managedInfrastructureStack.requireOutput
 export const andrewmeierDotDevDomain = managedInfrastructureStack.requireOutput('andrewmeierDotDevDomain')
 export const meiermadeDotComDomain = managedInfrastructureStack.requireOutput('meiermadeDotComDomain')
 export const k8sTunnelId = managedInfrastructureStack.requireOutput('k8sTunnelId')
-export const k8sTunnelCredentials = managedInfrastructureStack.requireOutput('k8sTunnelCredentials')
+export const k8sTunnelToken = managedInfrastructureStack.requireOutput('k8sTunnelToken')
 export const originCertificate = managedInfrastructureStack.requireOutput('originCertificate')
 export const originPrivateKey = managedInfrastructureStack.requireOutput('originPrivateKey')

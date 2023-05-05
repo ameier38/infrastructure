@@ -6,7 +6,7 @@ import * as config from '../config'
 class Tunnel extends pulumi.ComponentResource {
     public readonly id: pulumi.Output<string>
     public readonly cname: pulumi.Output<string>
-    public readonly credentials: pulumi.Output<string>
+    public readonly token: pulumi.Output<string>
 
     constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
         super('managed-infrastructure:Tunnel', name, {}, opts)
@@ -22,24 +22,12 @@ class Tunnel extends pulumi.ComponentResource {
 
         this.id = tunnel.id
         this.cname = tunnel.cname
-        this.credentials = pulumi.all([
-            tunnel.accountId,
-            tunnel.id,
-            tunnel.name,
-            tunnel.secret
-        ]).apply(([accountId, tunnelId, tunnelName, tunnelSecret]) => {
-            return JSON.stringify({
-                AccountTag: accountId,
-                TunnelID: tunnelId,
-                TunnelName: tunnelName,
-                TunnelSecret: tunnelSecret
-            })
-        })
+        this.token = tunnel.tunnelToken
 
         this.registerOutputs({
             id: this.id,
             cname: this.cname,
-            credentials: this.credentials
+            token: this.token
         })
     }
 }
